@@ -1,0 +1,3827 @@
+{
+  "addresses": [
+    {
+      "path": "/v1/metrics/addresses/accumulation_balance",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/accumulation_balance",
+      "metric": "accumulation_balance",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/accumulation_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/accumulation_count",
+      "metric": "accumulation_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/active_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/active_count",
+      "metric": "active_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/active_count_with_contracts",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/active_count_with_contracts",
+      "metric": "active_count_with_contracts",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/activity_retention",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/activity_retention",
+      "metric": "activity_retention",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/activity_retention_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/activity_retention_rate",
+      "metric": "activity_retention_rate",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/count",
+      "metric": "count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/holder_accumulation_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/holder_accumulation_ratio",
+      "metric": "holder_accumulation_ratio",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/holder_retention",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/holder_retention",
+      "metric": "holder_retention",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/holder_retention_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/holder_retention_rate",
+      "metric": "holder_retention_rate",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/loss_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/loss_count",
+      "metric": "loss_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/min_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/min_",
+      "metric": "min_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/min_point_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/min_point_",
+      "metric": "min_point_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/min_point_zero_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/min_point_zero_",
+      "metric": "min_point_zero_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/new_non_zero_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/new_non_zero_count",
+      "metric": "new_non_zero_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/non_zero_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/non_zero_count",
+      "metric": "non_zero_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/profit_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/profit_count",
+      "metric": "profit_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/profit_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/profit_relative",
+      "metric": "profit_relative",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/receiving_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/receiving_count",
+      "metric": "receiving_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/receiving_from_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/receiving_from_exchanges_count",
+      "metric": "receiving_from_exchanges_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/se",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/se",
+      "metric": "se",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/sending_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/sending_count",
+      "metric": "sending_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/sending_to_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/sending_to_exchanges_count",
+      "metric": "sending_to_exchanges_count",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_b",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_b",
+      "metric": "supply_b",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_balance_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_balance_",
+      "metric": "supply_balance_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_balance_above_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_balance_above_",
+      "metric": "supply_balance_above_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_balance_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_balance_less_",
+      "metric": "supply_balance_less_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_balance_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_balance_more_",
+      "metric": "supply_balance_more_",
+      "category": "addresses"
+    },
+    {
+      "path": "/v1/metrics/addresses/supply_distribution_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/addresses/supply_distribution_relative",
+      "metric": "supply_distribution_relative",
+      "category": "addresses"
+    }
+  ],
+  "blockchain": [
+    {
+      "path": "/v1/metrics/blockchain/block_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_count",
+      "metric": "block_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/block_height",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_height",
+      "metric": "block_height",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/block_interval_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_interval_mean",
+      "metric": "block_interval_mean",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/block_interval_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_interval_median",
+      "metric": "block_interval_median",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/block_size_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_size_mean",
+      "metric": "block_size_mean",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/block_size_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/block_size_sum",
+      "metric": "block_size_sum",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_count",
+      "metric": "utxo_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_created_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_created_count",
+      "metric": "utxo_created_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_created_value_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_created_value_mean",
+      "metric": "utxo_created_value_mean",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_created_value_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_created_value_median",
+      "metric": "utxo_created_value_median",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_created_value_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_created_value_sum",
+      "metric": "utxo_created_value_sum",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_loss_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_loss_count",
+      "metric": "utxo_loss_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_profit_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_profit_count",
+      "metric": "utxo_profit_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_profit_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_profit_relative",
+      "metric": "utxo_profit_relative",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_spent_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_spent_count",
+      "metric": "utxo_spent_count",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_spent_value_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_spent_value_mean",
+      "metric": "utxo_spent_value_mean",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_spent_value_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_spent_value_median",
+      "metric": "utxo_spent_value_median",
+      "category": "blockchain"
+    },
+    {
+      "path": "/v1/metrics/blockchain/utxo_spent_value_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/blockchain/utxo_spent_value_sum",
+      "metric": "utxo_spent_value_sum",
+      "category": "blockchain"
+    }
+  ],
+  "breakdowns": [
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_realized_usd_by_age",
+      "metric": "marketcap_realized_usd_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_realized_usd_by_pnl",
+      "metric": "marketcap_realized_usd_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_realized_usd_by_wallet_size",
+      "metric": "marketcap_realized_usd_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_usd_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_usd_by_age",
+      "metric": "marketcap_usd_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_usd_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_usd_by_pnl",
+      "metric": "marketcap_usd_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/marketcap_usd_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/marketcap_usd_by_wallet_size",
+      "metric": "marketcap_usd_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/mvrv_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/mvrv_by_age",
+      "metric": "mvrv_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/mvrv_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/mvrv_by_pnl",
+      "metric": "mvrv_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/mvrv_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/mvrv_by_wallet_size",
+      "metric": "mvrv_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/price_realized_usd_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/price_realized_usd_by_age",
+      "metric": "price_realized_usd_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/price_realized_usd_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/price_realized_usd_by_pnl",
+      "metric": "price_realized_usd_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/price_realized_usd_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/price_realized_usd_by_wallet_size",
+      "metric": "price_realized_usd_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_loss_by_",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_loss_by_",
+      "metric": "realized_loss_by_",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_loss_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_loss_by_age",
+      "metric": "realized_loss_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_loss_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_loss_by_lth_sth",
+      "metric": "realized_loss_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_loss_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_loss_by_pnl",
+      "metric": "realized_loss_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_loss_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_loss_by_wallet_size",
+      "metric": "realized_loss_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_profit_b",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_profit_b",
+      "metric": "realized_profit_b",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_profit_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_profit_by_age",
+      "metric": "realized_profit_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_profit_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_profit_by_lth_sth",
+      "metric": "realized_profit_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_profit_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_profit_by_pnl",
+      "metric": "realized_profit_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/realized_profit_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/realized_profit_by_wallet_size",
+      "metric": "realized_profit_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/sopr_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/sopr_by_age",
+      "metric": "sopr_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/sopr_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/sopr_by_lth_sth",
+      "metric": "sopr_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/sopr_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/sopr_by_pnl",
+      "metric": "sopr_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/sopr_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/sopr_by_wallet_size",
+      "metric": "sopr_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_vol",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_vol",
+      "metric": "spent_vol",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_loss_sum_by_age",
+      "metric": "spent_volume_loss_sum_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_loss_sum_by_lth_sth",
+      "metric": "spent_volume_loss_sum_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_loss_sum_by_wallet_size",
+      "metric": "spent_volume_loss_sum_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_profit_sum_by_age",
+      "metric": "spent_volume_profit_sum_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_profit_sum_by_lth_sth",
+      "metric": "spent_volume_profit_sum_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_profit_sum_by_wallet_size",
+      "metric": "spent_volume_profit_sum_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_sum_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_sum_by_age",
+      "metric": "spent_volume_sum_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_sum_by_lth_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_sum_by_lth_sth",
+      "metric": "spent_volume_sum_by_lth_sth",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_sum_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_sum_by_pnl",
+      "metric": "spent_volume_sum_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/spent_volume_sum_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/spent_volume_sum_by_wallet_size",
+      "metric": "spent_volume_sum_by_wallet_size",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/supply_by_age",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/supply_by_age",
+      "metric": "supply_by_age",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/supply_by_investor_behavior",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/supply_by_investor_behavior",
+      "metric": "supply_by_investor_behavior",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/supply_by_pnl",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/supply_by_pnl",
+      "metric": "supply_by_pnl",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/supply_by_pnl_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/supply_by_pnl_relative",
+      "metric": "supply_by_pnl_relative",
+      "category": "breakdowns"
+    },
+    {
+      "path": "/v1/metrics/breakdowns/supply_by_wallet_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/breakdowns/supply_by_wallet_size",
+      "metric": "supply_by_wallet_size",
+      "category": "breakdowns"
+    }
+  ],
+  "bridges": [
+    {
+      "path": "/v1/metrics/bridges/deposits_by_chain",
+      "full_url": "https://api.glassnode.com/v1/metrics/bridges/deposits_by_chain",
+      "metric": "deposits_by_chain",
+      "category": "bridges"
+    },
+    {
+      "path": "/v1/metrics/bridges/net_volume_by_chain",
+      "full_url": "https://api.glassnode.com/v1/metrics/bridges/net_volume_by_chain",
+      "metric": "net_volume_by_chain",
+      "category": "bridges"
+    },
+    {
+      "path": "/v1/metrics/bridges/total_value_locked_by_chain",
+      "full_url": "https://api.glassnode.com/v1/metrics/bridges/total_value_locked_by_chain",
+      "metric": "total_value_locked_by_chain",
+      "category": "bridges"
+    },
+    {
+      "path": "/v1/metrics/bridges/total_value_locked_by_chain_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/bridges/total_value_locked_by_chain_relative",
+      "metric": "total_value_locked_by_chain_relative",
+      "category": "bridges"
+    },
+    {
+      "path": "/v1/metrics/bridges/withdrawals_by_chain",
+      "full_url": "https://api.glassnode.com/v1/metrics/bridges/withdrawals_by_chain",
+      "metric": "withdrawals_by_chain",
+      "category": "bridges"
+    }
+  ],
+  "defi": [
+    {
+      "path": "/v1/metrics/defi/total_value_locked",
+      "full_url": "https://api.glassnode.com/v1/metrics/defi/total_value_locked",
+      "metric": "total_value_locked",
+      "category": "defi"
+    }
+  ],
+  "derivatives": [
+    {
+      "path": "/v1/metrics/derivatives/dvol_ohlc",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/dvol_ohlc",
+      "metric": "dvol_ohlc",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_annualized_basis_",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_annualized_basis_",
+      "metric": "futures_annualized_basis_",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_estimated_leverage_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_estimated_leverage_ratio",
+      "metric": "futures_estimated_leverage_ratio",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_funding_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_funding_rate",
+      "metric": "futures_funding_rate",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_funding_rate_perpetual",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_funding_rate_perpetual",
+      "metric": "futures_funding_rate_perpetual",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_funding_rate_perpetual_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_funding_rate_perpetual_all",
+      "metric": "futures_funding_rate_perpetual_all",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_liquidated_volume_long_mean",
+      "metric": "futures_liquidated_volume_long_mean",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_liquidated_volume_long_relative",
+      "metric": "futures_liquidated_volume_long_relative",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_liquidated_volume_long_sum",
+      "metric": "futures_liquidated_volume_long_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_liquidated_volume_short_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_liquidated_volume_short_mean",
+      "metric": "futures_liquidated_volume_short_mean",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_liquidated_volume_short_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_liquidated_volume_short_sum",
+      "metric": "futures_liquidated_volume_short_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_in",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_in",
+      "metric": "futures_open_in",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_cash_margin_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_cash_margin_perpetual_sum",
+      "metric": "futures_open_interest_cash_margin_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_cash_margin_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_cash_margin_sum",
+      "metric": "futures_open_interest_cash_margin_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_crypto_mar",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_crypto_mar",
+      "metric": "futures_open_interest_crypto_mar",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_crypto_margin_perpetual_sum",
+      "metric": "futures_open_interest_crypto_margin_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative",
+      "metric": "futures_open_interest_crypto_margin_relative",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative_perpetual",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative_perpetual",
+      "metric": "futures_open_interest_crypto_margin_relative_perpetual",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_crypto_margin_sum",
+      "metric": "futures_open_interest_crypto_margin_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_latest",
+      "metric": "futures_open_interest_latest",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_perpetual_sum",
+      "metric": "futures_open_interest_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_perpetual_sum_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_perpetual_sum_all",
+      "metric": "futures_open_interest_perpetual_sum_all",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_sum",
+      "metric": "futures_open_interest_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_open_interest_sum_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_open_interest_sum_all",
+      "metric": "futures_open_interest_sum_all",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_term_structure",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_term_structure",
+      "metric": "futures_term_structure",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_term_structure_by_exchange",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_term_structure_by_exchange",
+      "metric": "futures_term_structure_by_exchange",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_vd",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_vd",
+      "metric": "futures_vd",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_vd_perpetual",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_vd_perpetual",
+      "metric": "futures_vd_perpetual",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_buy_daily_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_buy_daily_perpetual_sum",
+      "metric": "futures_volume_buy_daily_perpetual_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_buy_daily_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_buy_daily_sum",
+      "metric": "futures_volume_buy_daily_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_buy_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_buy_perpetual_sum",
+      "metric": "futures_volume_buy_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_buy_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_buy_sum",
+      "metric": "futures_volume_buy_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_daily_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_daily_latest",
+      "metric": "futures_volume_daily_latest",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_daily_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_daily_perpetual_sum",
+      "metric": "futures_volume_daily_perpetual_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_daily_perpetual_sum_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_daily_perpetual_sum_all",
+      "metric": "futures_volume_daily_perpetual_sum_all",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_daily_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_daily_sum",
+      "metric": "futures_volume_daily_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_daily_sum_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_daily_sum_all",
+      "metric": "futures_volume_daily_sum_all",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_perpetual_sum",
+      "metric": "futures_volume_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_sell_daily_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_sell_daily_perpetual_sum",
+      "metric": "futures_volume_sell_daily_perpetual_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_sell_daily_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_sell_daily_sum",
+      "metric": "futures_volume_sell_daily_sum",
+      "category": "derivatives",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_sell_perpetual_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_sell_perpetual_sum",
+      "metric": "futures_volume_sell_perpetual_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_sell_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_sell_sum",
+      "metric": "futures_volume_sell_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/futures_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/futures_volume_sum",
+      "metric": "futures_volume_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_",
+      "metric": "options_",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_atm_implied_volatility_",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_atm_implied_volatility_",
+      "metric": "options_atm_implied_volatility_",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_atm_implied_volatility_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_atm_implied_volatility_all",
+      "metric": "options_atm_implied_volatility_all",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_implied_volatility_term_structure",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_implied_volatility_term_structure",
+      "metric": "options_implied_volatility_term_structure",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_open_interest_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_open_interest_distribution",
+      "metric": "options_open_interest_distribution",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_open_interest_put_call_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_open_interest_put_call_ratio",
+      "metric": "options_open_interest_put_call_ratio",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_open_interest_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_open_interest_sum",
+      "metric": "options_open_interest_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_volatility_smile",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_volatility_smile",
+      "metric": "options_volatility_smile",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_volume_daily_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_volume_daily_sum",
+      "metric": "options_volume_daily_sum",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/options_volume_put_call_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/options_volume_put_call_ratio",
+      "metric": "options_volume_put_call_ratio",
+      "category": "derivatives"
+    },
+    {
+      "path": "/v1/metrics/derivatives/perpetuals_reference_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/derivatives/perpetuals_reference_rate",
+      "metric": "perpetuals_reference_rate",
+      "category": "derivatives"
+    }
+  ],
+  "distribution": [
+    {
+      "path": "/v1/metrics/distribution/balance_",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_",
+      "metric": "balance_",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_bhutan_government",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_bhutan_government",
+      "metric": "balance_bhutan_government",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_bitwise",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_bitwise",
+      "metric": "balance_bitwise",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_blackrock",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_blackrock",
+      "metric": "balance_blackrock",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_cashapp",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_cashapp",
+      "metric": "balance_cashapp",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_donald_trump",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_donald_trump",
+      "metric": "balance_donald_trump",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_el_salvador",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_el_salvador",
+      "metric": "balance_el_salvador",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_exchanges",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_exchanges",
+      "metric": "balance_exchanges",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_exchanges_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_exchanges_all",
+      "metric": "balance_exchanges_all",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_exchanges_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_exchanges_relative",
+      "metric": "balance_exchanges_relative",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_franklin_templeton",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_franklin_templeton",
+      "metric": "balance_franklin_templeton",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_german_government",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_german_government",
+      "metric": "balance_german_government",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_grayscale_trust",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_grayscale_trust",
+      "metric": "balance_grayscale_trust",
+      "category": "distribution",
+      "assets": [
+        "BTC"
+      ]
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_luna_foundation_guard",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_luna_foundation_guard",
+      "metric": "balance_luna_foundation_guard",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_miners_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_miners_all",
+      "metric": "balance_miners_all",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_miners_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_miners_change",
+      "metric": "balance_miners_change",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_miners_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_miners_sum",
+      "metric": "balance_miners_sum",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_miners_sum/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_miners_sum/miners",
+      "metric": "miners",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_mtgox_trustee",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_mtgox_trustee",
+      "metric": "balance_mtgox_trustee",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_otc_desks",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_otc_desks",
+      "metric": "balance_otc_desks",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_paypal",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_paypal",
+      "metric": "balance_paypal",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_revolut",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_revolut",
+      "metric": "balance_revolut",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_robinhood",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_robinhood",
+      "metric": "balance_robinhood",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_tesla",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_tesla",
+      "metric": "balance_tesla",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_tether_",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_tether_",
+      "metric": "balance_tether_",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_tether_treasury",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_tether_treasury",
+      "metric": "balance_tether_treasury",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_uk_government",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_uk_government",
+      "metric": "balance_uk_government",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_us_government",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_us_government",
+      "metric": "balance_us_government",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_vaneck",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_vaneck",
+      "metric": "balance_vaneck",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_wbtc",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_wbtc",
+      "metric": "balance_wbtc",
+      "category": "distribution",
+      "assets": [
+        "BTC"
+      ]
+    },
+    {
+      "path": "/v1/metrics/distribution/balance_wisdomtree",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/balance_wisdomtree",
+      "metric": "balance_wisdomtree",
+      "category": "distribution",
+      "assets": [
+        "BTC"
+      ]
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_aggregated_reliance_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_aggregated_reliance_ratio",
+      "metric": "exchange_aggregated_reliance_ratio",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_aggregated_reshuffling_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_aggregated_reshuffling_ratio",
+      "metric": "exchange_aggregated_reshuffling_ratio",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_net_position_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_net_position_change",
+      "metric": "exchange_net_position_change",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_reliance_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_reliance_ratio",
+      "metric": "exchange_reliance_ratio",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_reshuffling_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_reshuffling_ratio",
+      "metric": "exchange_reshuffling_ratio",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/exchange_whales_outflow",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/exchange_whales_outflow",
+      "metric": "exchange_whales_outflow",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/gini",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/gini",
+      "metric": "gini",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/herfindahl",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/herfindahl",
+      "metric": "herfindahl",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/o",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/o",
+      "metric": "o",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/outflows_mtgox_trustee",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/outflows_mtgox_trustee",
+      "metric": "outflows_mtgox_trustee",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/proof_of_reserves",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/proof_of_reserves",
+      "metric": "proof_of_reserves",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/proof_of_reserves_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/proof_of_reserves_all",
+      "metric": "proof_of_reserves_all",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/proof_of_reserves_all_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/proof_of_reserves_all_latest",
+      "metric": "proof_of_reserves_all_latest",
+      "category": "distribution"
+    },
+    {
+      "path": "/v1/metrics/distribution/supply_contracts",
+      "full_url": "https://api.glassnode.com/v1/metrics/distribution/supply_contracts",
+      "metric": "supply_contracts",
+      "category": "distribution"
+    }
+  ],
+  "entities": [
+    {
+      "path": "/v1/metrics/entities/active_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/active_count",
+      "metric": "active_count",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/min_",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/min_",
+      "metric": "min_",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/net_growth_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/net_growth_count",
+      "metric": "net_growth_count",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/new_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/new_count",
+      "metric": "new_count",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/profit_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/profit_relative",
+      "metric": "profit_relative",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/receiving_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/receiving_count",
+      "metric": "receiving_count",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/sending_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/sending_count",
+      "metric": "sending_count",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/supply_balance_",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/supply_balance_",
+      "metric": "supply_balance_",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/supply_balance_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/supply_balance_less_",
+      "metric": "supply_balance_less_",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/supply_balance_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/supply_balance_more_",
+      "metric": "supply_balance_more_",
+      "category": "entities"
+    },
+    {
+      "path": "/v1/metrics/entities/supply_distribution_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/entities/supply_distribution_relative",
+      "metric": "supply_distribution_relative",
+      "category": "entities"
+    }
+  ],
+  "eth2": [
+    {
+      "path": "/v1/metrics/eth",
+      "full_url": "https://api.glassnode.com/v1/metrics/eth",
+      "metric": null,
+      "category": "eth"
+    }
+  ],
+  "fees": [
+    {
+      "path": "/v1/metrics/fees/exchanges_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/exchanges_mean",
+      "metric": "exchanges_mean",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/exchanges_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/exchanges_relative",
+      "metric": "exchanges_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/exchanges_sum",
+      "metric": "exchanges_sum",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/fee_ratio_multiple",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/fee_ratio_multiple",
+      "metric": "fee_ratio_multiple",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_limit_tx_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_limit_tx_mean",
+      "metric": "gas_limit_tx_mean",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_limit_tx_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_limit_tx_median",
+      "metric": "gas_limit_tx_median",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_price_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_price_mean",
+      "metric": "gas_price_mean",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_price_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_price_median",
+      "metric": "gas_price_median",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_mean",
+      "metric": "gas_used_mean",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_median",
+      "metric": "gas_used_median",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum",
+      "metric": "gas_used_sum",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_bridges",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_bridges",
+      "metric": "gas_used_sum_bridges",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_bridges_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_bridges_relative",
+      "metric": "gas_used_sum_bridges_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_defi",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_defi",
+      "metric": "gas_used_sum_defi",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_defi_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_defi_relative",
+      "metric": "gas_used_sum_defi_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_erc",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_erc",
+      "metric": "gas_used_sum_erc",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_nfts",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_nfts",
+      "metric": "gas_used_sum_nfts",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_nfts_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_nfts_relative",
+      "metric": "gas_used_sum_nfts_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_stablecoins",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_stablecoins",
+      "metric": "gas_used_sum_stablecoins",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_stablecoins_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_stablecoins_relative",
+      "metric": "gas_used_sum_stablecoins_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_vanilla",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_vanilla",
+      "metric": "gas_used_sum_vanilla",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/gas_used_sum_vanilla_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/gas_used_sum_vanilla_relative",
+      "metric": "gas_used_sum_vanilla_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/tx_types_breakdown_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/tx_types_breakdown_relative",
+      "metric": "tx_types_breakdown_relative",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/tx_types_breakdown_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/tx_types_breakdown_sum",
+      "metric": "tx_types_breakdown_sum",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/volume_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/volume_mean",
+      "metric": "volume_mean",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/volume_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/volume_median",
+      "metric": "volume_median",
+      "category": "fees"
+    },
+    {
+      "path": "/v1/metrics/fees/volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/fees/volume_sum",
+      "metric": "volume_sum",
+      "category": "fees"
+    }
+  ],
+  "indicators": [
+    {
+      "path": "/v1/metrics/indi",
+      "full_url": "https://api.glassnode.com/v1/metrics/indi",
+      "metric": null,
+      "category": "indi"
+    },
+    {
+      "path": "/v1/metrics/indicato",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicato",
+      "metric": null,
+      "category": "indicato"
+    },
+    {
+      "path": "/v1/metrics/indicators/accumulation_trend_score",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/accumulation_trend_score",
+      "metric": "accumulation_trend_score",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol",
+      "metric": "asol",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol_account_based",
+      "metric": "asol_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol_lth",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol_lth",
+      "metric": "asol_lth",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol_lth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol_lth_account_based",
+      "metric": "asol_lth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol_sth",
+      "metric": "asol_sth",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/asol_sth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/asol_sth_account_based",
+      "metric": "asol_sth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/average_dormancy",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/average_dormancy",
+      "metric": "average_dormancy",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/average_dormancy_supply_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/average_dormancy_supply_adjusted",
+      "metric": "average_dormancy_supply_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/aviv",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/aviv",
+      "metric": "aviv",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/balanced_price_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/balanced_price_usd",
+      "metric": "balanced_price_usd",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd",
+      "metric": "cdd",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_account_based",
+      "metric": "cdd_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_lth",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_lth",
+      "metric": "cdd_lth",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_lth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_lth_account_based",
+      "metric": "cdd_lth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_sth",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_sth",
+      "metric": "cdd_sth",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_sth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_sth_account_based",
+      "metric": "cdd_sth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_supply_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_supply_adjusted",
+      "metric": "cdd_supply_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cdd_supply_adjusted_binary",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cdd_supply_adjusted_binary",
+      "metric": "cdd_supply_adjusted_binary",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/coin_blocks_created",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/coin_blocks_created",
+      "metric": "coin_blocks_created",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/coin_blocks_destroyed",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/coin_blocks_destroyed",
+      "metric": "coin_blocks_destroyed",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cost_basis_distribution_heatmap",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cost_basis_distribution_heatmap",
+      "metric": "cost_basis_distribution_heatmap",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cost_basis_distribution_quantiles",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cost_basis_distribution_quantiles",
+      "metric": "cost_basis_distribution_quantiles",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cvdd",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cvdd",
+      "metric": "cvdd",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cyd",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cyd",
+      "metric": "cyd",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cyd_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cyd_account_based",
+      "metric": "cyd_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cyd_account_based_supply_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cyd_account_based_supply_adjusted",
+      "metric": "cyd_account_based_supply_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/cyd_supply_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/cyd_supply_adjusted",
+      "metric": "cyd_supply_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/difficulty_ribbon",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/difficulty_ribbon",
+      "metric": "difficulty_ribbon",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/difficulty_ribbon_compression",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/difficulty_ribbon_compression",
+      "metric": "difficulty_ribbon_compression",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/dormancy_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/dormancy_account_based",
+      "metric": "dormancy_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/dormancy_flow",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/dormancy_flow",
+      "metric": "dormancy_flow",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/dormancy_lth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/dormancy_lth_account_based",
+      "metric": "dormancy_lth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/dormancy_sth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/dormancy_sth_account_based",
+      "metric": "dormancy_sth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/fear_greed",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/fear_greed",
+      "metric": "fear_greed",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/hash_ribbon",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/hash_ribbon",
+      "metric": "hash_ribbon",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/hodled_lost_coins",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/hodled_lost_coins",
+      "metric": "hodled_lost_coins",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/hodler_net_position_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/hodler_net_position_change",
+      "metric": "hodler_net_position_change",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/investor_capitalization",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/investor_capitalization",
+      "metric": "investor_capitalization",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/leverage_pos",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/leverage_pos",
+      "metric": "leverage_pos",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/leverage_position_closures",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/leverage_position_closures",
+      "metric": "leverage_position_closures",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/leverage_position_closures_scaled",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/leverage_position_closures_scaled",
+      "metric": "leverage_position_closures_scaled",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/leverage_position_openings",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/leverage_position_openings",
+      "metric": "leverage_position_openings",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/leverage_position_openings_scaled",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/leverage_position_openings_scaled",
+      "metric": "leverage_position_openings_scaled",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/liveliness",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/liveliness",
+      "metric": "liveliness",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/liveliness_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/liveliness_account_based",
+      "metric": "liveliness_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/msol",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/msol",
+      "metric": "msol",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/msol_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/msol_account_based",
+      "metric": "msol_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/mvrv_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/mvrv_account_based",
+      "metric": "mvrv_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/net_realized_profit_loss",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/net_realized_profit_loss",
+      "metric": "net_realized_profit_loss",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/net_unrealized_profit_loss",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/net_unrealized_profit_loss",
+      "metric": "net_unrealized_profit_loss",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/net_unrealized_profit_loss_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/net_unrealized_profit_loss_account_based",
+      "metric": "net_unrealized_profit_loss_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/nupl_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/nupl_less_",
+      "metric": "nupl_less_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/nupl_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/nupl_more_",
+      "metric": "nupl_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/nvt",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/nvt",
+      "metric": "nvt",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/nvt_entity_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/nvt_entity_adjusted",
+      "metric": "nvt_entity_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/nvts",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/nvts",
+      "metric": "nvts",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/pi_cycle_top",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/pi_cycle_top",
+      "metric": "pi_cycle_top",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/power_law",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/power_law",
+      "metric": "power_law",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/puell_multiple",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/puell_multiple",
+      "metric": "puell_multiple",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/rcap_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/rcap_account_based",
+      "metric": "rcap_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss",
+      "metric": "realized_loss",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_account_based",
+      "metric": "realized_loss_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_lth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_lth_account_based",
+      "metric": "realized_loss_lth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_lth_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_lth_to_exchanges_account_based",
+      "metric": "realized_loss_lth_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_sth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_sth_account_based",
+      "metric": "realized_loss_sth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_sth_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_sth_to_exchanges_account_based",
+      "metric": "realized_loss_sth_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_loss_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_loss_to_exchanges_account_based",
+      "metric": "realized_loss_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit",
+      "metric": "realized_profit",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_account_based",
+      "metric": "realized_profit_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_loss_lth_sth_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_loss_lth_sth_relative",
+      "metric": "realized_profit_loss_lth_sth_relative",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_loss_lth_sth_to_exchanges_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_loss_lth_sth_to_exchanges_relative",
+      "metric": "realized_profit_loss_lth_sth_to_exchanges_relative",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_loss_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_loss_ratio",
+      "metric": "realized_profit_loss_ratio",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_lth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_lth_account_based",
+      "metric": "realized_profit_lth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_lth_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_lth_to_exchanges_account_based",
+      "metric": "realized_profit_lth_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_sth_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_sth_account_based",
+      "metric": "realized_profit_sth_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_sth_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_sth_to_exchanges_account_based",
+      "metric": "realized_profit_sth_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profit_to_exchanges_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profit_to_exchanges_account_based",
+      "metric": "realized_profit_to_exchanges_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_profits_to_value_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_profits_to_value_ratio",
+      "metric": "realized_profits_to_value_ratio",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_supply_density",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_supply_density",
+      "metric": "realized_supply_density",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_supply_density_dynamic",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_supply_density_dynamic",
+      "metric": "realized_supply_density_dynamic",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_supply_density_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_supply_density_less_",
+      "metric": "realized_supply_density_less_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/realized_supply_density_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/realized_supply_density_more_",
+      "metric": "realized_supply_density_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/reserve_risk",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/reserve_risk",
+      "metric": "reserve_risk",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/rhodl_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/rhodl_ratio",
+      "metric": "rhodl_ratio",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/seller_exhaustion_constant",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/seller_exhaustion_constant",
+      "metric": "seller_exhaustion_constant",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/so",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/so",
+      "metric": "so",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/soab",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/soab",
+      "metric": "soab",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sol_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sol_",
+      "metric": "sol_",
+      "category": "indicators",
+      "resolutions": [
+        "1h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/indicators/sol_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sol_more_",
+      "metric": "sol_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sopr",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sopr",
+      "metric": "sopr",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sopr_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sopr_account_based",
+      "metric": "sopr_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sopr_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sopr_adjusted",
+      "metric": "sopr_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sopr_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sopr_less_",
+      "metric": "sopr_less_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/sopr_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/sopr_more_",
+      "metric": "sopr_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_output_price_distribution_ath",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_output_price_distribution_ath",
+      "metric": "spent_output_price_distribution_ath",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_output_price_distribution_percent",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_output_price_distribution_percent",
+      "metric": "spent_output_price_distribution_percent",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_outputs_by_date_bands",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_outputs_by_date_bands",
+      "metric": "spent_outputs_by_date_bands",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_outputs_by_date_bands_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_outputs_by_date_bands_relative",
+      "metric": "spent_outputs_by_date_bands_relative",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_supply_distribution_quantiles",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_supply_distribution_quantiles",
+      "metric": "spent_supply_distribution_quantiles",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_volume_by_date_bands",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_volume_by_date_bands",
+      "metric": "spent_volume_by_date_bands",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/spent_volume_by_date_bands_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/spent_volume_by_date_bands_relative",
+      "metric": "spent_volume_by_date_bands_relative",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/ssr",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/ssr",
+      "metric": "ssr",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/ssr_oscillator",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/ssr_oscillator",
+      "metric": "ssr_oscillator",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/stock_to_flow_deflection",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/stock_to_flow_deflection",
+      "metric": "stock_to_flow_deflection",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/stock_to_flow_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/stock_to_flow_ratio",
+      "metric": "stock_to_flow_ratio",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/svab",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svab",
+      "metric": "svab",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/svab_entity_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svab_entity_adjusted",
+      "metric": "svab_entity_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/svl_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svl_",
+      "metric": "svl_",
+      "category": "indicators",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/indicators/svl_entity_adjusted_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svl_entity_adjusted_",
+      "metric": "svl_entity_adjusted_",
+      "category": "indicators",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/indicators/svl_entity_adjusted_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svl_entity_adjusted_more_",
+      "metric": "svl_entity_adjusted_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/svl_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/svl_more_",
+      "metric": "svl_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_loss",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_loss",
+      "metric": "unrealized_loss",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_loss_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_loss_account_based",
+      "metric": "unrealized_loss_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_loss_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_loss_less_",
+      "metric": "unrealized_loss_less_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_loss_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_loss_more_",
+      "metric": "unrealized_loss_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_profit",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_profit",
+      "metric": "unrealized_profit",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_profit_account_based",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_profit_account_based",
+      "metric": "unrealized_profit_account_based",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_profit_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_profit_less_",
+      "metric": "unrealized_profit_less_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/unrealized_profit_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/unrealized_profit_more_",
+      "metric": "unrealized_profit_more_",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/urpd_entity_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/urpd_entity_adjusted",
+      "metric": "urpd_entity_adjusted",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/utxo_realized_price_distribution_ath",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/utxo_realized_price_distribution_ath",
+      "metric": "utxo_realized_price_distribution_ath",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/utxo_realized_price_distribution_percent",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/utxo_realized_price_distribution_percent",
+      "metric": "utxo_realized_price_distribution_percent",
+      "category": "indicators"
+    },
+    {
+      "path": "/v1/metrics/indicators/velocity",
+      "full_url": "https://api.glassnode.com/v1/metrics/indicators/velocity",
+      "metric": "velocity",
+      "category": "indicators"
+    }
+  ],
+  "institutions": [
+    {
+      "path": "/v1/metrics/institutions/purpose_etf_aum_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/purpose_etf_aum_sum",
+      "metric": "purpose_etf_aum_sum",
+      "category": "institutions"
+    },
+    {
+      "path": "/v1/metrics/institutions/purpose_etf_flows_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/purpose_etf_flows_sum",
+      "metric": "purpose_etf_flows_sum",
+      "category": "institutions"
+    },
+    {
+      "path": "/v1/metrics/institutions/purpose_etf_holdings_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/purpose_etf_holdings_sum",
+      "metric": "purpose_etf_holdings_sum",
+      "category": "institutions"
+    },
+    {
+      "path": "/v1/metrics/institutions/us_spot_etf_balances_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/us_spot_etf_balances_all",
+      "metric": "us_spot_etf_balances_all",
+      "category": "institutions"
+    },
+    {
+      "path": "/v1/metrics/institutions/us_spot_etf_balances_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/us_spot_etf_balances_latest",
+      "metric": "us_spot_etf_balances_latest",
+      "category": "institutions",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/institutions/us_spot_etf_flows_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/us_spot_etf_flows_all",
+      "metric": "us_spot_etf_flows_all",
+      "category": "institutions"
+    },
+    {
+      "path": "/v1/metrics/institutions/us_spot_etf_flows_net",
+      "full_url": "https://api.glassnode.com/v1/metrics/institutions/us_spot_etf_flows_net",
+      "metric": "us_spot_etf_flows_net",
+      "category": "institutions"
+    }
+  ],
+  "lightning": [
+    {
+      "path": "/v1/metrics/lightning/base_fee_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/base_fee_median",
+      "metric": "base_fee_median",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/channel_size_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/channel_size_mean",
+      "metric": "channel_size_mean",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/channel_size_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/channel_size_median",
+      "metric": "channel_size_median",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/channels_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/channels_count",
+      "metric": "channels_count",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/fee_rate_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/fee_rate_median",
+      "metric": "fee_rate_median",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/gini_capacity_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/gini_capacity_distribution",
+      "metric": "gini_capacity_distribution",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/gini_channel_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/gini_channel_distribution",
+      "metric": "gini_channel_distribution",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/network_capacity_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/network_capacity_sum",
+      "metric": "network_capacity_sum",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/node_connectivity",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/node_connectivity",
+      "metric": "node_connectivity",
+      "category": "lightning"
+    },
+    {
+      "path": "/v1/metrics/lightning/nodes_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/lightning/nodes_count",
+      "metric": "nodes_count",
+      "category": "lightning"
+    }
+  ],
+  "market": [
+    {
+      "path": "/v1/metrics/market/amer_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/amer_",
+      "metric": "amer_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/apac_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/apac_",
+      "metric": "apac_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/btc_dominance",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/btc_dominance",
+      "metric": "btc_dominance",
+      "category": "market",
+      "assets": [
+        "BTC"
+      ]
+    },
+    {
+      "path": "/v1/metrics/market/deltacap_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/deltacap_usd",
+      "metric": "deltacap_usd",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/emea_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/emea_",
+      "metric": "emea_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/hodl_cave",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/hodl_cave",
+      "metric": "hodl_cave",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/marketcap_realized_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/marketcap_realized_usd",
+      "metric": "marketcap_realized_usd",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/marketcap_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/marketcap_usd",
+      "metric": "marketcap_usd",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/mvrv",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/mvrv",
+      "metric": "mvrv",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/mvrv_less_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/mvrv_less_",
+      "metric": "mvrv_less_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/mvrv_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/mvrv_median",
+      "metric": "mvrv_median",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/mvrv_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/mvrv_more_",
+      "metric": "mvrv_more_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/mvrv_z_score",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/mvrv_z_score",
+      "metric": "mvrv_z_score",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/price_drawdown_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/price_drawdown_relative",
+      "metric": "price_drawdown_relative",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/price_realized_median_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/price_realized_median_usd",
+      "metric": "price_realized_median_usd",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/price_realized_usd",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/price_realized_usd",
+      "metric": "price_realized_usd",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/price_usd_close",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/price_usd_close",
+      "metric": "price_usd_close",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/price_usd_ohlc",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/price_usd_ohlc",
+      "metric": "price_usd_ohlc",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/r",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/r",
+      "metric": "r",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/realized_volatility_",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/realized_volatility_",
+      "metric": "realized_volatility_",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/realized_volatility_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/realized_volatility_all",
+      "metric": "realized_volatility_all",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/spot_buying_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_buying_volume_sum",
+      "metric": "spot_buying_volume_sum",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/spot_selling_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_selling_volume_sum",
+      "metric": "spot_selling_volume_sum",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/spot_vd_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_vd_sum",
+      "metric": "spot_vd_sum",
+      "category": "market"
+    },
+    {
+      "path": "/v1/metrics/market/spot_volume_daily_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_volume_daily_latest",
+      "metric": "spot_volume_daily_latest",
+      "category": "market",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/market/spot_volume_daily_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_volume_daily_sum",
+      "metric": "spot_volume_daily_sum",
+      "category": "market",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/market/spot_volume_daily_sum_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_volume_daily_sum_all",
+      "metric": "spot_volume_daily_sum_all",
+      "category": "market",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/market/spot_volume_sum_intraday",
+      "full_url": "https://api.glassnode.com/v1/metrics/market/spot_volume_sum_intraday",
+      "metric": "spot_volume_sum_intraday",
+      "category": "market"
+    }
+  ],
+  "mempool": [
+    {
+      "path": "/v1/metrics/mempool/fees_average_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/fees_average_relative",
+      "metric": "fees_average_relative",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/fees_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/fees_distribution",
+      "metric": "fees_distribution",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/fees_median_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/fees_median_relative",
+      "metric": "fees_median_relative",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/fees_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/fees_sum",
+      "metric": "fees_sum",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_count_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_count_distribution",
+      "metric": "txs_count_distribution",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_count_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_count_sum",
+      "metric": "txs_count_sum",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_size_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_size_distribution",
+      "metric": "txs_size_distribution",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_size_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_size_sum",
+      "metric": "txs_size_sum",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_value_distribution",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_value_distribution",
+      "metric": "txs_value_distribution",
+      "category": "mempool"
+    },
+    {
+      "path": "/v1/metrics/mempool/txs_value_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mempool/txs_value_sum",
+      "metric": "txs_value_sum",
+      "category": "mempool"
+    }
+  ],
+  "mining": [
+    {
+      "path": "/v1/metrics/mining/difficulty_latest",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/difficulty_latest",
+      "metric": "difficulty_latest",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/hash_rate_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/hash_rate_mean",
+      "metric": "hash_rate_mean",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/marketcap_thermocap_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/marketcap_thermocap_ratio",
+      "metric": "marketcap_thermocap_ratio",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/miners_outflow_multiple",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/miners_outflow_multiple",
+      "metric": "miners_outflow_multiple",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/miners_outflow_multiple/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/miners_outflow_multiple/miners",
+      "metric": "miners",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/miners_unspent_supply",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/miners_unspent_supply",
+      "metric": "miners_unspent_supply",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/revenue_from_fees",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/revenue_from_fees",
+      "metric": "revenue_from_fees",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/revenue_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/revenue_sum",
+      "metric": "revenue_sum",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/revenue_sum/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/revenue_sum/miners",
+      "metric": "miners",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/thermocap",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/thermocap",
+      "metric": "thermocap",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/volume_mined_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/volume_mined_sum",
+      "metric": "volume_mined_sum",
+      "category": "mining"
+    },
+    {
+      "path": "/v1/metrics/mining/volume_mined_sum/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/mining/volume_mined_sum/miners",
+      "metric": "miners",
+      "category": "mining"
+    }
+  ],
+  "options": [
+    {
+      "path": "/v1/metrics/options/options_net_premium_breakdown_by_strike_price",
+      "full_url": "https://api.glassnode.com/v1/metrics/options/options_net_premium_breakdown_by_strike_price",
+      "metric": "options_net_premium_breakdown_by_strike_price",
+      "category": "options"
+    },
+    {
+      "path": "/v1/metrics/options/options_premiums",
+      "full_url": "https://api.glassnode.com/v1/metrics/options/options_premiums",
+      "metric": "options_premiums",
+      "category": "options"
+    }
+  ],
+  "protocols": [
+    {
+      "path": "/v1/metrics/p",
+      "full_url": "https://api.glassnode.com/v1/metrics/p",
+      "metric": null,
+      "category": "p"
+    },
+    {
+      "path": "/v1/metrics/protocols",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols",
+      "metric": null,
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/aave_v",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/aave_v",
+      "metric": "aave_v",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_",
+      "metric": "compound_",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_count_by_action",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_count_by_action",
+      "metric": "compound_count_by_action",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_deposit_flow",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_deposit_flow",
+      "metric": "compound_deposit_flow",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_loan_flow",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_loan_flow",
+      "metric": "compound_loan_flow",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_total_value_locked",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_total_value_locked",
+      "metric": "compound_total_value_locked",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_utilization_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_utilization_ratio",
+      "metric": "compound_utilization_ratio",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/compound_volume_by_action",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/compound_volume_by_action",
+      "metric": "compound_volume_by_action",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/lido_deposits_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/lido_deposits_volume_sum",
+      "metric": "lido_deposits_volume_sum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/lido_total_value_locked",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/lido_total_value_locked",
+      "metric": "lido_total_value_locked",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/lido_volume_net",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/lido_volume_net",
+      "metric": "lido_volume_net",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/lido_withdrawn_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/lido_withdrawn_volume_sum",
+      "metric": "lido_withdrawn_volume_sum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_event_count_by_type",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_event_count_by_type",
+      "metric": "maker_event_count_by_type",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_event_volume_usd_by_type",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_event_volume_usd_by_type",
+      "metric": "maker_event_volume_usd_by_type",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_new_vaults_created_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_new_vaults_created_count",
+      "metric": "maker_new_vaults_created_count",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_psm_balance_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_psm_balance_sum",
+      "metric": "maker_psm_balance_sum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_total_value_locked_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_total_value_locked_sum",
+      "metric": "maker_total_value_locked_sum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_total_value_locked_sum_by_token",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_total_value_locked_sum_by_token",
+      "metric": "maker_total_value_locked_sum_by_token",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/maker_total_vaults_created_cum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/maker_total_vaults_created_cum",
+      "metric": "maker_total_vaults_created_cum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_fees_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_fees_sum",
+      "metric": "uniswap_fees_sum",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_pools_created_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_pools_created_count",
+      "metric": "uniswap_pools_created_count",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_total_value_locked",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_total_value_locked",
+      "metric": "uniswap_total_value_locked",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_total_value_locked_by_fee_tier",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_total_value_locked_by_fee_tier",
+      "metric": "uniswap_total_value_locked_by_fee_tier",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_trades_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_trades_count",
+      "metric": "uniswap_trades_count",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_v",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_v",
+      "metric": "uniswap_v",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_volume_by_size_cohort",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_volume_by_size_cohort",
+      "metric": "uniswap_volume_by_size_cohort",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_volume_by_token_type",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_volume_by_token_type",
+      "metric": "uniswap_volume_by_token_type",
+      "category": "protocols"
+    },
+    {
+      "path": "/v1/metrics/protocols/uniswap_volume_traded_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/protocols/uniswap_volume_traded_sum",
+      "metric": "uniswap_volume_traded_sum",
+      "category": "protocols"
+    }
+  ],
+  "signals": [
+    {
+      "path": "/v1/metrics/signals/altcoin_index",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/altcoin_index",
+      "metric": "altcoin_index",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_bss_goldilocks",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_bss_goldilocks",
+      "metric": "btc_bss_goldilocks",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_bss_goldilocks_short",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_bss_goldilocks_short",
+      "metric": "btc_bss_goldilocks_short",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_bss_indicator_",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_bss_indicator_",
+      "metric": "btc_bss_indicator_",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_bss_short",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_bss_short",
+      "metric": "btc_bss_short",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_bss_v",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_bss_v",
+      "metric": "btc_bss_v",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_risk_index",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_risk_index",
+      "metric": "btc_risk_index",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/btc_sharpe_signal",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/btc_sharpe_signal",
+      "metric": "btc_sharpe_signal",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/ecosystem_momentum_index",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/ecosystem_momentum_index",
+      "metric": "ecosystem_momentum_index",
+      "category": "signals"
+    },
+    {
+      "path": "/v1/metrics/signals/l",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/l",
+      "metric": "l",
+      "category": "signals",
+      "assets": [
+        "BTC"
+      ]
+    },
+    {
+      "path": "/v1/metrics/signals/mcap_returns_vs_btc",
+      "full_url": "https://api.glassnode.com/v1/metrics/signals/mcap_returns_vs_btc",
+      "metric": "mcap_returns_vs_btc",
+      "category": "signals",
+      "assets": [
+        "BTC"
+      ]
+    }
+  ],
+  "supply": [
+    {
+      "path": "/v1/metrics/s",
+      "full_url": "https://api.glassnode.com/v1/metrics/s",
+      "metric": null,
+      "category": "s"
+    },
+    {
+      "path": "/v1/metrics/supply/a",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/a",
+      "metric": "a",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/active_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/active_",
+      "metric": "active_",
+      "category": "supply",
+      "resolutions": [
+        "24h"
+      ]
+    },
+    {
+      "path": "/v1/metrics/supply/active_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/active_more_",
+      "metric": "active_more_",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/activity_retention",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/activity_retention",
+      "metric": "activity_retention",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/amer_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/amer_",
+      "metric": "amer_",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/apac_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/apac_",
+      "metric": "apac_",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/burn_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/burn_rate",
+      "metric": "burn_rate",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/burned",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/burned",
+      "metric": "burned",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/current",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/current",
+      "metric": "current",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/current_adjusted",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/current_adjusted",
+      "metric": "current_adjusted",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/emea_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/emea_",
+      "metric": "emea_",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/high",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/high",
+      "metric": "high",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/highly_liquid_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/highly_liquid_sum",
+      "metric": "highly_liquid_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/hodl_waves",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/hodl_waves",
+      "metric": "hodl_waves",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/holder_retention",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/holder_retention",
+      "metric": "holder_retention",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/illiquid_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/illiquid_change",
+      "metric": "illiquid_change",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/illiquid_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/illiquid_sum",
+      "metric": "illiquid_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/inflation_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/inflation_rate",
+      "metric": "inflation_rate",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/issued",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/issued",
+      "metric": "issued",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/liquid_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/liquid_change",
+      "metric": "liquid_change",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/liquid_illiquid_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/liquid_illiquid_sum",
+      "metric": "liquid_illiquid_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/liquid_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/liquid_sum",
+      "metric": "liquid_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/loss_sum",
+      "metric": "loss_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/lth_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/lth_loss_sum",
+      "metric": "lth_loss_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/lth_net_change",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/lth_net_change",
+      "metric": "lth_net_change",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/lth_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/lth_profit_sum",
+      "metric": "lth_profit_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/lth_sth_profit_loss_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/lth_sth_profit_loss_relative",
+      "metric": "lth_sth_profit_loss_relative",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/lth_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/lth_sum",
+      "metric": "lth_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/minted",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/minted",
+      "metric": "minted",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/probably_lost",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/probably_lost",
+      "metric": "probably_lost",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/profit_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/profit_relative",
+      "metric": "profit_relative",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/profit_sum",
+      "metric": "profit_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/provably_lost",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/provably_lost",
+      "metric": "provably_lost",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/rcap_by_date_bands",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/rcap_by_date_bands",
+      "metric": "rcap_by_date_bands",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/rcap_by_date_bands_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/rcap_by_date_bands_relative",
+      "metric": "rcap_by_date_bands_relative",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/rcap_hodl_waves",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/rcap_hodl_waves",
+      "metric": "rcap_hodl_waves",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/revived_more_",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/revived_more_",
+      "metric": "revived_more_",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/sth_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/sth_loss_sum",
+      "metric": "sth_loss_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/sth_lth_realized_value_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/sth_lth_realized_value_ratio",
+      "metric": "sth_lth_realized_value_ratio",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/sth_profit_loss_ratio",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/sth_profit_loss_ratio",
+      "metric": "sth_profit_loss_ratio",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/sth_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/sth_profit_sum",
+      "metric": "sth_profit_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/sth_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/sth_sum",
+      "metric": "sth_sum",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/supply_by_date_bands",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/supply_by_date_bands",
+      "metric": "supply_by_date_bands",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/supply_by_date_bands_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/supply_by_date_bands_relative",
+      "metric": "supply_by_date_bands_relative",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/supply_by_txout_type",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/supply_by_txout_type",
+      "metric": "supply_by_txout_type",
+      "category": "supply"
+    },
+    {
+      "path": "/v1/metrics/supply/tips",
+      "full_url": "https://api.glassnode.com/v1/metrics/supply/tips",
+      "metric": "tips",
+      "category": "supply"
+    }
+  ],
+  "transactions": [
+    {
+      "path": "/v1/metrics/transac",
+      "full_url": "https://api.glassnode.com/v1/metrics/transac",
+      "metric": null,
+      "category": "transac"
+    },
+    {
+      "path": "/v1/metrics/transact",
+      "full_url": "https://api.glassnode.com/v1/metrics/transact",
+      "metric": null,
+      "category": "transact"
+    },
+    {
+      "path": "/v1/metrics/transactions/contract_call",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/contract_call",
+      "metric": "contract_call",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/contract_calls_external_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/contract_calls_external_count",
+      "metric": "contract_calls_external_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/contract_calls_internal_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/contract_calls_internal_count",
+      "metric": "contract_calls_internal_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/count",
+      "metric": "count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/entity_adjusted_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/entity_adjusted_count",
+      "metric": "entity_adjusted_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_count",
+      "metric": "inscriptions_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_count_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_count_share",
+      "metric": "inscriptions_count_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_count_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_count_sum",
+      "metric": "inscriptions_count_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_fee",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_fee",
+      "metric": "inscriptions_fee",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_fee_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_fee_share",
+      "metric": "inscriptions_fee_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_size_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_size_share",
+      "metric": "inscriptions_size_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/inscriptions_size_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/inscriptions_size_sum",
+      "metric": "inscriptions_size_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/rate",
+      "metric": "rate",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/runes_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/runes_count",
+      "metric": "runes_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/runes_count_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/runes_count_share",
+      "metric": "runes_count_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/runes_count_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/runes_count_sum",
+      "metric": "runes_count_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/runes_fee",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/runes_fee",
+      "metric": "runes_fee",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/runes_fee_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/runes_fee_share",
+      "metric": "runes_fee_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/segwit_adoption",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/segwit_adoption",
+      "metric": "segwit_adoption",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/size_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/size_mean",
+      "metric": "size_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/size_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/size_sum",
+      "metric": "size_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/spent_output_types_share",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/spent_output_types_share",
+      "metric": "spent_output_types_share",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/taproot_adoption",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/taproot_adoption",
+      "metric": "taproot_adoption",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_between_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_between_exchanges_count",
+      "metric": "transfers_between_exchanges_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_between_exchanges_count/flows",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_between_exchanges_count/flows",
+      "metric": "flows",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count",
+      "metric": "transfers_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_bridges",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_bridges",
+      "metric": "transfers_count_bridges",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_bridges_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_bridges_relative",
+      "metric": "transfers_count_bridges_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_defi",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_defi",
+      "metric": "transfers_count_defi",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_defi_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_defi_relative",
+      "metric": "transfers_count_defi_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_erc",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_erc",
+      "metric": "transfers_count_erc",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_nfts",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_nfts",
+      "metric": "transfers_count_nfts",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_nfts_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_nfts_relative",
+      "metric": "transfers_count_nfts_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_stablecoins",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_stablecoins",
+      "metric": "transfers_count_stablecoins",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_stablecoins_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_stablecoins_relative",
+      "metric": "transfers_count_stablecoins_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_vanilla",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_vanilla",
+      "metric": "transfers_count_vanilla",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_count_vanilla_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_count_vanilla_relative",
+      "metric": "transfers_count_vanilla_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_exchanges_to_whales_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_exchanges_to_whales_count",
+      "metric": "transfers_exchanges_to_whales_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_from_coinjoins_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_from_coinjoins_count",
+      "metric": "transfers_from_coinjoins_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_from_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_from_exchanges_count",
+      "metric": "transfers_from_exchanges_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_from_miners_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_from_miners_count",
+      "metric": "transfers_from_miners_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_from_miners_count/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_from_miners_count/miners",
+      "metric": "miners",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_from_otc_desks_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_from_otc_desks_count",
+      "metric": "transfers_from_otc_desks_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_rate",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_rate",
+      "metric": "transfers_rate",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_to_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_to_exchanges_count",
+      "metric": "transfers_to_exchanges_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_to_miners_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_to_miners_count",
+      "metric": "transfers_to_miners_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_to_miners_count/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_to_miners_count/miners",
+      "metric": "miners",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_to_otc_desks_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_to_otc_desks_count",
+      "metric": "transfers_to_otc_desks_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_adjusted_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_adjusted_mean",
+      "metric": "transfers_volume_adjusted_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_adjusted_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_adjusted_median",
+      "metric": "transfers_volume_adjusted_median",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_adjusted_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_adjusted_sum",
+      "metric": "transfers_volume_adjusted_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_between_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_between_exchanges_sum",
+      "metric": "transfers_volume_between_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_between_exchanges_sum/flows",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_between_exchanges_sum/flows",
+      "metric": "flows",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_relative",
+      "metric": "transfers_volume_by_size_entity_adjusted_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_sum",
+      "metric": "transfers_volume_by_size_entity_adjusted_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_loss_sum",
+      "metric": "transfers_volume_entity_adjusted_from_lth_loss_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_profit_sum",
+      "metric": "transfers_volume_entity_adjusted_from_lth_profit_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sth_profit_loss_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sth_profit_loss_relative",
+      "metric": "transfers_volume_entity_adjusted_from_lth_sth_profit_loss_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sum",
+      "metric": "transfers_volume_entity_adjusted_from_lth_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_loss_sum",
+      "metric": "transfers_volume_entity_adjusted_from_sth_loss_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_profit_sum",
+      "metric": "transfers_volume_entity_adjusted_from_sth_profit_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_sum",
+      "metric": "transfers_volume_entity_adjusted_from_sth_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_mean",
+      "metric": "transfers_volume_entity_adjusted_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_median",
+      "metric": "transfers_volume_entity_adjusted_median",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_entity_adjusted_sum",
+      "metric": "transfers_volume_entity_adjusted_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_exchanges_net",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_exchanges_net",
+      "metric": "transfers_volume_exchanges_net",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_exchanges_net_by_size",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_exchanges_net_by_size",
+      "metric": "transfers_volume_exchanges_net_by_size",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_exchanges_to_whales_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_exchanges_to_whales_sum",
+      "metric": "transfers_volume_exchanges_to_whales_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_coinjoins_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_coinjoins_sum",
+      "metric": "transfers_volume_from_coinjoins_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_exchanges_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_exchanges_mean",
+      "metric": "transfers_volume_from_exchanges_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_exchanges_sum",
+      "metric": "transfers_volume_from_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_miners_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_miners_sum",
+      "metric": "transfers_volume_from_miners_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_miners_sum/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_miners_sum/miners",
+      "metric": "miners",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_from_otc_desks_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_from_otc_desks_sum",
+      "metric": "transfers_volume_from_otc_desks_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_loss_sum",
+      "metric": "transfers_volume_loss_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_lth_sth_to_exchanges_profit_loss_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_lth_sth_to_exchanges_profit_loss_relative",
+      "metric": "transfers_volume_lth_sth_to_exchanges_profit_loss_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_lth_to_exchanges_loss_sum",
+      "metric": "transfers_volume_lth_to_exchanges_loss_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_lth_to_exchanges_profit_sum",
+      "metric": "transfers_volume_lth_to_exchanges_profit_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_lth_to_exchanges_sum",
+      "metric": "transfers_volume_lth_to_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_mean",
+      "metric": "transfers_volume_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_median",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_median",
+      "metric": "transfers_volume_median",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_miners_net",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_miners_net",
+      "metric": "transfers_volume_miners_net",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_miners_net/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_miners_net/miners",
+      "metric": "miners",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_miners_to_exchanges",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_miners_to_exchanges",
+      "metric": "transfers_volume_miners_to_exchanges",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_miners_to_exchanges_all",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_miners_to_exchanges_all",
+      "metric": "transfers_volume_miners_to_exchanges_all",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_profit_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_profit_relative",
+      "metric": "transfers_volume_profit_relative",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_profit_sum",
+      "metric": "transfers_volume_profit_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_loss_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_sth_to_exchanges_loss_sum",
+      "metric": "transfers_volume_sth_to_exchanges_loss_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_profit_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_sth_to_exchanges_profit_sum",
+      "metric": "transfers_volume_sth_to_exchanges_profit_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_sth_to_exchanges_sum",
+      "metric": "transfers_volume_sth_to_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_sum",
+      "metric": "transfers_volume_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_to_exchanges_mean",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_to_exchanges_mean",
+      "metric": "transfers_volume_to_exchanges_mean",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_to_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_to_exchanges_sum",
+      "metric": "transfers_volume_to_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_to_miners_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_to_miners_sum",
+      "metric": "transfers_volume_to_miners_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_to_miners_sum/miners",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_to_miners_sum/miners",
+      "metric": "miners",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_to_otc_desks_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_to_otc_desks_sum",
+      "metric": "transfers_volume_to_otc_desks_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_whales_to_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_whales_to_exchanges_sum",
+      "metric": "transfers_volume_whales_to_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_volume_within_exchanges_sum",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_volume_within_exchanges_sum",
+      "metric": "transfers_volume_within_exchanges_sum",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/transfers_whales_to_exchanges_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/transfers_whales_to_exchanges_count",
+      "metric": "transfers_whales_to_exchanges_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/tx_types_breakdown_count",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/tx_types_breakdown_count",
+      "metric": "tx_types_breakdown_count",
+      "category": "transactions"
+    },
+    {
+      "path": "/v1/metrics/transactions/tx_types_breakdown_relative",
+      "full_url": "https://api.glassnode.com/v1/metrics/transactions/tx_types_breakdown_relative",
+      "metric": "tx_types_breakdown_relative",
+      "category": "transactions"
+    }
+  ]
+}

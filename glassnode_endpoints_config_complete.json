@@ -1,0 +1,3038 @@
+{
+  "addresses": {
+    "name": "Addresses",
+    "endpoints": [
+      {
+        "metric": "accumulation_balance",
+        "path": "/v1/metrics/addresses/accumulation_balance"
+      },
+      {
+        "metric": "accumulation_count",
+        "path": "/v1/metrics/addresses/accumulation_count"
+      },
+      {
+        "metric": "active_count",
+        "path": "/v1/metrics/addresses/active_count"
+      },
+      {
+        "metric": "active_count_with_contracts",
+        "path": "/v1/metrics/addresses/active_count_with_contracts"
+      },
+      {
+        "metric": "activity_retention",
+        "path": "/v1/metrics/addresses/activity_retention"
+      },
+      {
+        "metric": "activity_retention_rate",
+        "path": "/v1/metrics/addresses/activity_retention_rate"
+      },
+      {
+        "metric": "count",
+        "path": "/v1/metrics/addresses/count"
+      },
+      {
+        "metric": "holder_accumulation_ratio",
+        "path": "/v1/metrics/addresses/holder_accumulation_ratio"
+      },
+      {
+        "metric": "holder_retention",
+        "path": "/v1/metrics/addresses/holder_retention"
+      },
+      {
+        "metric": "holder_retention_rate",
+        "path": "/v1/metrics/addresses/holder_retention_rate"
+      },
+      {
+        "metric": "loss_count",
+        "path": "/v1/metrics/addresses/loss_count"
+      },
+      {
+        "metric": "min_100_count",
+        "path": "/v1/metrics/addresses/min_100_count"
+      },
+      {
+        "metric": "min_100_usd_count",
+        "path": "/v1/metrics/addresses/min_100_usd_count"
+      },
+      {
+        "metric": "min_100k_usd_count",
+        "path": "/v1/metrics/addresses/min_100k_usd_count"
+      },
+      {
+        "metric": "min_10_count",
+        "path": "/v1/metrics/addresses/min_10_count"
+      },
+      {
+        "metric": "min_10_usd_count",
+        "path": "/v1/metrics/addresses/min_10_usd_count"
+      },
+      {
+        "metric": "min_10k_count",
+        "path": "/v1/metrics/addresses/min_10k_count"
+      },
+      {
+        "metric": "min_10k_usd_count",
+        "path": "/v1/metrics/addresses/min_10k_usd_count"
+      },
+      {
+        "metric": "min_1_count",
+        "path": "/v1/metrics/addresses/min_1_count"
+      },
+      {
+        "metric": "min_1_usd_count",
+        "path": "/v1/metrics/addresses/min_1_usd_count"
+      },
+      {
+        "metric": "min_1k_count",
+        "path": "/v1/metrics/addresses/min_1k_count"
+      },
+      {
+        "metric": "min_1k_usd_count",
+        "path": "/v1/metrics/addresses/min_1k_usd_count"
+      },
+      {
+        "metric": "min_1m_usd_count",
+        "path": "/v1/metrics/addresses/min_1m_usd_count"
+      },
+      {
+        "metric": "min_32_count",
+        "path": "/v1/metrics/addresses/min_32_count"
+      },
+      {
+        "metric": "min_point_1_count",
+        "path": "/v1/metrics/addresses/min_point_1_count"
+      },
+      {
+        "metric": "min_point_zero_1_count",
+        "path": "/v1/metrics/addresses/min_point_zero_1_count"
+      },
+      {
+        "metric": "new_non_zero_count",
+        "path": "/v1/metrics/addresses/new_non_zero_count"
+      },
+      {
+        "metric": "non_zero_count",
+        "path": "/v1/metrics/addresses/non_zero_count"
+      },
+      {
+        "metric": "profit_count",
+        "path": "/v1/metrics/addresses/profit_count"
+      },
+      {
+        "metric": "profit_relative",
+        "path": "/v1/metrics/addresses/profit_relative"
+      },
+      {
+        "metric": "receiving_count",
+        "path": "/v1/metrics/addresses/receiving_count"
+      },
+      {
+        "metric": "receiving_from_exchanges_count",
+        "path": "/v1/metrics/addresses/receiving_from_exchanges_count"
+      },
+      {
+        "metric": "sending_count",
+        "path": "/v1/metrics/addresses/sending_count"
+      },
+      {
+        "metric": "sending_to_exchanges_count",
+        "path": "/v1/metrics/addresses/sending_to_exchanges_count"
+      },
+      {
+        "metric": "supply_balance_0001_001",
+        "path": "/v1/metrics/addresses/supply_balance_0001_001"
+      },
+      {
+        "metric": "supply_balance_001_01",
+        "path": "/v1/metrics/addresses/supply_balance_001_01"
+      },
+      {
+        "metric": "supply_balance_01_1",
+        "path": "/v1/metrics/addresses/supply_balance_01_1"
+      },
+      {
+        "metric": "supply_balance_01_10_ppm",
+        "path": "/v1/metrics/addresses/supply_balance_01_10_ppm"
+      },
+      {
+        "metric": "supply_balance_1000_10000_ppm",
+        "path": "/v1/metrics/addresses/supply_balance_1000_10000_ppm"
+      },
+      {
+        "metric": "supply_balance_100_1k",
+        "path": "/v1/metrics/addresses/supply_balance_100_1k"
+      },
+      {
+        "metric": "supply_balance_10_100",
+        "path": "/v1/metrics/addresses/supply_balance_10_100"
+      },
+      {
+        "metric": "supply_balance_10_1000_ppm",
+        "path": "/v1/metrics/addresses/supply_balance_10_1000_ppm"
+      },
+      {
+        "metric": "supply_balance_10k_100k",
+        "path": "/v1/metrics/addresses/supply_balance_10k_100k"
+      },
+      {
+        "metric": "supply_balance_1_10",
+        "path": "/v1/metrics/addresses/supply_balance_1_10"
+      },
+      {
+        "metric": "supply_balance_1k_10k",
+        "path": "/v1/metrics/addresses/supply_balance_1k_10k"
+      },
+      {
+        "metric": "supply_balance_above_10000_ppm",
+        "path": "/v1/metrics/addresses/supply_balance_above_10000_ppm"
+      },
+      {
+        "metric": "supply_balance_less_0001",
+        "path": "/v1/metrics/addresses/supply_balance_less_0001"
+      },
+      {
+        "metric": "supply_balance_less_01_ppm",
+        "path": "/v1/metrics/addresses/supply_balance_less_01_ppm"
+      },
+      {
+        "metric": "supply_balance_more_100k",
+        "path": "/v1/metrics/addresses/supply_balance_more_100k"
+      },
+      {
+        "metric": "supply_distribution_relative",
+        "path": "/v1/metrics/addresses/supply_distribution_relative"
+      }
+    ]
+  },
+  "blockchain": {
+    "name": "Blockchain",
+    "endpoints": [
+      {
+        "metric": "block_count",
+        "path": "/v1/metrics/blockchain/block_count"
+      },
+      {
+        "metric": "block_height",
+        "path": "/v1/metrics/blockchain/block_height"
+      },
+      {
+        "metric": "block_interval_mean",
+        "path": "/v1/metrics/blockchain/block_interval_mean"
+      },
+      {
+        "metric": "block_interval_median",
+        "path": "/v1/metrics/blockchain/block_interval_median"
+      },
+      {
+        "metric": "block_size_mean",
+        "path": "/v1/metrics/blockchain/block_size_mean"
+      },
+      {
+        "metric": "block_size_sum",
+        "path": "/v1/metrics/blockchain/block_size_sum"
+      },
+      {
+        "metric": "utxo_count",
+        "path": "/v1/metrics/blockchain/utxo_count"
+      },
+      {
+        "metric": "utxo_created_count",
+        "path": "/v1/metrics/blockchain/utxo_created_count"
+      },
+      {
+        "metric": "utxo_created_value_mean",
+        "path": "/v1/metrics/blockchain/utxo_created_value_mean"
+      },
+      {
+        "metric": "utxo_created_value_median",
+        "path": "/v1/metrics/blockchain/utxo_created_value_median"
+      },
+      {
+        "metric": "utxo_created_value_sum",
+        "path": "/v1/metrics/blockchain/utxo_created_value_sum"
+      },
+      {
+        "metric": "utxo_loss_count",
+        "path": "/v1/metrics/blockchain/utxo_loss_count"
+      },
+      {
+        "metric": "utxo_profit_count",
+        "path": "/v1/metrics/blockchain/utxo_profit_count"
+      },
+      {
+        "metric": "utxo_profit_relative",
+        "path": "/v1/metrics/blockchain/utxo_profit_relative"
+      },
+      {
+        "metric": "utxo_spent_count",
+        "path": "/v1/metrics/blockchain/utxo_spent_count"
+      },
+      {
+        "metric": "utxo_spent_value_mean",
+        "path": "/v1/metrics/blockchain/utxo_spent_value_mean"
+      },
+      {
+        "metric": "utxo_spent_value_median",
+        "path": "/v1/metrics/blockchain/utxo_spent_value_median"
+      },
+      {
+        "metric": "utxo_spent_value_sum",
+        "path": "/v1/metrics/blockchain/utxo_spent_value_sum"
+      }
+    ]
+  },
+  "breakdowns": {
+    "name": "Breakdowns",
+    "endpoints": [
+      {
+        "metric": "marketcap_realized_usd_by_age",
+        "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_age"
+      },
+      {
+        "metric": "marketcap_realized_usd_by_pnl",
+        "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_pnl"
+      },
+      {
+        "metric": "marketcap_realized_usd_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/marketcap_realized_usd_by_wallet_size"
+      },
+      {
+        "metric": "marketcap_usd_by_age",
+        "path": "/v1/metrics/breakdowns/marketcap_usd_by_age"
+      },
+      {
+        "metric": "marketcap_usd_by_pnl",
+        "path": "/v1/metrics/breakdowns/marketcap_usd_by_pnl"
+      },
+      {
+        "metric": "marketcap_usd_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/marketcap_usd_by_wallet_size"
+      },
+      {
+        "metric": "mvrv_by_age",
+        "path": "/v1/metrics/breakdowns/mvrv_by_age"
+      },
+      {
+        "metric": "mvrv_by_pnl",
+        "path": "/v1/metrics/breakdowns/mvrv_by_pnl"
+      },
+      {
+        "metric": "mvrv_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/mvrv_by_wallet_size"
+      },
+      {
+        "metric": "price_realized_usd_by_age",
+        "path": "/v1/metrics/breakdowns/price_realized_usd_by_age"
+      },
+      {
+        "metric": "price_realized_usd_by_pnl",
+        "path": "/v1/metrics/breakdowns/price_realized_usd_by_pnl"
+      },
+      {
+        "metric": "price_realized_usd_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/price_realized_usd_by_wallet_size"
+      },
+      {
+        "metric": "realized_loss_by_age",
+        "path": "/v1/metrics/breakdowns/realized_loss_by_age"
+      },
+      {
+        "metric": "realized_loss_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/realized_loss_by_lth_sth"
+      },
+      {
+        "metric": "realized_loss_by_pnl",
+        "path": "/v1/metrics/breakdowns/realized_loss_by_pnl"
+      },
+      {
+        "metric": "realized_loss_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/realized_loss_by_wallet_size"
+      },
+      {
+        "metric": "realized_profit_by_age",
+        "path": "/v1/metrics/breakdowns/realized_profit_by_age"
+      },
+      {
+        "metric": "realized_profit_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/realized_profit_by_lth_sth"
+      },
+      {
+        "metric": "realized_profit_by_pnl",
+        "path": "/v1/metrics/breakdowns/realized_profit_by_pnl"
+      },
+      {
+        "metric": "realized_profit_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/realized_profit_by_wallet_size"
+      },
+      {
+        "metric": "sopr_by_age",
+        "path": "/v1/metrics/breakdowns/sopr_by_age"
+      },
+      {
+        "metric": "sopr_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/sopr_by_lth_sth"
+      },
+      {
+        "metric": "sopr_by_pnl",
+        "path": "/v1/metrics/breakdowns/sopr_by_pnl"
+      },
+      {
+        "metric": "sopr_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/sopr_by_wallet_size"
+      },
+      {
+        "metric": "spent_volume_loss_sum_by_age",
+        "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_age"
+      },
+      {
+        "metric": "spent_volume_loss_sum_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_lth_sth"
+      },
+      {
+        "metric": "spent_volume_loss_sum_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/spent_volume_loss_sum_by_wallet_size"
+      },
+      {
+        "metric": "spent_volume_profit_sum_by_age",
+        "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_age"
+      },
+      {
+        "metric": "spent_volume_profit_sum_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_lth_sth"
+      },
+      {
+        "metric": "spent_volume_profit_sum_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/spent_volume_profit_sum_by_wallet_size"
+      },
+      {
+        "metric": "spent_volume_sum_by_age",
+        "path": "/v1/metrics/breakdowns/spent_volume_sum_by_age"
+      },
+      {
+        "metric": "spent_volume_sum_by_lth_sth",
+        "path": "/v1/metrics/breakdowns/spent_volume_sum_by_lth_sth"
+      },
+      {
+        "metric": "spent_volume_sum_by_pnl",
+        "path": "/v1/metrics/breakdowns/spent_volume_sum_by_pnl"
+      },
+      {
+        "metric": "spent_volume_sum_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/spent_volume_sum_by_wallet_size"
+      },
+      {
+        "metric": "supply_by_age",
+        "path": "/v1/metrics/breakdowns/supply_by_age"
+      },
+      {
+        "metric": "supply_by_investor_behavior",
+        "path": "/v1/metrics/breakdowns/supply_by_investor_behavior"
+      },
+      {
+        "metric": "supply_by_pnl",
+        "path": "/v1/metrics/breakdowns/supply_by_pnl"
+      },
+      {
+        "metric": "supply_by_pnl_relative",
+        "path": "/v1/metrics/breakdowns/supply_by_pnl_relative"
+      },
+      {
+        "metric": "supply_by_wallet_size",
+        "path": "/v1/metrics/breakdowns/supply_by_wallet_size"
+      }
+    ]
+  },
+  "bridges": {
+    "name": "Bridges",
+    "endpoints": [
+      {
+        "metric": "deposits_by_chain",
+        "path": "/v1/metrics/bridges/deposits_by_chain"
+      },
+      {
+        "metric": "net_volume_by_chain",
+        "path": "/v1/metrics/bridges/net_volume_by_chain"
+      },
+      {
+        "metric": "total_value_locked_by_chain",
+        "path": "/v1/metrics/bridges/total_value_locked_by_chain"
+      },
+      {
+        "metric": "total_value_locked_by_chain_relative",
+        "path": "/v1/metrics/bridges/total_value_locked_by_chain_relative"
+      },
+      {
+        "metric": "withdrawals_by_chain",
+        "path": "/v1/metrics/bridges/withdrawals_by_chain"
+      }
+    ]
+  },
+  "defi": {
+    "name": "Defi",
+    "endpoints": [
+      {
+        "metric": "total_value_locked",
+        "path": "/v1/metrics/defi/total_value_locked"
+      }
+    ]
+  },
+  "derivatives": {
+    "name": "Derivatives",
+    "endpoints": [
+      {
+        "metric": "dvol_ohlc",
+        "path": "/v1/metrics/derivatives/dvol_ohlc"
+      },
+      {
+        "metric": "futures_annualized_basis_3m",
+        "path": "/v1/metrics/derivatives/futures_annualized_basis_3m"
+      },
+      {
+        "metric": "futures_estimated_leverage_ratio",
+        "path": "/v1/metrics/derivatives/futures_estimated_leverage_ratio"
+      },
+      {
+        "metric": "futures_funding_rate_perpetual",
+        "path": "/v1/metrics/derivatives/futures_funding_rate_perpetual"
+      },
+      {
+        "metric": "futures_funding_rate_perpetual_all",
+        "path": "/v1/metrics/derivatives/futures_funding_rate_perpetual_all"
+      },
+      {
+        "metric": "futures_liquidated_volume_long_mean",
+        "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_mean"
+      },
+      {
+        "metric": "futures_liquidated_volume_long_relative",
+        "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_relative"
+      },
+      {
+        "metric": "futures_liquidated_volume_long_sum",
+        "path": "/v1/metrics/derivatives/futures_liquidated_volume_long_sum"
+      },
+      {
+        "metric": "futures_liquidated_volume_short_mean",
+        "path": "/v1/metrics/derivatives/futures_liquidated_volume_short_mean"
+      },
+      {
+        "metric": "futures_liquidated_volume_short_sum",
+        "path": "/v1/metrics/derivatives/futures_liquidated_volume_short_sum"
+      },
+      {
+        "metric": "futures_open_interest_cash_margin_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_cash_margin_perpetual_sum"
+      },
+      {
+        "metric": "futures_open_interest_cash_margin_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_cash_margin_sum"
+      },
+      {
+        "metric": "futures_open_interest_crypto_margin_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_perpetual_sum"
+      },
+      {
+        "metric": "futures_open_interest_crypto_margin_relative",
+        "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative"
+      },
+      {
+        "metric": "futures_open_interest_crypto_margin_relative_perpetual",
+        "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_relative_perpetual"
+      },
+      {
+        "metric": "futures_open_interest_crypto_margin_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_crypto_margin_sum"
+      },
+      {
+        "metric": "futures_open_interest_latest",
+        "path": "/v1/metrics/derivatives/futures_open_interest_latest"
+      },
+      {
+        "metric": "futures_open_interest_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_perpetual_sum"
+      },
+      {
+        "metric": "futures_open_interest_perpetual_sum_all",
+        "path": "/v1/metrics/derivatives/futures_open_interest_perpetual_sum_all"
+      },
+      {
+        "metric": "futures_open_interest_sum",
+        "path": "/v1/metrics/derivatives/futures_open_interest_sum"
+      },
+      {
+        "metric": "futures_open_interest_sum_all",
+        "path": "/v1/metrics/derivatives/futures_open_interest_sum_all"
+      },
+      {
+        "metric": "futures_term_structure",
+        "path": "/v1/metrics/derivatives/futures_term_structure"
+      },
+      {
+        "metric": "futures_term_structure_by_exchange",
+        "path": "/v1/metrics/derivatives/futures_term_structure_by_exchange"
+      },
+      {
+        "metric": "futures_vd",
+        "path": "/v1/metrics/derivatives/futures_vd"
+      },
+      {
+        "metric": "futures_vd_perpetual",
+        "path": "/v1/metrics/derivatives/futures_vd_perpetual"
+      },
+      {
+        "metric": "futures_volume_buy_daily_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_buy_daily_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_buy_daily_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_buy_daily_sum"
+      },
+      {
+        "metric": "futures_volume_buy_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_buy_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_buy_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_buy_sum"
+      },
+      {
+        "metric": "futures_volume_daily_latest",
+        "path": "/v1/metrics/derivatives/futures_volume_daily_latest"
+      },
+      {
+        "metric": "futures_volume_daily_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_daily_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_daily_perpetual_sum_all",
+        "path": "/v1/metrics/derivatives/futures_volume_daily_perpetual_sum_all"
+      },
+      {
+        "metric": "futures_volume_daily_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_daily_sum"
+      },
+      {
+        "metric": "futures_volume_daily_sum_all",
+        "path": "/v1/metrics/derivatives/futures_volume_daily_sum_all"
+      },
+      {
+        "metric": "futures_volume_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_sell_daily_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_sell_daily_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_sell_daily_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_sell_daily_sum"
+      },
+      {
+        "metric": "futures_volume_sell_perpetual_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_sell_perpetual_sum"
+      },
+      {
+        "metric": "futures_volume_sell_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_sell_sum"
+      },
+      {
+        "metric": "futures_volume_sum",
+        "path": "/v1/metrics/derivatives/futures_volume_sum"
+      },
+      {
+        "metric": "options_25delta_skew_1_month",
+        "path": "/v1/metrics/derivatives/options_25delta_skew_1_month"
+      },
+      {
+        "metric": "options_25delta_skew_1_week",
+        "path": "/v1/metrics/derivatives/options_25delta_skew_1_week"
+      },
+      {
+        "metric": "options_25delta_skew_3_months",
+        "path": "/v1/metrics/derivatives/options_25delta_skew_3_months"
+      },
+      {
+        "metric": "options_25delta_skew_6_months",
+        "path": "/v1/metrics/derivatives/options_25delta_skew_6_months"
+      },
+      {
+        "metric": "options_25delta_skew_all",
+        "path": "/v1/metrics/derivatives/options_25delta_skew_all"
+      },
+      {
+        "metric": "options_atm_implied_volatility_1_month",
+        "path": "/v1/metrics/derivatives/options_atm_implied_volatility_1_month"
+      },
+      {
+        "metric": "options_atm_implied_volatility_1_week",
+        "path": "/v1/metrics/derivatives/options_atm_implied_volatility_1_week"
+      },
+      {
+        "metric": "options_atm_implied_volatility_3_months",
+        "path": "/v1/metrics/derivatives/options_atm_implied_volatility_3_months"
+      },
+      {
+        "metric": "options_atm_implied_volatility_6_months",
+        "path": "/v1/metrics/derivatives/options_atm_implied_volatility_6_months"
+      },
+      {
+        "metric": "options_atm_implied_volatility_all",
+        "path": "/v1/metrics/derivatives/options_atm_implied_volatility_all"
+      },
+      {
+        "metric": "options_implied_volatility_term_structure",
+        "path": "/v1/metrics/derivatives/options_implied_volatility_term_structure"
+      },
+      {
+        "metric": "options_open_interest_distribution",
+        "path": "/v1/metrics/derivatives/options_open_interest_distribution"
+      },
+      {
+        "metric": "options_open_interest_put_call_ratio",
+        "path": "/v1/metrics/derivatives/options_open_interest_put_call_ratio"
+      },
+      {
+        "metric": "options_open_interest_sum",
+        "path": "/v1/metrics/derivatives/options_open_interest_sum"
+      },
+      {
+        "metric": "options_volatility_smile",
+        "path": "/v1/metrics/derivatives/options_volatility_smile"
+      },
+      {
+        "metric": "options_volume_daily_sum",
+        "path": "/v1/metrics/derivatives/options_volume_daily_sum"
+      },
+      {
+        "metric": "options_volume_put_call_ratio",
+        "path": "/v1/metrics/derivatives/options_volume_put_call_ratio"
+      },
+      {
+        "metric": "perpetuals_reference_rate",
+        "path": "/v1/metrics/derivatives/perpetuals_reference_rate"
+      }
+    ]
+  },
+  "distribution": {
+    "name": "Distribution",
+    "endpoints": [
+      {
+        "metric": "balance_1pct_holders",
+        "path": "/v1/metrics/distribution/balance_1pct_holders"
+      },
+      {
+        "metric": "balance_bhutan_government",
+        "path": "/v1/metrics/distribution/balance_bhutan_government"
+      },
+      {
+        "metric": "balance_bitwise",
+        "path": "/v1/metrics/distribution/balance_bitwise"
+      },
+      {
+        "metric": "balance_blackrock",
+        "path": "/v1/metrics/distribution/balance_blackrock"
+      },
+      {
+        "metric": "balance_cashapp",
+        "path": "/v1/metrics/distribution/balance_cashapp"
+      },
+      {
+        "metric": "balance_donald_trump",
+        "path": "/v1/metrics/distribution/balance_donald_trump"
+      },
+      {
+        "metric": "balance_el_salvador",
+        "path": "/v1/metrics/distribution/balance_el_salvador"
+      },
+      {
+        "metric": "balance_exchanges",
+        "path": "/v1/metrics/distribution/balance_exchanges"
+      },
+      {
+        "metric": "balance_exchanges_all",
+        "path": "/v1/metrics/distribution/balance_exchanges_all"
+      },
+      {
+        "metric": "balance_exchanges_relative",
+        "path": "/v1/metrics/distribution/balance_exchanges_relative"
+      },
+      {
+        "metric": "balance_franklin_templeton",
+        "path": "/v1/metrics/distribution/balance_franklin_templeton"
+      },
+      {
+        "metric": "balance_german_government",
+        "path": "/v1/metrics/distribution/balance_german_government"
+      },
+      {
+        "metric": "balance_grayscale_trust",
+        "path": "/v1/metrics/distribution/balance_grayscale_trust"
+      },
+      {
+        "metric": "balance_luna_foundation_guard",
+        "path": "/v1/metrics/distribution/balance_luna_foundation_guard"
+      },
+      {
+        "metric": "balance_miners_all",
+        "path": "/v1/metrics/distribution/balance_miners_all"
+      },
+      {
+        "metric": "balance_miners_change",
+        "path": "/v1/metrics/distribution/balance_miners_change"
+      },
+      {
+        "metric": "balance_miners_sum",
+        "path": "/v1/metrics/distribution/balance_miners_sum"
+      },
+      {
+        "metric": "balance_mtgox_trustee",
+        "path": "/v1/metrics/distribution/balance_mtgox_trustee"
+      },
+      {
+        "metric": "balance_otc_desks",
+        "path": "/v1/metrics/distribution/balance_otc_desks"
+      },
+      {
+        "metric": "balance_paypal",
+        "path": "/v1/metrics/distribution/balance_paypal"
+      },
+      {
+        "metric": "balance_revolut",
+        "path": "/v1/metrics/distribution/balance_revolut"
+      },
+      {
+        "metric": "balance_robinhood",
+        "path": "/v1/metrics/distribution/balance_robinhood"
+      },
+      {
+        "metric": "balance_tesla",
+        "path": "/v1/metrics/distribution/balance_tesla"
+      },
+      {
+        "metric": "balance_tether_treasury",
+        "path": "/v1/metrics/distribution/balance_tether_treasury"
+      },
+      {
+        "metric": "balance_uk_government",
+        "path": "/v1/metrics/distribution/balance_uk_government"
+      },
+      {
+        "metric": "balance_us_government",
+        "path": "/v1/metrics/distribution/balance_us_government"
+      },
+      {
+        "metric": "balance_vaneck",
+        "path": "/v1/metrics/distribution/balance_vaneck"
+      },
+      {
+        "metric": "balance_wbtc",
+        "path": "/v1/metrics/distribution/balance_wbtc"
+      },
+      {
+        "metric": "balance_wisdomtree",
+        "path": "/v1/metrics/distribution/balance_wisdomtree"
+      },
+      {
+        "metric": "exchange_aggregated_reliance_ratio",
+        "path": "/v1/metrics/distribution/exchange_aggregated_reliance_ratio"
+      },
+      {
+        "metric": "exchange_aggregated_reshuffling_ratio",
+        "path": "/v1/metrics/distribution/exchange_aggregated_reshuffling_ratio"
+      },
+      {
+        "metric": "exchange_net_position_change",
+        "path": "/v1/metrics/distribution/exchange_net_position_change"
+      },
+      {
+        "metric": "exchange_reliance_ratio",
+        "path": "/v1/metrics/distribution/exchange_reliance_ratio"
+      },
+      {
+        "metric": "exchange_reshuffling_ratio",
+        "path": "/v1/metrics/distribution/exchange_reshuffling_ratio"
+      },
+      {
+        "metric": "exchange_whales_outflow",
+        "path": "/v1/metrics/distribution/exchange_whales_outflow"
+      },
+      {
+        "metric": "gini",
+        "path": "/v1/metrics/distribution/gini"
+      },
+      {
+        "metric": "herfindahl",
+        "path": "/v1/metrics/distribution/herfindahl"
+      },
+      {
+        "metric": "outflows_mtgox_trustee",
+        "path": "/v1/metrics/distribution/outflows_mtgox_trustee"
+      },
+      {
+        "metric": "proof_of_reserves",
+        "path": "/v1/metrics/distribution/proof_of_reserves"
+      },
+      {
+        "metric": "proof_of_reserves_all",
+        "path": "/v1/metrics/distribution/proof_of_reserves_all"
+      },
+      {
+        "metric": "proof_of_reserves_all_latest",
+        "path": "/v1/metrics/distribution/proof_of_reserves_all_latest"
+      },
+      {
+        "metric": "supply_contracts",
+        "path": "/v1/metrics/distribution/supply_contracts"
+      }
+    ]
+  },
+  "entities": {
+    "name": "Entities",
+    "endpoints": [
+      {
+        "metric": "active_count",
+        "path": "/v1/metrics/entities/active_count"
+      },
+      {
+        "metric": "min_1k_count",
+        "path": "/v1/metrics/entities/min_1k_count"
+      },
+      {
+        "metric": "net_growth_count",
+        "path": "/v1/metrics/entities/net_growth_count"
+      },
+      {
+        "metric": "new_count",
+        "path": "/v1/metrics/entities/new_count"
+      },
+      {
+        "metric": "profit_relative",
+        "path": "/v1/metrics/entities/profit_relative"
+      },
+      {
+        "metric": "receiving_count",
+        "path": "/v1/metrics/entities/receiving_count"
+      },
+      {
+        "metric": "sending_count",
+        "path": "/v1/metrics/entities/sending_count"
+      },
+      {
+        "metric": "supply_balance_0001_001",
+        "path": "/v1/metrics/entities/supply_balance_0001_001"
+      },
+      {
+        "metric": "supply_balance_001_01",
+        "path": "/v1/metrics/entities/supply_balance_001_01"
+      },
+      {
+        "metric": "supply_balance_01_1",
+        "path": "/v1/metrics/entities/supply_balance_01_1"
+      },
+      {
+        "metric": "supply_balance_100_1k",
+        "path": "/v1/metrics/entities/supply_balance_100_1k"
+      },
+      {
+        "metric": "supply_balance_10_100",
+        "path": "/v1/metrics/entities/supply_balance_10_100"
+      },
+      {
+        "metric": "supply_balance_10k_100k",
+        "path": "/v1/metrics/entities/supply_balance_10k_100k"
+      },
+      {
+        "metric": "supply_balance_1_10",
+        "path": "/v1/metrics/entities/supply_balance_1_10"
+      },
+      {
+        "metric": "supply_balance_1k_10k",
+        "path": "/v1/metrics/entities/supply_balance_1k_10k"
+      },
+      {
+        "metric": "supply_balance_less_0001",
+        "path": "/v1/metrics/entities/supply_balance_less_0001"
+      },
+      {
+        "metric": "supply_balance_more_100k",
+        "path": "/v1/metrics/entities/supply_balance_more_100k"
+      },
+      {
+        "metric": "supply_distribution_relative",
+        "path": "/v1/metrics/entities/supply_distribution_relative"
+      }
+    ]
+  },
+  "eth2": {
+    "name": "Eth2",
+    "endpoints": [
+      {
+        "metric": "active_validators_count",
+        "path": "/v1/metrics/eth2/active_validators_count"
+      },
+      {
+        "metric": "attestation_count",
+        "path": "/v1/metrics/eth2/attestation_count"
+      },
+      {
+        "metric": "deposited_by_provider_volume_sum",
+        "path": "/v1/metrics/eth2/deposited_by_provider_volume_sum"
+      },
+      {
+        "metric": "deposits_count",
+        "path": "/v1/metrics/eth2/deposits_count"
+      },
+      {
+        "metric": "effective_balance_sum",
+        "path": "/v1/metrics/eth2/effective_balance_sum"
+      },
+      {
+        "metric": "epoch_height",
+        "path": "/v1/metrics/eth2/epoch_height"
+      },
+      {
+        "metric": "estimated_annual_issuance",
+        "path": "/v1/metrics/eth2/estimated_annual_issuance"
+      },
+      {
+        "metric": "estimated_annual_issuance_roi_per_validator",
+        "path": "/v1/metrics/eth2/estimated_annual_issuance_roi_per_validator"
+      },
+      {
+        "metric": "missed_blocks_count",
+        "path": "/v1/metrics/eth2/missed_blocks_count"
+      },
+      {
+        "metric": "orphaned_blocks_count",
+        "path": "/v1/metrics/eth2/orphaned_blocks_count"
+      },
+      {
+        "metric": "participation_rate_mean",
+        "path": "/v1/metrics/eth2/participation_rate_mean"
+      },
+      {
+        "metric": "slashings_count",
+        "path": "/v1/metrics/eth2/slashings_count"
+      },
+      {
+        "metric": "slot_height",
+        "path": "/v1/metrics/eth2/slot_height"
+      },
+      {
+        "metric": "stake_effectiveness_mean",
+        "path": "/v1/metrics/eth2/stake_effectiveness_mean"
+      },
+      {
+        "metric": "staking_deposits_count",
+        "path": "/v1/metrics/eth2/staking_deposits_count"
+      },
+      {
+        "metric": "staking_total_deposits_count",
+        "path": "/v1/metrics/eth2/staking_total_deposits_count"
+      },
+      {
+        "metric": "staking_total_validators_count",
+        "path": "/v1/metrics/eth2/staking_total_validators_count"
+      },
+      {
+        "metric": "staking_total_volume_sum",
+        "path": "/v1/metrics/eth2/staking_total_volume_sum"
+      },
+      {
+        "metric": "staking_validators_count",
+        "path": "/v1/metrics/eth2/staking_validators_count"
+      },
+      {
+        "metric": "staking_volume_sum",
+        "path": "/v1/metrics/eth2/staking_volume_sum"
+      },
+      {
+        "metric": "validator_balance_mean",
+        "path": "/v1/metrics/eth2/validator_balance_mean"
+      },
+      {
+        "metric": "voluntary_exit_count",
+        "path": "/v1/metrics/eth2/voluntary_exit_count"
+      }
+    ]
+  },
+  "fees": {
+    "name": "Fees",
+    "endpoints": [
+      {
+        "metric": "exchanges_mean",
+        "path": "/v1/metrics/fees/exchanges_mean"
+      },
+      {
+        "metric": "exchanges_relative",
+        "path": "/v1/metrics/fees/exchanges_relative"
+      },
+      {
+        "metric": "exchanges_sum",
+        "path": "/v1/metrics/fees/exchanges_sum"
+      },
+      {
+        "metric": "fee_ratio_multiple",
+        "path": "/v1/metrics/fees/fee_ratio_multiple"
+      },
+      {
+        "metric": "gas_limit_tx_mean",
+        "path": "/v1/metrics/fees/gas_limit_tx_mean"
+      },
+      {
+        "metric": "gas_limit_tx_median",
+        "path": "/v1/metrics/fees/gas_limit_tx_median"
+      },
+      {
+        "metric": "gas_price_mean",
+        "path": "/v1/metrics/fees/gas_price_mean"
+      },
+      {
+        "metric": "gas_price_median",
+        "path": "/v1/metrics/fees/gas_price_median"
+      },
+      {
+        "metric": "gas_used_mean",
+        "path": "/v1/metrics/fees/gas_used_mean"
+      },
+      {
+        "metric": "gas_used_median",
+        "path": "/v1/metrics/fees/gas_used_median"
+      },
+      {
+        "metric": "gas_used_sum",
+        "path": "/v1/metrics/fees/gas_used_sum"
+      },
+      {
+        "metric": "gas_used_sum_bridges",
+        "path": "/v1/metrics/fees/gas_used_sum_bridges"
+      },
+      {
+        "metric": "gas_used_sum_bridges_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_bridges_relative"
+      },
+      {
+        "metric": "gas_used_sum_defi",
+        "path": "/v1/metrics/fees/gas_used_sum_defi"
+      },
+      {
+        "metric": "gas_used_sum_defi_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_defi_relative"
+      },
+      {
+        "metric": "gas_used_sum_erc20",
+        "path": "/v1/metrics/fees/gas_used_sum_erc20"
+      },
+      {
+        "metric": "gas_used_sum_erc20_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_erc20_relative"
+      },
+      {
+        "metric": "gas_used_sum_nfts",
+        "path": "/v1/metrics/fees/gas_used_sum_nfts"
+      },
+      {
+        "metric": "gas_used_sum_nfts_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_nfts_relative"
+      },
+      {
+        "metric": "gas_used_sum_stablecoins",
+        "path": "/v1/metrics/fees/gas_used_sum_stablecoins"
+      },
+      {
+        "metric": "gas_used_sum_stablecoins_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_stablecoins_relative"
+      },
+      {
+        "metric": "gas_used_sum_vanilla",
+        "path": "/v1/metrics/fees/gas_used_sum_vanilla"
+      },
+      {
+        "metric": "gas_used_sum_vanilla_relative",
+        "path": "/v1/metrics/fees/gas_used_sum_vanilla_relative"
+      },
+      {
+        "metric": "tx_types_breakdown_relative",
+        "path": "/v1/metrics/fees/tx_types_breakdown_relative"
+      },
+      {
+        "metric": "tx_types_breakdown_sum",
+        "path": "/v1/metrics/fees/tx_types_breakdown_sum"
+      },
+      {
+        "metric": "volume_mean",
+        "path": "/v1/metrics/fees/volume_mean"
+      },
+      {
+        "metric": "volume_median",
+        "path": "/v1/metrics/fees/volume_median"
+      },
+      {
+        "metric": "volume_sum",
+        "path": "/v1/metrics/fees/volume_sum"
+      }
+    ]
+  },
+  "indicators": {
+    "name": "Indicators",
+    "endpoints": [
+      {
+        "metric": "accumulation_trend_score",
+        "path": "/v1/metrics/indicators/accumulation_trend_score"
+      },
+      {
+        "metric": "asol",
+        "path": "/v1/metrics/indicators/asol"
+      },
+      {
+        "metric": "asol_account_based",
+        "path": "/v1/metrics/indicators/asol_account_based"
+      },
+      {
+        "metric": "asol_lth",
+        "path": "/v1/metrics/indicators/asol_lth"
+      },
+      {
+        "metric": "asol_lth_account_based",
+        "path": "/v1/metrics/indicators/asol_lth_account_based"
+      },
+      {
+        "metric": "asol_sth",
+        "path": "/v1/metrics/indicators/asol_sth"
+      },
+      {
+        "metric": "asol_sth_account_based",
+        "path": "/v1/metrics/indicators/asol_sth_account_based"
+      },
+      {
+        "metric": "average_dormancy",
+        "path": "/v1/metrics/indicators/average_dormancy"
+      },
+      {
+        "metric": "average_dormancy_supply_adjusted",
+        "path": "/v1/metrics/indicators/average_dormancy_supply_adjusted"
+      },
+      {
+        "metric": "aviv",
+        "path": "/v1/metrics/indicators/aviv"
+      },
+      {
+        "metric": "balanced_price_usd",
+        "path": "/v1/metrics/indicators/balanced_price_usd"
+      },
+      {
+        "metric": "cdd",
+        "path": "/v1/metrics/indicators/cdd"
+      },
+      {
+        "metric": "cdd90_account_based_age_adjusted",
+        "path": "/v1/metrics/indicators/cdd90_account_based_age_adjusted"
+      },
+      {
+        "metric": "cdd90_age_adjusted",
+        "path": "/v1/metrics/indicators/cdd90_age_adjusted"
+      },
+      {
+        "metric": "cdd_account_based",
+        "path": "/v1/metrics/indicators/cdd_account_based"
+      },
+      {
+        "metric": "cdd_lth",
+        "path": "/v1/metrics/indicators/cdd_lth"
+      },
+      {
+        "metric": "cdd_lth_account_based",
+        "path": "/v1/metrics/indicators/cdd_lth_account_based"
+      },
+      {
+        "metric": "cdd_sth",
+        "path": "/v1/metrics/indicators/cdd_sth"
+      },
+      {
+        "metric": "cdd_sth_account_based",
+        "path": "/v1/metrics/indicators/cdd_sth_account_based"
+      },
+      {
+        "metric": "cdd_supply_adjusted",
+        "path": "/v1/metrics/indicators/cdd_supply_adjusted"
+      },
+      {
+        "metric": "cdd_supply_adjusted_binary",
+        "path": "/v1/metrics/indicators/cdd_supply_adjusted_binary"
+      },
+      {
+        "metric": "coin_blocks_created",
+        "path": "/v1/metrics/indicators/coin_blocks_created"
+      },
+      {
+        "metric": "coin_blocks_destroyed",
+        "path": "/v1/metrics/indicators/coin_blocks_destroyed"
+      },
+      {
+        "metric": "cost_basis_distribution_heatmap",
+        "path": "/v1/metrics/indicators/cost_basis_distribution_heatmap"
+      },
+      {
+        "metric": "cost_basis_distribution_quantiles",
+        "path": "/v1/metrics/indicators/cost_basis_distribution_quantiles"
+      },
+      {
+        "metric": "cvdd",
+        "path": "/v1/metrics/indicators/cvdd"
+      },
+      {
+        "metric": "cyd",
+        "path": "/v1/metrics/indicators/cyd"
+      },
+      {
+        "metric": "cyd_account_based",
+        "path": "/v1/metrics/indicators/cyd_account_based"
+      },
+      {
+        "metric": "cyd_account_based_supply_adjusted",
+        "path": "/v1/metrics/indicators/cyd_account_based_supply_adjusted"
+      },
+      {
+        "metric": "cyd_supply_adjusted",
+        "path": "/v1/metrics/indicators/cyd_supply_adjusted"
+      },
+      {
+        "metric": "difficulty_ribbon",
+        "path": "/v1/metrics/indicators/difficulty_ribbon"
+      },
+      {
+        "metric": "difficulty_ribbon_compression",
+        "path": "/v1/metrics/indicators/difficulty_ribbon_compression"
+      },
+      {
+        "metric": "dormancy_account_based",
+        "path": "/v1/metrics/indicators/dormancy_account_based"
+      },
+      {
+        "metric": "dormancy_flow",
+        "path": "/v1/metrics/indicators/dormancy_flow"
+      },
+      {
+        "metric": "dormancy_lth_account_based",
+        "path": "/v1/metrics/indicators/dormancy_lth_account_based"
+      },
+      {
+        "metric": "dormancy_sth_account_based",
+        "path": "/v1/metrics/indicators/dormancy_sth_account_based"
+      },
+      {
+        "metric": "fear_greed",
+        "path": "/v1/metrics/indicators/fear_greed"
+      },
+      {
+        "metric": "hash_ribbon",
+        "path": "/v1/metrics/indicators/hash_ribbon"
+      },
+      {
+        "metric": "hodled_lost_coins",
+        "path": "/v1/metrics/indicators/hodled_lost_coins"
+      },
+      {
+        "metric": "hodler_net_position_change",
+        "path": "/v1/metrics/indicators/hodler_net_position_change"
+      },
+      {
+        "metric": "investor_capitalization",
+        "path": "/v1/metrics/indicators/investor_capitalization"
+      },
+      {
+        "metric": "leverage_position_closures",
+        "path": "/v1/metrics/indicators/leverage_position_closures"
+      },
+      {
+        "metric": "leverage_position_closures_scaled",
+        "path": "/v1/metrics/indicators/leverage_position_closures_scaled"
+      },
+      {
+        "metric": "leverage_position_openings",
+        "path": "/v1/metrics/indicators/leverage_position_openings"
+      },
+      {
+        "metric": "leverage_position_openings_scaled",
+        "path": "/v1/metrics/indicators/leverage_position_openings_scaled"
+      },
+      {
+        "metric": "liveliness",
+        "path": "/v1/metrics/indicators/liveliness"
+      },
+      {
+        "metric": "liveliness_account_based",
+        "path": "/v1/metrics/indicators/liveliness_account_based"
+      },
+      {
+        "metric": "msol",
+        "path": "/v1/metrics/indicators/msol"
+      },
+      {
+        "metric": "msol_account_based",
+        "path": "/v1/metrics/indicators/msol_account_based"
+      },
+      {
+        "metric": "mvrv_account_based",
+        "path": "/v1/metrics/indicators/mvrv_account_based"
+      },
+      {
+        "metric": "net_realized_profit_loss",
+        "path": "/v1/metrics/indicators/net_realized_profit_loss"
+      },
+      {
+        "metric": "net_unrealized_profit_loss",
+        "path": "/v1/metrics/indicators/net_unrealized_profit_loss"
+      },
+      {
+        "metric": "net_unrealized_profit_loss_account_based",
+        "path": "/v1/metrics/indicators/net_unrealized_profit_loss_account_based"
+      },
+      {
+        "metric": "nupl_less_155",
+        "path": "/v1/metrics/indicators/nupl_less_155"
+      },
+      {
+        "metric": "nupl_less_155_account_based",
+        "path": "/v1/metrics/indicators/nupl_less_155_account_based"
+      },
+      {
+        "metric": "nupl_more_155",
+        "path": "/v1/metrics/indicators/nupl_more_155"
+      },
+      {
+        "metric": "nupl_more_155_account_based",
+        "path": "/v1/metrics/indicators/nupl_more_155_account_based"
+      },
+      {
+        "metric": "nvt",
+        "path": "/v1/metrics/indicators/nvt"
+      },
+      {
+        "metric": "nvt_entity_adjusted",
+        "path": "/v1/metrics/indicators/nvt_entity_adjusted"
+      },
+      {
+        "metric": "nvts",
+        "path": "/v1/metrics/indicators/nvts"
+      },
+      {
+        "metric": "pi_cycle_top",
+        "path": "/v1/metrics/indicators/pi_cycle_top"
+      },
+      {
+        "metric": "power_law",
+        "path": "/v1/metrics/indicators/power_law"
+      },
+      {
+        "metric": "puell_multiple",
+        "path": "/v1/metrics/indicators/puell_multiple"
+      },
+      {
+        "metric": "rcap_account_based",
+        "path": "/v1/metrics/indicators/rcap_account_based"
+      },
+      {
+        "metric": "realized_loss",
+        "path": "/v1/metrics/indicators/realized_loss"
+      },
+      {
+        "metric": "realized_loss_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_account_based"
+      },
+      {
+        "metric": "realized_loss_lth_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_lth_account_based"
+      },
+      {
+        "metric": "realized_loss_lth_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_lth_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_loss_sth_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_sth_account_based"
+      },
+      {
+        "metric": "realized_loss_sth_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_sth_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_loss_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_loss_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_profit",
+        "path": "/v1/metrics/indicators/realized_profit"
+      },
+      {
+        "metric": "realized_profit_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_account_based"
+      },
+      {
+        "metric": "realized_profit_loss_lth_sth_relative",
+        "path": "/v1/metrics/indicators/realized_profit_loss_lth_sth_relative"
+      },
+      {
+        "metric": "realized_profit_loss_lth_sth_to_exchanges_relative",
+        "path": "/v1/metrics/indicators/realized_profit_loss_lth_sth_to_exchanges_relative"
+      },
+      {
+        "metric": "realized_profit_loss_ratio",
+        "path": "/v1/metrics/indicators/realized_profit_loss_ratio"
+      },
+      {
+        "metric": "realized_profit_lth_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_lth_account_based"
+      },
+      {
+        "metric": "realized_profit_lth_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_lth_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_profit_sth_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_sth_account_based"
+      },
+      {
+        "metric": "realized_profit_sth_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_sth_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_profit_to_exchanges_account_based",
+        "path": "/v1/metrics/indicators/realized_profit_to_exchanges_account_based"
+      },
+      {
+        "metric": "realized_profits_to_value_ratio",
+        "path": "/v1/metrics/indicators/realized_profits_to_value_ratio"
+      },
+      {
+        "metric": "realized_supply_density",
+        "path": "/v1/metrics/indicators/realized_supply_density"
+      },
+      {
+        "metric": "realized_supply_density_dynamic",
+        "path": "/v1/metrics/indicators/realized_supply_density_dynamic"
+      },
+      {
+        "metric": "realized_supply_density_less_155",
+        "path": "/v1/metrics/indicators/realized_supply_density_less_155"
+      },
+      {
+        "metric": "realized_supply_density_more_155",
+        "path": "/v1/metrics/indicators/realized_supply_density_more_155"
+      },
+      {
+        "metric": "reserve_risk",
+        "path": "/v1/metrics/indicators/reserve_risk"
+      },
+      {
+        "metric": "rhodl_ratio",
+        "path": "/v1/metrics/indicators/rhodl_ratio"
+      },
+      {
+        "metric": "seller_exhaustion_constant",
+        "path": "/v1/metrics/indicators/seller_exhaustion_constant"
+      },
+      {
+        "metric": "soab",
+        "path": "/v1/metrics/indicators/soab"
+      },
+      {
+        "metric": "sol_1d_1w",
+        "path": "/v1/metrics/indicators/sol_1d_1w"
+      },
+      {
+        "metric": "sol_1h",
+        "path": "/v1/metrics/indicators/sol_1h"
+      },
+      {
+        "metric": "sol_1h_24h",
+        "path": "/v1/metrics/indicators/sol_1h_24h"
+      },
+      {
+        "metric": "sol_1m_3m",
+        "path": "/v1/metrics/indicators/sol_1m_3m"
+      },
+      {
+        "metric": "sol_1w_1m",
+        "path": "/v1/metrics/indicators/sol_1w_1m"
+      },
+      {
+        "metric": "sol_1y_2y",
+        "path": "/v1/metrics/indicators/sol_1y_2y"
+      },
+      {
+        "metric": "sol_2y_3y",
+        "path": "/v1/metrics/indicators/sol_2y_3y"
+      },
+      {
+        "metric": "sol_3m_6m",
+        "path": "/v1/metrics/indicators/sol_3m_6m"
+      },
+      {
+        "metric": "sol_3y_5y",
+        "path": "/v1/metrics/indicators/sol_3y_5y"
+      },
+      {
+        "metric": "sol_5y_7y",
+        "path": "/v1/metrics/indicators/sol_5y_7y"
+      },
+      {
+        "metric": "sol_6m_12m",
+        "path": "/v1/metrics/indicators/sol_6m_12m"
+      },
+      {
+        "metric": "sol_7y_10y",
+        "path": "/v1/metrics/indicators/sol_7y_10y"
+      },
+      {
+        "metric": "sol_more_10y",
+        "path": "/v1/metrics/indicators/sol_more_10y"
+      },
+      {
+        "metric": "sopr",
+        "path": "/v1/metrics/indicators/sopr"
+      },
+      {
+        "metric": "sopr_account_based",
+        "path": "/v1/metrics/indicators/sopr_account_based"
+      },
+      {
+        "metric": "sopr_adjusted",
+        "path": "/v1/metrics/indicators/sopr_adjusted"
+      },
+      {
+        "metric": "sopr_less_155",
+        "path": "/v1/metrics/indicators/sopr_less_155"
+      },
+      {
+        "metric": "sopr_more_155",
+        "path": "/v1/metrics/indicators/sopr_more_155"
+      },
+      {
+        "metric": "spent_output_price_distribution_ath",
+        "path": "/v1/metrics/indicators/spent_output_price_distribution_ath"
+      },
+      {
+        "metric": "spent_output_price_distribution_percent",
+        "path": "/v1/metrics/indicators/spent_output_price_distribution_percent"
+      },
+      {
+        "metric": "spent_outputs_by_date_bands",
+        "path": "/v1/metrics/indicators/spent_outputs_by_date_bands"
+      },
+      {
+        "metric": "spent_outputs_by_date_bands_relative",
+        "path": "/v1/metrics/indicators/spent_outputs_by_date_bands_relative"
+      },
+      {
+        "metric": "spent_supply_distribution_quantiles",
+        "path": "/v1/metrics/indicators/spent_supply_distribution_quantiles"
+      },
+      {
+        "metric": "spent_volume_by_date_bands",
+        "path": "/v1/metrics/indicators/spent_volume_by_date_bands"
+      },
+      {
+        "metric": "spent_volume_by_date_bands_relative",
+        "path": "/v1/metrics/indicators/spent_volume_by_date_bands_relative"
+      },
+      {
+        "metric": "ssr",
+        "path": "/v1/metrics/indicators/ssr"
+      },
+      {
+        "metric": "ssr_oscillator",
+        "path": "/v1/metrics/indicators/ssr_oscillator"
+      },
+      {
+        "metric": "stock_to_flow_deflection",
+        "path": "/v1/metrics/indicators/stock_to_flow_deflection"
+      },
+      {
+        "metric": "stock_to_flow_ratio",
+        "path": "/v1/metrics/indicators/stock_to_flow_ratio"
+      },
+      {
+        "metric": "svab",
+        "path": "/v1/metrics/indicators/svab"
+      },
+      {
+        "metric": "svab_entity_adjusted",
+        "path": "/v1/metrics/indicators/svab_entity_adjusted"
+      },
+      {
+        "metric": "svl_1d_1w",
+        "path": "/v1/metrics/indicators/svl_1d_1w"
+      },
+      {
+        "metric": "svl_1h",
+        "path": "/v1/metrics/indicators/svl_1h"
+      },
+      {
+        "metric": "svl_1h_24h",
+        "path": "/v1/metrics/indicators/svl_1h_24h"
+      },
+      {
+        "metric": "svl_1m_3m",
+        "path": "/v1/metrics/indicators/svl_1m_3m"
+      },
+      {
+        "metric": "svl_1w_1m",
+        "path": "/v1/metrics/indicators/svl_1w_1m"
+      },
+      {
+        "metric": "svl_1y_2y",
+        "path": "/v1/metrics/indicators/svl_1y_2y"
+      },
+      {
+        "metric": "svl_2y_3y",
+        "path": "/v1/metrics/indicators/svl_2y_3y"
+      },
+      {
+        "metric": "svl_3m_6m",
+        "path": "/v1/metrics/indicators/svl_3m_6m"
+      },
+      {
+        "metric": "svl_3y_5y",
+        "path": "/v1/metrics/indicators/svl_3y_5y"
+      },
+      {
+        "metric": "svl_5y_7y",
+        "path": "/v1/metrics/indicators/svl_5y_7y"
+      },
+      {
+        "metric": "svl_6m_12m",
+        "path": "/v1/metrics/indicators/svl_6m_12m"
+      },
+      {
+        "metric": "svl_7y_10y",
+        "path": "/v1/metrics/indicators/svl_7y_10y"
+      },
+      {
+        "metric": "svl_entity_adjusted_1d_1w",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_1d_1w"
+      },
+      {
+        "metric": "svl_entity_adjusted_1m_3m",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_1m_3m"
+      },
+      {
+        "metric": "svl_entity_adjusted_1w_1m",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_1w_1m"
+      },
+      {
+        "metric": "svl_entity_adjusted_1y_2y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_1y_2y"
+      },
+      {
+        "metric": "svl_entity_adjusted_24h",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_24h"
+      },
+      {
+        "metric": "svl_entity_adjusted_2y_3y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_2y_3y"
+      },
+      {
+        "metric": "svl_entity_adjusted_3m_6m",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_3m_6m"
+      },
+      {
+        "metric": "svl_entity_adjusted_3y_5y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_3y_5y"
+      },
+      {
+        "metric": "svl_entity_adjusted_5y_7y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_5y_7y"
+      },
+      {
+        "metric": "svl_entity_adjusted_6m_12m",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_6m_12m"
+      },
+      {
+        "metric": "svl_entity_adjusted_7y_10y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_7y_10y"
+      },
+      {
+        "metric": "svl_entity_adjusted_more_10y",
+        "path": "/v1/metrics/indicators/svl_entity_adjusted_more_10y"
+      },
+      {
+        "metric": "svl_more_10y",
+        "path": "/v1/metrics/indicators/svl_more_10y"
+      },
+      {
+        "metric": "unrealized_loss",
+        "path": "/v1/metrics/indicators/unrealized_loss"
+      },
+      {
+        "metric": "unrealized_loss_account_based",
+        "path": "/v1/metrics/indicators/unrealized_loss_account_based"
+      },
+      {
+        "metric": "unrealized_loss_less_155",
+        "path": "/v1/metrics/indicators/unrealized_loss_less_155"
+      },
+      {
+        "metric": "unrealized_loss_more_155",
+        "path": "/v1/metrics/indicators/unrealized_loss_more_155"
+      },
+      {
+        "metric": "unrealized_profit",
+        "path": "/v1/metrics/indicators/unrealized_profit"
+      },
+      {
+        "metric": "unrealized_profit_account_based",
+        "path": "/v1/metrics/indicators/unrealized_profit_account_based"
+      },
+      {
+        "metric": "unrealized_profit_less_155",
+        "path": "/v1/metrics/indicators/unrealized_profit_less_155"
+      },
+      {
+        "metric": "unrealized_profit_more_155",
+        "path": "/v1/metrics/indicators/unrealized_profit_more_155"
+      },
+      {
+        "metric": "urpd_entity_adjusted",
+        "path": "/v1/metrics/indicators/urpd_entity_adjusted"
+      },
+      {
+        "metric": "utxo_realized_price_distribution_ath",
+        "path": "/v1/metrics/indicators/utxo_realized_price_distribution_ath"
+      },
+      {
+        "metric": "utxo_realized_price_distribution_percent",
+        "path": "/v1/metrics/indicators/utxo_realized_price_distribution_percent"
+      },
+      {
+        "metric": "velocity",
+        "path": "/v1/metrics/indicators/velocity"
+      }
+    ]
+  },
+  "institutions": {
+    "name": "Institutions",
+    "endpoints": [
+      {
+        "metric": "purpose_etf_aum_sum",
+        "path": "/v1/metrics/institutions/purpose_etf_aum_sum"
+      },
+      {
+        "metric": "purpose_etf_flows_sum",
+        "path": "/v1/metrics/institutions/purpose_etf_flows_sum"
+      },
+      {
+        "metric": "purpose_etf_holdings_sum",
+        "path": "/v1/metrics/institutions/purpose_etf_holdings_sum"
+      },
+      {
+        "metric": "us_spot_etf_balances_all",
+        "path": "/v1/metrics/institutions/us_spot_etf_balances_all"
+      },
+      {
+        "metric": "us_spot_etf_balances_latest",
+        "path": "/v1/metrics/institutions/us_spot_etf_balances_latest"
+      },
+      {
+        "metric": "us_spot_etf_flows_all",
+        "path": "/v1/metrics/institutions/us_spot_etf_flows_all"
+      },
+      {
+        "metric": "us_spot_etf_flows_net",
+        "path": "/v1/metrics/institutions/us_spot_etf_flows_net"
+      }
+    ]
+  },
+  "lightning": {
+    "name": "Lightning",
+    "endpoints": [
+      {
+        "metric": "base_fee_median",
+        "path": "/v1/metrics/lightning/base_fee_median"
+      },
+      {
+        "metric": "channel_size_mean",
+        "path": "/v1/metrics/lightning/channel_size_mean"
+      },
+      {
+        "metric": "channel_size_median",
+        "path": "/v1/metrics/lightning/channel_size_median"
+      },
+      {
+        "metric": "channels_count",
+        "path": "/v1/metrics/lightning/channels_count"
+      },
+      {
+        "metric": "fee_rate_median",
+        "path": "/v1/metrics/lightning/fee_rate_median"
+      },
+      {
+        "metric": "gini_capacity_distribution",
+        "path": "/v1/metrics/lightning/gini_capacity_distribution"
+      },
+      {
+        "metric": "gini_channel_distribution",
+        "path": "/v1/metrics/lightning/gini_channel_distribution"
+      },
+      {
+        "metric": "network_capacity_sum",
+        "path": "/v1/metrics/lightning/network_capacity_sum"
+      },
+      {
+        "metric": "node_connectivity",
+        "path": "/v1/metrics/lightning/node_connectivity"
+      },
+      {
+        "metric": "nodes_count",
+        "path": "/v1/metrics/lightning/nodes_count"
+      }
+    ]
+  },
+  "market": {
+    "name": "Market",
+    "endpoints": [
+      {
+        "metric": "amer_30d_price_change",
+        "path": "/v1/metrics/market/amer_30d_price_change"
+      },
+      {
+        "metric": "apac_30d_price_change",
+        "path": "/v1/metrics/market/apac_30d_price_change"
+      },
+      {
+        "metric": "btc_dominance",
+        "path": "/v1/metrics/market/btc_dominance"
+      },
+      {
+        "metric": "deltacap_usd",
+        "path": "/v1/metrics/market/deltacap_usd"
+      },
+      {
+        "metric": "emea_30d_price_change",
+        "path": "/v1/metrics/market/emea_30d_price_change"
+      },
+      {
+        "metric": "hodl_cave",
+        "path": "/v1/metrics/market/hodl_cave"
+      },
+      {
+        "metric": "marketcap_realized_usd",
+        "path": "/v1/metrics/market/marketcap_realized_usd"
+      },
+      {
+        "metric": "marketcap_usd",
+        "path": "/v1/metrics/market/marketcap_usd"
+      },
+      {
+        "metric": "mvrv",
+        "path": "/v1/metrics/market/mvrv"
+      },
+      {
+        "metric": "mvrv_less_155",
+        "path": "/v1/metrics/market/mvrv_less_155"
+      },
+      {
+        "metric": "mvrv_median",
+        "path": "/v1/metrics/market/mvrv_median"
+      },
+      {
+        "metric": "mvrv_more_155",
+        "path": "/v1/metrics/market/mvrv_more_155"
+      },
+      {
+        "metric": "mvrv_z_score",
+        "path": "/v1/metrics/market/mvrv_z_score"
+      },
+      {
+        "metric": "price_drawdown_relative",
+        "path": "/v1/metrics/market/price_drawdown_relative"
+      },
+      {
+        "metric": "price_realized_median_usd",
+        "path": "/v1/metrics/market/price_realized_median_usd"
+      },
+      {
+        "metric": "price_realized_usd",
+        "path": "/v1/metrics/market/price_realized_usd"
+      },
+      {
+        "metric": "price_usd_close",
+        "path": "/v1/metrics/market/price_usd_close"
+      },
+      {
+        "metric": "price_usd_ohlc",
+        "path": "/v1/metrics/market/price_usd_ohlc"
+      },
+      {
+        "metric": "realized_volatility_1_month",
+        "path": "/v1/metrics/market/realized_volatility_1_month"
+      },
+      {
+        "metric": "realized_volatility_1_week",
+        "path": "/v1/metrics/market/realized_volatility_1_week"
+      },
+      {
+        "metric": "realized_volatility_1_year",
+        "path": "/v1/metrics/market/realized_volatility_1_year"
+      },
+      {
+        "metric": "realized_volatility_2_weeks",
+        "path": "/v1/metrics/market/realized_volatility_2_weeks"
+      },
+      {
+        "metric": "realized_volatility_3_months",
+        "path": "/v1/metrics/market/realized_volatility_3_months"
+      },
+      {
+        "metric": "realized_volatility_6_months",
+        "path": "/v1/metrics/market/realized_volatility_6_months"
+      },
+      {
+        "metric": "realized_volatility_all",
+        "path": "/v1/metrics/market/realized_volatility_all"
+      },
+      {
+        "metric": "spot_buying_volume_sum",
+        "path": "/v1/metrics/market/spot_buying_volume_sum"
+      },
+      {
+        "metric": "spot_selling_volume_sum",
+        "path": "/v1/metrics/market/spot_selling_volume_sum"
+      },
+      {
+        "metric": "spot_vd_sum",
+        "path": "/v1/metrics/market/spot_vd_sum"
+      },
+      {
+        "metric": "spot_volume_daily_latest",
+        "path": "/v1/metrics/market/spot_volume_daily_latest"
+      },
+      {
+        "metric": "spot_volume_daily_sum",
+        "path": "/v1/metrics/market/spot_volume_daily_sum"
+      },
+      {
+        "metric": "spot_volume_daily_sum_all",
+        "path": "/v1/metrics/market/spot_volume_daily_sum_all"
+      },
+      {
+        "metric": "spot_volume_sum_intraday",
+        "path": "/v1/metrics/market/spot_volume_sum_intraday"
+      }
+    ]
+  },
+  "mempool": {
+    "name": "Mempool",
+    "endpoints": [
+      {
+        "metric": "fees_average_relative",
+        "path": "/v1/metrics/mempool/fees_average_relative"
+      },
+      {
+        "metric": "fees_distribution",
+        "path": "/v1/metrics/mempool/fees_distribution"
+      },
+      {
+        "metric": "fees_median_relative",
+        "path": "/v1/metrics/mempool/fees_median_relative"
+      },
+      {
+        "metric": "fees_sum",
+        "path": "/v1/metrics/mempool/fees_sum"
+      },
+      {
+        "metric": "txs_count_distribution",
+        "path": "/v1/metrics/mempool/txs_count_distribution"
+      },
+      {
+        "metric": "txs_count_sum",
+        "path": "/v1/metrics/mempool/txs_count_sum"
+      },
+      {
+        "metric": "txs_size_distribution",
+        "path": "/v1/metrics/mempool/txs_size_distribution"
+      },
+      {
+        "metric": "txs_size_sum",
+        "path": "/v1/metrics/mempool/txs_size_sum"
+      },
+      {
+        "metric": "txs_value_distribution",
+        "path": "/v1/metrics/mempool/txs_value_distribution"
+      },
+      {
+        "metric": "txs_value_sum",
+        "path": "/v1/metrics/mempool/txs_value_sum"
+      }
+    ]
+  },
+  "mining": {
+    "name": "Mining",
+    "endpoints": [
+      {
+        "metric": "difficulty_latest",
+        "path": "/v1/metrics/mining/difficulty_latest"
+      },
+      {
+        "metric": "hash_rate_mean",
+        "path": "/v1/metrics/mining/hash_rate_mean"
+      },
+      {
+        "metric": "marketcap_thermocap_ratio",
+        "path": "/v1/metrics/mining/marketcap_thermocap_ratio"
+      },
+      {
+        "metric": "miners_outflow_multiple",
+        "path": "/v1/metrics/mining/miners_outflow_multiple"
+      },
+      {
+        "metric": "miners_unspent_supply",
+        "path": "/v1/metrics/mining/miners_unspent_supply"
+      },
+      {
+        "metric": "revenue_from_fees",
+        "path": "/v1/metrics/mining/revenue_from_fees"
+      },
+      {
+        "metric": "revenue_sum",
+        "path": "/v1/metrics/mining/revenue_sum"
+      },
+      {
+        "metric": "thermocap",
+        "path": "/v1/metrics/mining/thermocap"
+      },
+      {
+        "metric": "volume_mined_sum",
+        "path": "/v1/metrics/mining/volume_mined_sum"
+      }
+    ]
+  },
+  "protocols": {
+    "name": "Protocols",
+    "endpoints": [
+      {
+        "metric": "aave_v1_available_liquidity_perc_by_token",
+        "path": "/v1/metrics/protocols/aave_v1_available_liquidity_perc_by_token"
+      },
+      {
+        "metric": "aave_v1_available_liquidity_sum_by_token",
+        "path": "/v1/metrics/protocols/aave_v1_available_liquidity_sum_by_token"
+      },
+      {
+        "metric": "aave_v1_collateral_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v1_collateral_rate_by_token"
+      },
+      {
+        "metric": "aave_v1_count_by_action",
+        "path": "/v1/metrics/protocols/aave_v1_count_by_action"
+      },
+      {
+        "metric": "aave_v1_stable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v1_stable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v1_variable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v1_variable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v1_volume_sum_by_action",
+        "path": "/v1/metrics/protocols/aave_v1_volume_sum_by_action"
+      },
+      {
+        "metric": "aave_v2_available_liquidity_perc_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_available_liquidity_perc_by_token"
+      },
+      {
+        "metric": "aave_v2_available_liquidity_sum_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_available_liquidity_sum_by_token"
+      },
+      {
+        "metric": "aave_v2_borrows_perc_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_borrows_perc_by_token"
+      },
+      {
+        "metric": "aave_v2_borrows_sum_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_borrows_sum_by_token"
+      },
+      {
+        "metric": "aave_v2_collateral_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_collateral_rate_by_token"
+      },
+      {
+        "metric": "aave_v2_count_by_action",
+        "path": "/v1/metrics/protocols/aave_v2_count_by_action"
+      },
+      {
+        "metric": "aave_v2_stable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_stable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v2_total_value_locked_perc",
+        "path": "/v1/metrics/protocols/aave_v2_total_value_locked_perc"
+      },
+      {
+        "metric": "aave_v2_total_value_locked_sum",
+        "path": "/v1/metrics/protocols/aave_v2_total_value_locked_sum"
+      },
+      {
+        "metric": "aave_v2_variable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v2_variable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v2_volume_sum_by_action",
+        "path": "/v1/metrics/protocols/aave_v2_volume_sum_by_action"
+      },
+      {
+        "metric": "aave_v3_available_liquidity_perc_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_available_liquidity_perc_by_token"
+      },
+      {
+        "metric": "aave_v3_available_liquidity_sum_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_available_liquidity_sum_by_token"
+      },
+      {
+        "metric": "aave_v3_borrows_perc_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_borrows_perc_by_token"
+      },
+      {
+        "metric": "aave_v3_borrows_sum_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_borrows_sum_by_token"
+      },
+      {
+        "metric": "aave_v3_collateral_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_collateral_rate_by_token"
+      },
+      {
+        "metric": "aave_v3_count_by_action",
+        "path": "/v1/metrics/protocols/aave_v3_count_by_action"
+      },
+      {
+        "metric": "aave_v3_stable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_stable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v3_total_value_locked_perc",
+        "path": "/v1/metrics/protocols/aave_v3_total_value_locked_perc"
+      },
+      {
+        "metric": "aave_v3_total_value_locked_sum",
+        "path": "/v1/metrics/protocols/aave_v3_total_value_locked_sum"
+      },
+      {
+        "metric": "aave_v3_variable_borrow_rate_by_token",
+        "path": "/v1/metrics/protocols/aave_v3_variable_borrow_rate_by_token"
+      },
+      {
+        "metric": "aave_v3_volume_sum_by_action",
+        "path": "/v1/metrics/protocols/aave_v3_volume_sum_by_action"
+      },
+      {
+        "metric": "compound_count_by_action",
+        "path": "/v1/metrics/protocols/compound_count_by_action"
+      },
+      {
+        "metric": "compound_deposit_flow",
+        "path": "/v1/metrics/protocols/compound_deposit_flow"
+      },
+      {
+        "metric": "compound_loan_flow",
+        "path": "/v1/metrics/protocols/compound_loan_flow"
+      },
+      {
+        "metric": "compound_total_value_locked",
+        "path": "/v1/metrics/protocols/compound_total_value_locked"
+      },
+      {
+        "metric": "compound_utilization_ratio",
+        "path": "/v1/metrics/protocols/compound_utilization_ratio"
+      },
+      {
+        "metric": "compound_volume_by_action",
+        "path": "/v1/metrics/protocols/compound_volume_by_action"
+      },
+      {
+        "metric": "lido_deposits_volume_sum",
+        "path": "/v1/metrics/protocols/lido_deposits_volume_sum"
+      },
+      {
+        "metric": "lido_total_value_locked",
+        "path": "/v1/metrics/protocols/lido_total_value_locked"
+      },
+      {
+        "metric": "lido_volume_net",
+        "path": "/v1/metrics/protocols/lido_volume_net"
+      },
+      {
+        "metric": "lido_withdrawn_volume_sum",
+        "path": "/v1/metrics/protocols/lido_withdrawn_volume_sum"
+      },
+      {
+        "metric": "maker_event_count_by_type",
+        "path": "/v1/metrics/protocols/maker_event_count_by_type"
+      },
+      {
+        "metric": "maker_event_volume_usd_by_type",
+        "path": "/v1/metrics/protocols/maker_event_volume_usd_by_type"
+      },
+      {
+        "metric": "maker_new_vaults_created_count",
+        "path": "/v1/metrics/protocols/maker_new_vaults_created_count"
+      },
+      {
+        "metric": "maker_psm_balance_sum",
+        "path": "/v1/metrics/protocols/maker_psm_balance_sum"
+      },
+      {
+        "metric": "maker_total_value_locked_sum",
+        "path": "/v1/metrics/protocols/maker_total_value_locked_sum"
+      },
+      {
+        "metric": "maker_total_value_locked_sum_by_token",
+        "path": "/v1/metrics/protocols/maker_total_value_locked_sum_by_token"
+      },
+      {
+        "metric": "maker_total_vaults_created_cum",
+        "path": "/v1/metrics/protocols/maker_total_vaults_created_cum"
+      },
+      {
+        "metric": "uniswap_fees_sum",
+        "path": "/v1/metrics/protocols/uniswap_fees_sum"
+      },
+      {
+        "metric": "uniswap_pools_created_count",
+        "path": "/v1/metrics/protocols/uniswap_pools_created_count"
+      },
+      {
+        "metric": "uniswap_total_value_locked",
+        "path": "/v1/metrics/protocols/uniswap_total_value_locked"
+      },
+      {
+        "metric": "uniswap_total_value_locked_by_fee_tier",
+        "path": "/v1/metrics/protocols/uniswap_total_value_locked_by_fee_tier"
+      },
+      {
+        "metric": "uniswap_trades_count",
+        "path": "/v1/metrics/protocols/uniswap_trades_count"
+      },
+      {
+        "metric": "uniswap_v3_avl_by_fee_tier_mean",
+        "path": "/v1/metrics/protocols/uniswap_v3_avl_by_fee_tier_mean"
+      },
+      {
+        "metric": "uniswap_v3_avl_mean",
+        "path": "/v1/metrics/protocols/uniswap_v3_avl_mean"
+      },
+      {
+        "metric": "uniswap_v3_fees_sum_by_fee_tier",
+        "path": "/v1/metrics/protocols/uniswap_v3_fees_sum_by_fee_tier"
+      },
+      {
+        "metric": "uniswap_v3_pools_created_by_fee_tier_count",
+        "path": "/v1/metrics/protocols/uniswap_v3_pools_created_by_fee_tier_count"
+      },
+      {
+        "metric": "uniswap_volume_by_size_cohort",
+        "path": "/v1/metrics/protocols/uniswap_volume_by_size_cohort"
+      },
+      {
+        "metric": "uniswap_volume_by_token_type",
+        "path": "/v1/metrics/protocols/uniswap_volume_by_token_type"
+      },
+      {
+        "metric": "uniswap_volume_traded_sum",
+        "path": "/v1/metrics/protocols/uniswap_volume_traded_sum"
+      }
+    ]
+  },
+  "signals": {
+    "name": "Signals",
+    "endpoints": [
+      {
+        "metric": "altcoin_index",
+        "path": "/v1/metrics/signals/altcoin_index"
+      },
+      {
+        "metric": "btc_bss_goldilocks",
+        "path": "/v1/metrics/signals/btc_bss_goldilocks"
+      },
+      {
+        "metric": "btc_bss_goldilocks_short",
+        "path": "/v1/metrics/signals/btc_bss_goldilocks_short"
+      },
+      {
+        "metric": "btc_bss_indicator_1",
+        "path": "/v1/metrics/signals/btc_bss_indicator_1"
+      },
+      {
+        "metric": "btc_bss_indicator_2",
+        "path": "/v1/metrics/signals/btc_bss_indicator_2"
+      },
+      {
+        "metric": "btc_bss_indicator_3",
+        "path": "/v1/metrics/signals/btc_bss_indicator_3"
+      },
+      {
+        "metric": "btc_bss_indicator_4",
+        "path": "/v1/metrics/signals/btc_bss_indicator_4"
+      },
+      {
+        "metric": "btc_bss_short",
+        "path": "/v1/metrics/signals/btc_bss_short"
+      },
+      {
+        "metric": "btc_bss_v2",
+        "path": "/v1/metrics/signals/btc_bss_v2"
+      },
+      {
+        "metric": "btc_risk_index",
+        "path": "/v1/metrics/signals/btc_risk_index"
+      },
+      {
+        "metric": "btc_sharpe_signal",
+        "path": "/v1/metrics/signals/btc_sharpe_signal"
+      },
+      {
+        "metric": "ecosystem_momentum_index",
+        "path": "/v1/metrics/signals/ecosystem_momentum_index"
+      },
+      {
+        "metric": "l1_native_tokens_returns_vs_btc",
+        "path": "/v1/metrics/signals/l1_native_tokens_returns_vs_btc"
+      },
+      {
+        "metric": "mcap_returns_vs_btc",
+        "path": "/v1/metrics/signals/mcap_returns_vs_btc"
+      }
+    ]
+  },
+  "supply": {
+    "name": "Supply",
+    "endpoints": [
+      {
+        "metric": "active_1d_1w",
+        "path": "/v1/metrics/supply/active_1d_1w"
+      },
+      {
+        "metric": "active_1m_3m",
+        "path": "/v1/metrics/supply/active_1m_3m"
+      },
+      {
+        "metric": "active_1w_1m",
+        "path": "/v1/metrics/supply/active_1w_1m"
+      },
+      {
+        "metric": "active_1y_2y",
+        "path": "/v1/metrics/supply/active_1y_2y"
+      },
+      {
+        "metric": "active_24h",
+        "path": "/v1/metrics/supply/active_24h"
+      },
+      {
+        "metric": "active_2y_3y",
+        "path": "/v1/metrics/supply/active_2y_3y"
+      },
+      {
+        "metric": "active_3m_6m",
+        "path": "/v1/metrics/supply/active_3m_6m"
+      },
+      {
+        "metric": "active_3y_5y",
+        "path": "/v1/metrics/supply/active_3y_5y"
+      },
+      {
+        "metric": "active_5y_7y",
+        "path": "/v1/metrics/supply/active_5y_7y"
+      },
+      {
+        "metric": "active_6m_12m",
+        "path": "/v1/metrics/supply/active_6m_12m"
+      },
+      {
+        "metric": "active_7y_10y",
+        "path": "/v1/metrics/supply/active_7y_10y"
+      },
+      {
+        "metric": "active_more_10y",
+        "path": "/v1/metrics/supply/active_more_10y"
+      },
+      {
+        "metric": "active_more_1y_percent",
+        "path": "/v1/metrics/supply/active_more_1y_percent"
+      },
+      {
+        "metric": "active_more_2y_percent",
+        "path": "/v1/metrics/supply/active_more_2y_percent"
+      },
+      {
+        "metric": "active_more_3y_percent",
+        "path": "/v1/metrics/supply/active_more_3y_percent"
+      },
+      {
+        "metric": "active_more_5y_percent",
+        "path": "/v1/metrics/supply/active_more_5y_percent"
+      },
+      {
+        "metric": "activity_retention",
+        "path": "/v1/metrics/supply/activity_retention"
+      },
+      {
+        "metric": "amer_1y_supply_change",
+        "path": "/v1/metrics/supply/amer_1y_supply_change"
+      },
+      {
+        "metric": "apac_1y_supply_change",
+        "path": "/v1/metrics/supply/apac_1y_supply_change"
+      },
+      {
+        "metric": "burn_rate",
+        "path": "/v1/metrics/supply/burn_rate"
+      },
+      {
+        "metric": "burned",
+        "path": "/v1/metrics/supply/burned"
+      },
+      {
+        "metric": "current",
+        "path": "/v1/metrics/supply/current"
+      },
+      {
+        "metric": "current_adjusted",
+        "path": "/v1/metrics/supply/current_adjusted"
+      },
+      {
+        "metric": "emea_1y_supply_change",
+        "path": "/v1/metrics/supply/emea_1y_supply_change"
+      },
+      {
+        "metric": "highly_liquid_sum",
+        "path": "/v1/metrics/supply/highly_liquid_sum"
+      },
+      {
+        "metric": "hodl_waves",
+        "path": "/v1/metrics/supply/hodl_waves"
+      },
+      {
+        "metric": "holder_retention",
+        "path": "/v1/metrics/supply/holder_retention"
+      },
+      {
+        "metric": "illiquid_change",
+        "path": "/v1/metrics/supply/illiquid_change"
+      },
+      {
+        "metric": "illiquid_sum",
+        "path": "/v1/metrics/supply/illiquid_sum"
+      },
+      {
+        "metric": "inflation_rate",
+        "path": "/v1/metrics/supply/inflation_rate"
+      },
+      {
+        "metric": "issued",
+        "path": "/v1/metrics/supply/issued"
+      },
+      {
+        "metric": "liquid_change",
+        "path": "/v1/metrics/supply/liquid_change"
+      },
+      {
+        "metric": "liquid_illiquid_sum",
+        "path": "/v1/metrics/supply/liquid_illiquid_sum"
+      },
+      {
+        "metric": "liquid_sum",
+        "path": "/v1/metrics/supply/liquid_sum"
+      },
+      {
+        "metric": "loss_sum",
+        "path": "/v1/metrics/supply/loss_sum"
+      },
+      {
+        "metric": "lth_loss_sum",
+        "path": "/v1/metrics/supply/lth_loss_sum"
+      },
+      {
+        "metric": "lth_net_change",
+        "path": "/v1/metrics/supply/lth_net_change"
+      },
+      {
+        "metric": "lth_profit_sum",
+        "path": "/v1/metrics/supply/lth_profit_sum"
+      },
+      {
+        "metric": "lth_sth_profit_loss_relative",
+        "path": "/v1/metrics/supply/lth_sth_profit_loss_relative"
+      },
+      {
+        "metric": "lth_sum",
+        "path": "/v1/metrics/supply/lth_sum"
+      },
+      {
+        "metric": "minted",
+        "path": "/v1/metrics/supply/minted"
+      },
+      {
+        "metric": "probably_lost",
+        "path": "/v1/metrics/supply/probably_lost"
+      },
+      {
+        "metric": "profit_relative",
+        "path": "/v1/metrics/supply/profit_relative"
+      },
+      {
+        "metric": "profit_sum",
+        "path": "/v1/metrics/supply/profit_sum"
+      },
+      {
+        "metric": "provably_lost",
+        "path": "/v1/metrics/supply/provably_lost"
+      },
+      {
+        "metric": "rcap_by_date_bands",
+        "path": "/v1/metrics/supply/rcap_by_date_bands"
+      },
+      {
+        "metric": "rcap_by_date_bands_relative",
+        "path": "/v1/metrics/supply/rcap_by_date_bands_relative"
+      },
+      {
+        "metric": "rcap_hodl_waves",
+        "path": "/v1/metrics/supply/rcap_hodl_waves"
+      },
+      {
+        "metric": "revived_more_1y_sum",
+        "path": "/v1/metrics/supply/revived_more_1y_sum"
+      },
+      {
+        "metric": "revived_more_2y_sum",
+        "path": "/v1/metrics/supply/revived_more_2y_sum"
+      },
+      {
+        "metric": "revived_more_3y_sum",
+        "path": "/v1/metrics/supply/revived_more_3y_sum"
+      },
+      {
+        "metric": "revived_more_5y_sum",
+        "path": "/v1/metrics/supply/revived_more_5y_sum"
+      },
+      {
+        "metric": "sth_loss_sum",
+        "path": "/v1/metrics/supply/sth_loss_sum"
+      },
+      {
+        "metric": "sth_lth_realized_value_ratio",
+        "path": "/v1/metrics/supply/sth_lth_realized_value_ratio"
+      },
+      {
+        "metric": "sth_profit_loss_ratio",
+        "path": "/v1/metrics/supply/sth_profit_loss_ratio"
+      },
+      {
+        "metric": "sth_profit_sum",
+        "path": "/v1/metrics/supply/sth_profit_sum"
+      },
+      {
+        "metric": "sth_sum",
+        "path": "/v1/metrics/supply/sth_sum"
+      },
+      {
+        "metric": "supply_by_date_bands",
+        "path": "/v1/metrics/supply/supply_by_date_bands"
+      },
+      {
+        "metric": "supply_by_date_bands_relative",
+        "path": "/v1/metrics/supply/supply_by_date_bands_relative"
+      },
+      {
+        "metric": "supply_by_txout_type",
+        "path": "/v1/metrics/supply/supply_by_txout_type"
+      },
+      {
+        "metric": "tips",
+        "path": "/v1/metrics/supply/tips"
+      }
+    ]
+  },
+  "transactions": {
+    "name": "Transactions",
+    "endpoints": [
+      {
+        "metric": "contract_calls_external_count",
+        "path": "/v1/metrics/transactions/contract_calls_external_count"
+      },
+      {
+        "metric": "contract_calls_internal_count",
+        "path": "/v1/metrics/transactions/contract_calls_internal_count"
+      },
+      {
+        "metric": "count",
+        "path": "/v1/metrics/transactions/count"
+      },
+      {
+        "metric": "entity_adjusted_count",
+        "path": "/v1/metrics/transactions/entity_adjusted_count"
+      },
+      {
+        "metric": "inscriptions_count",
+        "path": "/v1/metrics/transactions/inscriptions_count"
+      },
+      {
+        "metric": "inscriptions_count_share",
+        "path": "/v1/metrics/transactions/inscriptions_count_share"
+      },
+      {
+        "metric": "inscriptions_count_sum",
+        "path": "/v1/metrics/transactions/inscriptions_count_sum"
+      },
+      {
+        "metric": "inscriptions_fee",
+        "path": "/v1/metrics/transactions/inscriptions_fee"
+      },
+      {
+        "metric": "inscriptions_fee_share",
+        "path": "/v1/metrics/transactions/inscriptions_fee_share"
+      },
+      {
+        "metric": "inscriptions_size_share",
+        "path": "/v1/metrics/transactions/inscriptions_size_share"
+      },
+      {
+        "metric": "inscriptions_size_sum",
+        "path": "/v1/metrics/transactions/inscriptions_size_sum"
+      },
+      {
+        "metric": "rate",
+        "path": "/v1/metrics/transactions/rate"
+      },
+      {
+        "metric": "runes_count",
+        "path": "/v1/metrics/transactions/runes_count"
+      },
+      {
+        "metric": "runes_count_share",
+        "path": "/v1/metrics/transactions/runes_count_share"
+      },
+      {
+        "metric": "runes_count_sum",
+        "path": "/v1/metrics/transactions/runes_count_sum"
+      },
+      {
+        "metric": "runes_fee",
+        "path": "/v1/metrics/transactions/runes_fee"
+      },
+      {
+        "metric": "runes_fee_share",
+        "path": "/v1/metrics/transactions/runes_fee_share"
+      },
+      {
+        "metric": "segwit_adoption",
+        "path": "/v1/metrics/transactions/segwit_adoption"
+      },
+      {
+        "metric": "size_mean",
+        "path": "/v1/metrics/transactions/size_mean"
+      },
+      {
+        "metric": "size_sum",
+        "path": "/v1/metrics/transactions/size_sum"
+      },
+      {
+        "metric": "spent_output_types_share",
+        "path": "/v1/metrics/transactions/spent_output_types_share"
+      },
+      {
+        "metric": "taproot_adoption",
+        "path": "/v1/metrics/transactions/taproot_adoption"
+      },
+      {
+        "metric": "transfers_between_exchanges_count",
+        "path": "/v1/metrics/transactions/transfers_between_exchanges_count"
+      },
+      {
+        "metric": "transfers_count",
+        "path": "/v1/metrics/transactions/transfers_count"
+      },
+      {
+        "metric": "transfers_count_bridges",
+        "path": "/v1/metrics/transactions/transfers_count_bridges"
+      },
+      {
+        "metric": "transfers_count_bridges_relative",
+        "path": "/v1/metrics/transactions/transfers_count_bridges_relative"
+      },
+      {
+        "metric": "transfers_count_defi",
+        "path": "/v1/metrics/transactions/transfers_count_defi"
+      },
+      {
+        "metric": "transfers_count_defi_relative",
+        "path": "/v1/metrics/transactions/transfers_count_defi_relative"
+      },
+      {
+        "metric": "transfers_count_erc20",
+        "path": "/v1/metrics/transactions/transfers_count_erc20"
+      },
+      {
+        "metric": "transfers_count_erc20_relative",
+        "path": "/v1/metrics/transactions/transfers_count_erc20_relative"
+      },
+      {
+        "metric": "transfers_count_nfts",
+        "path": "/v1/metrics/transactions/transfers_count_nfts"
+      },
+      {
+        "metric": "transfers_count_nfts_relative",
+        "path": "/v1/metrics/transactions/transfers_count_nfts_relative"
+      },
+      {
+        "metric": "transfers_count_stablecoins",
+        "path": "/v1/metrics/transactions/transfers_count_stablecoins"
+      },
+      {
+        "metric": "transfers_count_stablecoins_relative",
+        "path": "/v1/metrics/transactions/transfers_count_stablecoins_relative"
+      },
+      {
+        "metric": "transfers_count_vanilla",
+        "path": "/v1/metrics/transactions/transfers_count_vanilla"
+      },
+      {
+        "metric": "transfers_count_vanilla_relative",
+        "path": "/v1/metrics/transactions/transfers_count_vanilla_relative"
+      },
+      {
+        "metric": "transfers_exchanges_to_whales_count",
+        "path": "/v1/metrics/transactions/transfers_exchanges_to_whales_count"
+      },
+      {
+        "metric": "transfers_from_coinjoins_count",
+        "path": "/v1/metrics/transactions/transfers_from_coinjoins_count"
+      },
+      {
+        "metric": "transfers_from_exchanges_count",
+        "path": "/v1/metrics/transactions/transfers_from_exchanges_count"
+      },
+      {
+        "metric": "transfers_from_miners_count",
+        "path": "/v1/metrics/transactions/transfers_from_miners_count"
+      },
+      {
+        "metric": "transfers_from_otc_desks_count",
+        "path": "/v1/metrics/transactions/transfers_from_otc_desks_count"
+      },
+      {
+        "metric": "transfers_rate",
+        "path": "/v1/metrics/transactions/transfers_rate"
+      },
+      {
+        "metric": "transfers_to_exchanges_count",
+        "path": "/v1/metrics/transactions/transfers_to_exchanges_count"
+      },
+      {
+        "metric": "transfers_to_miners_count",
+        "path": "/v1/metrics/transactions/transfers_to_miners_count"
+      },
+      {
+        "metric": "transfers_to_otc_desks_count",
+        "path": "/v1/metrics/transactions/transfers_to_otc_desks_count"
+      },
+      {
+        "metric": "transfers_volume_adjusted_mean",
+        "path": "/v1/metrics/transactions/transfers_volume_adjusted_mean"
+      },
+      {
+        "metric": "transfers_volume_adjusted_median",
+        "path": "/v1/metrics/transactions/transfers_volume_adjusted_median"
+      },
+      {
+        "metric": "transfers_volume_adjusted_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_adjusted_sum"
+      },
+      {
+        "metric": "transfers_volume_between_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_between_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_by_size_entity_adjusted_relative",
+        "path": "/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_relative"
+      },
+      {
+        "metric": "transfers_volume_by_size_entity_adjusted_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_by_size_entity_adjusted_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_lth_loss_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_loss_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_lth_profit_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_profit_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_lth_sth_profit_loss_relative",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sth_profit_loss_relative"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_lth_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_lth_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_sth_loss_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_loss_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_sth_profit_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_profit_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_from_sth_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_from_sth_sum"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_mean",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_mean"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_median",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_median"
+      },
+      {
+        "metric": "transfers_volume_entity_adjusted_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_entity_adjusted_sum"
+      },
+      {
+        "metric": "transfers_volume_exchanges_net",
+        "path": "/v1/metrics/transactions/transfers_volume_exchanges_net"
+      },
+      {
+        "metric": "transfers_volume_exchanges_net_by_size",
+        "path": "/v1/metrics/transactions/transfers_volume_exchanges_net_by_size"
+      },
+      {
+        "metric": "transfers_volume_exchanges_to_whales_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_exchanges_to_whales_sum"
+      },
+      {
+        "metric": "transfers_volume_from_coinjoins_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_from_coinjoins_sum"
+      },
+      {
+        "metric": "transfers_volume_from_exchanges_mean",
+        "path": "/v1/metrics/transactions/transfers_volume_from_exchanges_mean"
+      },
+      {
+        "metric": "transfers_volume_from_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_from_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_from_miners_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_from_miners_sum"
+      },
+      {
+        "metric": "transfers_volume_from_otc_desks_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_from_otc_desks_sum"
+      },
+      {
+        "metric": "transfers_volume_loss_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_loss_sum"
+      },
+      {
+        "metric": "transfers_volume_lth_sth_to_exchanges_profit_loss_relative",
+        "path": "/v1/metrics/transactions/transfers_volume_lth_sth_to_exchanges_profit_loss_relative"
+      },
+      {
+        "metric": "transfers_volume_lth_to_exchanges_loss_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_loss_sum"
+      },
+      {
+        "metric": "transfers_volume_lth_to_exchanges_profit_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_profit_sum"
+      },
+      {
+        "metric": "transfers_volume_lth_to_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_lth_to_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_mean",
+        "path": "/v1/metrics/transactions/transfers_volume_mean"
+      },
+      {
+        "metric": "transfers_volume_median",
+        "path": "/v1/metrics/transactions/transfers_volume_median"
+      },
+      {
+        "metric": "transfers_volume_miners_net",
+        "path": "/v1/metrics/transactions/transfers_volume_miners_net"
+      },
+      {
+        "metric": "transfers_volume_miners_to_exchanges",
+        "path": "/v1/metrics/transactions/transfers_volume_miners_to_exchanges"
+      },
+      {
+        "metric": "transfers_volume_miners_to_exchanges_all",
+        "path": "/v1/metrics/transactions/transfers_volume_miners_to_exchanges_all"
+      },
+      {
+        "metric": "transfers_volume_profit_relative",
+        "path": "/v1/metrics/transactions/transfers_volume_profit_relative"
+      },
+      {
+        "metric": "transfers_volume_profit_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_profit_sum"
+      },
+      {
+        "metric": "transfers_volume_sth_to_exchanges_loss_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_loss_sum"
+      },
+      {
+        "metric": "transfers_volume_sth_to_exchanges_profit_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_profit_sum"
+      },
+      {
+        "metric": "transfers_volume_sth_to_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_sth_to_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_sum"
+      },
+      {
+        "metric": "transfers_volume_to_exchanges_mean",
+        "path": "/v1/metrics/transactions/transfers_volume_to_exchanges_mean"
+      },
+      {
+        "metric": "transfers_volume_to_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_to_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_to_miners_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_to_miners_sum"
+      },
+      {
+        "metric": "transfers_volume_to_otc_desks_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_to_otc_desks_sum"
+      },
+      {
+        "metric": "transfers_volume_whales_to_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_whales_to_exchanges_sum"
+      },
+      {
+        "metric": "transfers_volume_within_exchanges_sum",
+        "path": "/v1/metrics/transactions/transfers_volume_within_exchanges_sum"
+      },
+      {
+        "metric": "transfers_whales_to_exchanges_count",
+        "path": "/v1/metrics/transactions/transfers_whales_to_exchanges_count"
+      },
+      {
+        "metric": "tx_types_breakdown_count",
+        "path": "/v1/metrics/transactions/tx_types_breakdown_count"
+      },
+      {
+        "metric": "tx_types_breakdown_relative",
+        "path": "/v1/metrics/transactions/tx_types_breakdown_relative"
+      }
+    ]
+  }
+}
