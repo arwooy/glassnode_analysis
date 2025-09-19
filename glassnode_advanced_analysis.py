@@ -773,15 +773,26 @@ class GlassnodeAdvancedAnalyzer:
                 drawdown = (cumulative_returns - running_max) / running_max
                 max_drawdown = drawdown.min() if len(drawdown) > 0 else 0
                 
-                # 计算夏普比率
-                annual_return = regime_benchmark_returns.mean() * 252 if len(regime_benchmark_returns) > 0 else 0
+                # 计算累计收益率
+                cumulative_return = (1 + regime_benchmark_returns).prod() - 1 if len(regime_benchmark_returns) > 0 else 0
+                
+                # 计算年化收益率（使用几何平均）
+                total_days = mask.sum()
+                if total_days > 0 and cumulative_return > -1:
+                    years = total_days / 365.25
+                    # 使用复利公式计算年化收益率
+                    annual_return = (1 + cumulative_return) ** (1/years) - 1 if years > 0 else 0
+                else:
+                    annual_return = 0
+                
+                # 计算年化波动率和夏普比率
                 annual_volatility = regime_benchmark_returns.std() * np.sqrt(252) if len(regime_benchmark_returns) > 1 else 0
                 sharpe = (annual_return - 0.02) / annual_volatility if annual_volatility > 0 else 0
                 
                 full_regime_benchmarks[regime_name] = {
-                    'total_days': mask.sum(),
+                    'total_days': total_days,
                     'benchmark_annual_return': annual_return,
-                    'benchmark_cumulative': (1 + regime_benchmark_returns).prod() - 1 if len(regime_benchmark_returns) > 0 else 0,
+                    'benchmark_cumulative': cumulative_return,
                     'benchmark_annual_volatility': annual_volatility,
                     'benchmark_max_drawdown': max_drawdown,
                     'benchmark_sharpe': sharpe
