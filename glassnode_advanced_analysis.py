@@ -571,11 +571,16 @@ class GlassnodeAdvancedAnalyzer:
                     for horizon in [1, 5, 10, 20, 30, 60, 120, 360, 720]:
                         try:
                             # 计算未来收益
-                            future_returns = price_data.shift(-horizon).pct_change(horizon)
-                            
-                            # 如果是空头策略，反转收益符号
                             if strategy_type == 'short':
-                                future_returns = -future_returns
+                                # 做空策略：使用价格比率的倒数
+                                # 价格从P1变到P2，做空收益 = 1/price_ratio - 1
+                                future_prices = price_data.shift(-horizon)
+                                price_ratio = future_prices / price_data
+                                # 做空收益 = 1/price_ratio - 1
+                                future_returns = (1 / price_ratio - 1).fillna(0)
+                            else:
+                                # 做多策略：正常的价格变化收益
+                                future_returns = price_data.shift(-horizon).pct_change(horizon)
                             
                             # 将未来收益分为正负两类
                             returns_binary = (future_returns > 0).astype(int)
@@ -1205,15 +1210,55 @@ class GlassnodeAdvancedAnalyzer:
         daily_returns = aligned_price.pct_change().fillna(0)
         
         # 策略收益计算
-        # aligned_signal已经包含了方向：1=多头，-1=空头，0=空仓
-        # 多头(signal=1)：1 * 日收益率 = 价格上涨时赚钱
-        # 空头(signal=-1)：-1 * 日收益率 = 价格下跌时赚钱
         # shift(1)避免前瞻偏差（今天的信号明天生效）
-        strategy_returns = aligned_signal.shift(1) * daily_returns
+        shifted_signal = aligned_signal.shift(1).fillna(0)
+        
+        # 分别处理多头和空头位置
+        long_positions = (shifted_signal == 1)  # 多头信号
+        short_positions = (shifted_signal == -1)  # 空头信号
+        
+        # 初始化策略收益序列
+        strategy_returns = pd.Series(index=aligned_price.index, data=0.0)
+        
+        # 多头收益：正常的价格变化收益
+        strategy_returns[long_positions] = daily_returns[long_positions]
+        
+        # 空头收益：需要特殊处理以确保对称性
+        # 使用价格比率方法计算空头收益
+        if short_positions.any():
+            # 找出所有空头持仓期间
+            short_periods = []
+            in_short = False
+            start_idx = None
+            
+            for i, is_short in enumerate(short_positions):
+                if is_short and not in_short:
+                    # 开始做空
+                    start_idx = i
+                    in_short = True
+                elif not is_short and in_short:
+                    # 结束做空
+                    short_periods.append((start_idx, i))
+                    in_short = False
+            
+            # 如果最后仍在做空
+            if in_short:
+                short_periods.append((start_idx, len(short_positions)))
+            
+            # 计算每个做空期间的收益
+            for start, end in short_periods:
+                if start < len(aligned_price) and end <= len(aligned_price):
+                    # 获取做空期间的价格
+                    period_prices = aligned_price.iloc[start:end]
+                    if len(period_prices) > 0:
+                        # 计算相对于期初的价格比率
+                        price_ratio = period_prices / period_prices.iloc[0]
+                        # 做空收益 = 1/price_ratio - 1
+                        # 但为了保持日收益率格式，我们计算每日收益
+                        short_returns = (1 / price_ratio).pct_change().fillna(0)
+                        strategy_returns.iloc[start:end] = short_returns
         
         # 累积收益
-        # 注意：这是简化计算，实际空头可能面临保证金追加或强制平仓
-        # 真实交易中，空头损失可能超过100%（需要追加保证金）
         cumulative_returns = (1 + strategy_returns).cumprod()
         
         # 年化收益和波动率
