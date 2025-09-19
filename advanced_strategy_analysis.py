@@ -4,7 +4,7 @@ import numpy as np
 
 # 读取JSON文件
 print("正在加载数据...")
-with open('indicator_analysis_results_BTC_20250919_131040.json', 'r') as f:
+with open('indicator_analysis_results_BTC_20250919_143653.json', 'r') as f:
     data = json.load(f)
 
 # =============================================================================

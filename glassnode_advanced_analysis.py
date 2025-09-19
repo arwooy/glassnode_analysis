@@ -41,15 +41,75 @@ plt.rcParams['axes.unicode_minus'] = False
 API_KEY = "myapi_sk_b3fa36048ea022be1c21e626742d4dec"
 headers = {"x-key": API_KEY}
 
-# 全局分析器实例（用于多进程）
-_global_analyzer = None
-
-def process_indicator_wrapper(args):
-    """全局函数包装器，用于多进程池调用"""
-    global _global_analyzer
-    if _global_analyzer is None:
+def process_single_indicator_worker(args):
+    """独立的处理函数，用于多进程池调用，在每个进程中创建新的分析器"""
+    try:
+        # 解包参数
+        api_key, cache_dir, categories, asset, category, endpoint_info, price_data, market_regime, \
+        full_regime_benchmarks, benchmark_returns_long, \
+        benchmark_returns_short, only_cache = args
+        
+        # 在每个进程中创建一个新的分析器实例
+        analyzer = GlassnodeAdvancedAnalyzer(api_key)
+        analyzer.cache_dir = cache_dir
+        analyzer.categories = categories  # 传递categories配置
+        analyzer.asset = asset
+        
+        # 从endpoint_info中提取metric和path
+        if isinstance(endpoint_info, dict):
+            metric = endpoint_info['metric']
+            path = endpoint_info.get('path', None)
+        else:
+            metric = endpoint_info
+            path = None
+        
+        print(f"[进程 {os.getpid()}] 分析 {metric}...")
+        
+        # 获取数据
+        df = analyzer.fetch_metric_data(category, metric, 
+                                   price_data.index[0], 
+                                   price_data.index[-1],
+                                   path=path,
+                                   asset=asset,
+                                   only_cache=only_cache)
+        if df.empty:
+            return None
+        
+        indicator_data = df[metric]
+        
+        # 1. 多时间窗口分析
+        multi_horizon = analyzer.calculate_information_gain_multi_horizon(
+            indicator_data, price_data
+        )
+        
+        # 2. 找最优窗口
+        optimal = analyzer.find_optimal_horizon(multi_horizon)
+        
+        # 3. 阈值影响分析
+        threshold_impact = analyzer.analyze_threshold_impact(
+            indicator_data, price_data,
+            market_regime=market_regime,
+            full_regime_benchmarks=full_regime_benchmarks,
+            benchmark_long=benchmark_returns_long,
+            benchmark_short=benchmark_returns_short
+        )
+        
+        # 返回结果
+        result_dict = {
+            'multi_horizon': multi_horizon,
+            'optimal': optimal,
+            'threshold_impact': threshold_impact
+        }
+        
+        return (metric, result_dict)
+        
+    except Exception as e:
+        metric_name = 'unknown'
+        if 'metric' in locals():
+            metric_name = metric
+        print(f"[进程 {os.getpid()}] 处理 {metric_name} 时出错: {str(e)}")
+        traceback.print_exc()
         return None
-    return _global_analyzer._process_single_indicator(args)
 
 class GlassnodeAdvancedAnalyzer:
     """Glassnode高级分析器"""
@@ -1528,30 +1588,167 @@ class GlassnodeAdvancedAnalyzer:
         # 准备并行处理的参数
         process_args = []
         for category, endpoint_info in key_indicators:
-            process_args.append((
-                category, endpoint_info, price_data, market_regime, 
-                full_regime_benchmarks, benchmark_returns_long, 
-                benchmark_returns_short, self.asset, only_cache
-            ))
+            # 准备完整的参数包，包括配置信息
+            args = (
+                self.api_key,
+                self.cache_dir,
+                self.categories,  # 传递categories配置
+                self.asset,
+                category, 
+                endpoint_info, 
+                price_data, 
+                market_regime, 
+                full_regime_benchmarks, 
+                benchmark_returns_long, 
+                benchmark_returns_short, 
+                only_cache
+            )
+            process_args.append(args)
         
         # 使用多进程并行处理指标
         print(f"\n使用 {num_workers} 个进程并行处理 {len(process_args)} 个指标...")
         
-        # 设置全局分析器实例
-        global _global_analyzer
-        _global_analyzer = self
-        
         # 使用多进程池
         with Pool(processes=num_workers) as pool:
-            results = pool.map(process_indicator_wrapper, process_args)
+            results = pool.map(process_single_indicator_worker, process_args)
         
         # 收集结果
         for result in results:
             if result is not None:
                 metric_name, result_dict = result
                 self.results[metric_name] = result_dict
-        
+        self.analysis_results['indicators'] = self.results
         print(f"\n成功分析了 {len(self.results)} 个指标")
+        
+        # 原来的串行处理代码已经被多进程替代，注释掉
+        '''
+        for category, endpoint_info in key_indicators:
+            # 从endpoint_info中提取metric和path
+            if isinstance(endpoint_info, dict):
+                metric = endpoint_info['metric']
+                path = endpoint_info.get('path', None)
+            else:
+                metric = endpoint_info
+                path = None
+            
+            print(f"\n分析 {metric}...")
+            
+            # 获取数据，传入path参数、asset和only_cache
+            df = self.fetch_metric_data(category, metric, 
+                                       price_data.index[0], 
+                                       price_data.index[-1],
+                                       path=path,
+                                       asset=self.asset,
+                                       only_cache=only_cache)
+            if df.empty:
+                continue
+            
+            indicator_data = df[metric]
+            
+            # 1. 多时间窗口分析
+            multi_horizon = self.calculate_information_gain_multi_horizon(
+                indicator_data, price_data
+            )
+            
+            # 2. 找最优窗口
+            optimal = self.find_optimal_horizon(multi_horizon)
+            
+            # 3. 阈值影响分析（传入市场状态和统一基准）
+            threshold_impact = self.analyze_threshold_impact(
+                indicator_data, price_data,
+                market_regime=market_regime,
+                full_regime_benchmarks=full_regime_benchmarks,
+                benchmark_long=benchmark_returns_long,
+                benchmark_short=benchmark_returns_short
+            )
+            
+            # 保存结果到两个地方
+            result_dict = {
+                'multi_horizon': multi_horizon,
+                'optimal': optimal,
+                'threshold_impact': threshold_impact
+            }
+            
+            # 保存到新结构
+            self.analysis_results['indicators'][metric] = result_dict
+            
+            # 保留旧结构以向后兼容
+            self.indicator_analysis_results[metric] = result_dict
+            
+            # 打印关键结果
+            if optimal:
+                print(f"  最优预测窗口: {optimal.get('optimal_horizon_ig', 'N/A')}天")
+                print(f"  最大信息增益: {optimal.get('max_ig', 0):.4f}")
+                
+            # 打印相关性和策略信息
+            if threshold_impact:
+                first_result = next(iter(threshold_impact.values()))
+                corr_type = first_result.get('correlation_type', 'unknown')
+                corr_value = first_result.get('correlation_value', 0)
+                print(f"  相关性: {corr_type} ({corr_value:.3f})")
+                
+                # 找出最佳的多头和空头策略
+                best_long_ir = -999
+                best_short_ir = -999
+                best_long_pct = None
+                best_short_pct = None
+                best_long_ig = -999
+                best_short_ig = -999
+                best_long_accuracy = 0
+                best_short_accuracy = 0
+                best_long_horizon = None
+                best_short_horizon = None
+                
+                for pct, pct_data in threshold_impact.items():
+                    strategies = pct_data.get('strategies', {})
+                    
+                    # 检查多头策略
+                    if 'long' in strategies:
+                        ir = strategies['long']['relative_performance'].get('information_ratio', -999)
+                        if ir > best_long_ir:
+                            best_long_ir = ir
+                            best_long_pct = pct
+                        
+                        # 检查最优时间窗口的信息增益
+                        optimal = strategies['long'].get('optimal_horizon')
+                        if optimal:
+                            ig = optimal.get('information_gain', 0)
+                            accuracy = optimal.get('signal_accuracy', 0)
+                            horizon = optimal.get('horizon', 'N/A')
+                            if ig > best_long_ig:
+                                best_long_ig = ig
+                                best_long_accuracy = accuracy
+                                best_long_horizon = horizon
+                    
+                    # 检查空头策略
+                    if 'short' in strategies:
+                        ir = strategies['short']['relative_performance'].get('information_ratio', -999)
+                        if ir > best_short_ir:
+                            best_short_ir = ir
+                            best_short_pct = pct
+                        
+                        # 检查最优时间窗口的信息增益
+                        optimal = strategies['short'].get('optimal_horizon')
+                        if optimal:
+                            ig = optimal.get('information_gain', 0)
+                            accuracy = optimal.get('signal_accuracy', 0)
+                            horizon = optimal.get('horizon', 'N/A')
+                            if ig > best_short_ig:
+                                best_short_ig = ig
+                                best_short_accuracy = accuracy
+                                best_short_horizon = horizon
+                
+                # 打印最佳策略
+                if best_long_pct is not None:
+                    print(f"  最佳多头策略: 阈值{best_long_pct}%, IR={best_long_ir:.3f}")
+                    if best_long_horizon:
+                        print(f"    最优预测窗口: {best_long_horizon}, IG={best_long_ig:.4f}, 准确率={best_long_accuracy:.1%}")
+                        
+                if best_short_pct is not None:
+                    print(f"  最佳空头策略: 阈值{best_short_pct}%, IR={best_short_ir:.3f}")
+                    if best_short_horizon:
+                        print(f"    最优预测窗口: {best_short_horizon}, IG={best_short_ig:.4f}, 准确率={best_short_accuracy:.1%}")
+        '''
 
 
 def main():

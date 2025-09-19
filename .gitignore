@@ -58,4 +58,7 @@ htmlcov/
 .coverage
 .coverage.*
 coverage.xml
-*.coverindicator_analysis_results_*.json
+*.cover
+
+# Large result files
+indicator_analysis_results_*.json
