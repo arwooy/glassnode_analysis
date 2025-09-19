@@ -172,10 +172,10 @@ if 'short' in full_regime_benchmarks:
             print(f"    夏普比率: {r.get('benchmark_sharpe', 0):.3f}")
 
 # =============================================================================
-# 3. 寻找全市场正收益+正超额策略
+# 3. 寻找全市场正收益策略
 # =============================================================================
 print("\n" + "=" * 80)
-print("全市场正收益且正超额收益策略分析")
+print("全市场正收益策略分析")
 print("=" * 80)
 
 indicators = data.get('indicators', {})
@@ -306,7 +306,7 @@ for indicator_name, indicator_data in indicators.items():
                     })
 
 # 输出做多全天候策略
-print(f"\n【做多策略 - 全市场正收益+正超额】")
+print(f"\n【做多策略 - 全市场正收益】")
 print(f"找到 {len(all_weather_positive_long)} 个策略\n")
 
 if all_weather_positive_long:
@@ -328,7 +328,7 @@ if all_weather_positive_long:
     df_long_sorted.to_csv('all_weather_positive_long_strategies.csv', index=False)
 
 # 输出做空全天候策略
-print(f"\n【做空策略 - 全市场正收益+正超额】")
+print(f"\n【做空策略 - 全市场正收益】")
 print(f"找到 {len(all_weather_positive_short)} 个策略\n")
 
 if all_weather_positive_short:
@@ -667,7 +667,7 @@ print("\n" + "=" * 80)
 print("综合统计摘要")
 print("=" * 80)
 
-print(f"\n全市场正收益+正超额策略数量:")
+print(f"\n全市场正收益策略数量:")
 print(f"  做多策略: {len(all_weather_positive_long)}个")
 print(f"  做空策略: {len(all_weather_positive_short)}个")
 
