@@ -192,6 +192,8 @@ for indicator_name, indicator_data in indicators.items():
         optimal_horizon_rank = optimal_data.get('optimal_horizon_rank_ic', 0)
         max_ig = optimal_data.get('max_ig', 0)
         max_mi = optimal_data.get('max_mi', 0)
+        optimal_horizon_ig = optimal_data.get('optimal_horizon_ig', 0)
+        optimal_horizon_mi = optimal_data.get('optimal_horizon_mi', 0)
         
         ic_results.append({
             'indicator': indicator_name,
@@ -200,7 +202,9 @@ for indicator_name, indicator_data in indicators.items():
             'max_pearson_ic': pearson_ic,
             'optimal_horizon_pearson': optimal_horizon_pearson,
             'max_ig': max_ig,
-            'max_mi': max_mi
+            'optimal_horizon_ig': optimal_horizon_ig,
+            'max_mi': max_mi,
+            'optimal_horizon_mi': optimal_horizon_mi
         })
 
 # 转换为DataFrame
@@ -230,7 +234,7 @@ top30_by_ig = df_ic.nlargest(30, 'max_ig')
 
 print("\n【Top 30 指标 - 按信息增益 (Information Gain) 排序】")
 for i, (idx, row) in enumerate(top30_by_ig.iterrows(), 1):
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | MI: {row['max_mi']:.4f}")
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | 最优周期: {row['optimal_horizon_ig']:3d}天 | MI: {row['max_mi']:.4f}")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
