@@ -17,7 +17,6 @@ import hashlib
 import pickle
 from datetime import datetime, timedelta
 from scipy.stats import entropy
-from itertools import combinations
 from typing import Dict, List, Tuple, Optional
 import warnings
 from scipy import stats
@@ -1083,123 +1082,6 @@ class GlassnodeAdvancedAnalyzer:
         
         return scores
     
-    def analyze_indicator_combinations(self, 
-                                      indicators_dict: Dict[str, pd.Series],
-                                      price_data: pd.Series,
-                                      combination_size: int = 2) -> Dict:
-        """分析指标组合的效果"""
-        results = {}
-        
-        # 获取所有指标名称
-        indicator_names = list(indicators_dict.keys())
-        
-        # 生成组合
-        for combo in combinations(indicator_names, combination_size):
-            try:
-                # 合并指标数据
-                combined_df = pd.DataFrame()
-                for ind_name in combo:
-                    combined_df[ind_name] = indicators_dict[ind_name]
-                
-                # 标准化
-                from sklearn.preprocessing import StandardScaler
-                scaler = StandardScaler()
-                
-                # 确保没有NaN
-                combined_df = combined_df.dropna()
-                if len(combined_df) < 100:
-                    continue
-                
-                # 标准化并计算组合指标
-                scaled_data = scaler.fit_transform(combined_df)
-                
-                # 尝试不同的组合方式
-                combo_methods = {
-                    'mean': np.mean(scaled_data, axis=1),
-                    'weighted': self.calculate_weighted_combination(scaled_data, price_data, combined_df.index),
-                    'pca': self.calculate_pca_combination(scaled_data)
-                }
-                
-                combo_results = {}
-                for method_name, combo_indicator in combo_methods.items():
-                    if combo_indicator is None:
-                        continue
-                        
-                    # 转换为Series
-                    combo_series = pd.Series(combo_indicator, index=combined_df.index)
-                    
-                    # 计算信息增益
-                    ig_results = self.calculate_information_gain_multi_horizon(
-                        combo_series, 
-                        price_data,
-                        horizons=[1, 7, 30, 60, 90, 180, 365]
-                    )
-                    
-                    if ig_results:
-                        # 平均信息增益
-                        avg_ig = np.mean([r['information_gain'] for r in ig_results.values()])
-                        avg_mi = np.mean([r['normalized_mi'] for r in ig_results.values()])
-                        
-                        combo_results[method_name] = {
-                            'avg_ig': avg_ig,
-                            'avg_mi': avg_mi,
-                            'horizons': ig_results
-                        }
-                
-                if combo_results:
-                    results[combo] = combo_results
-                    
-            except Exception as e:
-                continue
-        
-        return results
-    
-    def calculate_weighted_combination(self, scaled_data: np.ndarray, 
-                                      price_data: pd.Series, 
-                                      index: pd.Index) -> np.ndarray:
-        """计算加权组合"""
-        try:
-            # 使用与价格的相关性作为权重
-            weights = []
-            for i in range(scaled_data.shape[1]):
-                indicator_series = pd.Series(scaled_data[:, i], index=index)
-                # 计算与未来价格的相关性
-                future_price = price_data.shift(-7)
-                price_change = (future_price / price_data - 1).fillna(0)
-                
-                # 对齐数据
-                aligned_data = pd.DataFrame({
-                    'ind': indicator_series,
-                    'price_change': price_change
-                }).dropna()
-                
-                if len(aligned_data) > 0:
-                    corr = abs(aligned_data['ind'].corr(aligned_data['price_change']))
-                    weights.append(corr)
-                else:
-                    weights.append(0)
-            
-            # 归一化权重
-            weights = np.array(weights)
-            if weights.sum() > 0:
-                weights = weights / weights.sum()
-            else:
-                weights = np.ones(len(weights)) / len(weights)
-            
-            # 加权组合
-            return np.dot(scaled_data, weights)
-            
-        except:
-            return None
-    
-    def calculate_pca_combination(self, scaled_data: np.ndarray) -> np.ndarray:
-        """使用PCA计算组合"""
-        try:
-            from sklearn.decomposition import PCA
-            pca = PCA(n_components=1)
-            return pca.fit_transform(scaled_data).flatten()
-        except:
-            return None
     
     def run_comprehensive_analysis(self, asset: str = 'BTC', end_date: datetime = None, only_cache: bool = False):
         """运行综合分析
@@ -1241,9 +1123,6 @@ class GlassnodeAdvancedAnalyzer:
         
         # 分析关键指标
         self.analyze_key_indicators(price_data, only_cache=only_cache)
-        
-        # 分析指标组合
-        self.analyze_combinations(price_data)
         
         # 生成报告
         self.generate_advanced_report()
@@ -1349,55 +1228,6 @@ class GlassnodeAdvancedAnalyzer:
             
             
     
-    def analyze_combinations(self, price_data: pd.Series):
-        """分析指标组合"""
-        print("\n3. 分析指标组合...")
-        
-        # 收集已有的指标数据
-        indicators_dict = {}
-        for cache_key, df in self.indicators_data.items():
-            if not df.empty:
-                metric_name = df.columns[0]
-                indicators_dict[metric_name] = df[metric_name]
-        
-        if len(indicators_dict) < 2:
-            print("指标数据不足，跳过组合分析")
-            return
-        
-        # 2元组合
-        print("\n分析2元组合...")
-        self.combo_2_results = self.analyze_indicator_combinations(
-            indicators_dict, price_data, combination_size=2
-        )
-        
-        # 打印最佳组合
-        self.print_best_combinations()
-    
-    def print_best_combinations(self):
-        """打印最佳指标组合"""
-        print("\n" + "="*60)
-        print("最佳指标组合")
-        print("="*60)
-        
-        # 2元组合
-        if hasattr(self, 'combo_2_results') and self.combo_2_results:
-            print("\n### 2元组合 TOP 5 ###")
-            best_2_combos = []
-            for combo, methods in self.combo_2_results.items():
-                for method, results in methods.items():
-                    best_2_combos.append({
-                        'combo': combo,
-                        'method': method,
-                        'avg_ig': results['avg_ig'],
-                        'avg_mi': results['avg_mi']
-                    })
-            
-            # 排序
-            best_2_combos.sort(key=lambda x: x['avg_ig'], reverse=True)
-            
-            for i, item in enumerate(best_2_combos[:5], 1):
-                print(f"{i}. {'+'.join(item['combo'])} ({item['method']})")
-                print(f"   平均IG: {item['avg_ig']:.4f}, 平均MI: {item['avg_mi']:.4f}")
     
     def generate_advanced_report(self):
         """生成高级分析报告"""
@@ -1430,9 +1260,6 @@ class GlassnodeAdvancedAnalyzer:
         # 2. 阈值影响分析图
         self.plot_threshold_impact()
         
-        # 3. 组合效果对比图
-        if hasattr(self, 'combo_2_results'):
-            self.plot_combination_comparison()
     
     def plot_multi_horizon_heatmap(self):
         """绘制多时间窗口信息增益热力图"""
@@ -1566,66 +1393,6 @@ class GlassnodeAdvancedAnalyzer:
         except Exception as e:
             print(f"绘制阈值影响图失败: {e}")
     
-    def plot_combination_comparison(self):
-        """绘制组合效果对比图"""
-        try:
-            # 收集所有组合结果
-            combo_data = []
-            
-            # 2元组合
-            if hasattr(self, 'combo_2_results'):
-                for combo, methods in self.combo_2_results.items():
-                    for method, results in methods.items():
-                        combo_data.append({
-                            'name': f"{'+'.join(combo[:2])}..." if len(combo) > 2 else '+'.join(combo),
-                            'type': '2元组合',
-                            'method': method,
-                            'ig': results['avg_ig'],
-                            'mi': results['avg_mi']
-                        })
-            
-            
-            if not combo_data:
-                return
-            
-            # 转为DataFrame
-            df = pd.DataFrame(combo_data)
-            
-            # 按IG排序取前20
-            df = df.nlargest(20, 'ig')
-            
-            # 绘图
-            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-            
-            # 信息增益对比
-            colors = {'mean': 'blue', 'weighted': 'green', 'pca': 'red'}
-            for method in df['method'].unique():
-                mask = df['method'] == method
-                ax1.scatter(df[mask]['ig'], range(len(df[mask])), 
-                          label=method, alpha=0.6, s=100,
-                          color=colors.get(method, 'gray'))
-            
-            ax1.set_xlabel('平均信息增益')
-            ax1.set_ylabel('组合排名')
-            ax1.set_title('指标组合信息增益对比')
-            ax1.legend()
-            ax1.grid(True, alpha=0.3)
-            
-            # 组合方法对比
-            method_df = df.groupby('method')['ig'].agg(['mean', 'max', 'count'])
-            method_df.plot(kind='bar', ax=ax2)
-            ax2.set_title('组合方法对比')
-            ax2.set_xlabel('组合方法')
-            ax2.set_ylabel('信息增益')
-            ax2.legend(['平均值', '最大值', '数量'])
-            
-            plt.suptitle('指标组合效果分析')
-            plt.tight_layout()
-            plt.savefig('advanced_analysis_combination.png', dpi=100)
-            plt.close()
-            
-        except Exception as e:
-            print(f"绘制组合对比图失败: {e}")
     
     def generate_html_report(self):
         """生成HTML报告"""
