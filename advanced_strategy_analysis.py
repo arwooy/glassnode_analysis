@@ -5,9 +5,12 @@ import os
 
 # 读取JSON文件
 print("正在加载数据...")
-with open('indicator_analysis_results_BTC_20250919_152957.json', 'r') as f:
-    data = json.load(f)
+# with open('indicator_analysis_results_BTC_20250919_152957.json', 'r') as f:
+#     data = json.load(f)
 
+with open('indicator_analysis_results_ETH_20250919_155001.json', 'r') as f:
+    data = json.load(f)
+    
 # 获取指标数量信息
 metadata = data.get('metadata', {})
 indicators = data.get('indicators', {})
@@ -429,8 +432,50 @@ if perfect_signals:
     # 按信息增益排序
     perfect_signals_sorted = sorted(perfect_signals, key=lambda x: x['information_gain'], reverse=True)
     
+    # 去重逻辑：对于相同指标、相同策略类型、相同预测周期的信号，保留范围最大的
+    deduplicated_signals = {}
+    for signal in perfect_signals_sorted:
+        # 创建唯一键：指标+策略类型+预测周期+操作方向
+        percentile = signal['percentile']
+        
+        # 判断操作方向
+        if signal['strategy_type'] == 'long':
+            correlation_type = signal.get('correlation_type', 'unknown')
+            if correlation_type == 'positive':
+                operation_type = '>='
+            else:
+                operation_type = '<='
+        else:  # short
+            if percentile >= 50:
+                operation_type = '>='
+            else:
+                operation_type = '<='
+        
+        key = (signal['indicator'], signal['strategy_type'], signal['horizon'], operation_type)
+        
+        if key not in deduplicated_signals:
+            deduplicated_signals[key] = signal
+        else:
+            # 比较阈值，保留范围最大的
+            existing = deduplicated_signals[key]
+            
+            # 对于 >= 操作，保留较小的阈值（范围更大）
+            # 对于 <= 操作，保留较大的阈值（范围更大）
+            if operation_type == '>=':
+                if signal['threshold'] < existing['threshold']:
+                    deduplicated_signals[key] = signal
+            else:  # <=
+                if signal['threshold'] > existing['threshold']:
+                    deduplicated_signals[key] = signal
+    
+    # 转换为列表并按信息增益重新排序
+    perfect_signals_dedup = sorted(deduplicated_signals.values(), 
+                                  key=lambda x: x['information_gain'], 
+                                  reverse=True)
+    
+    print(f"去重后剩余 {len(perfect_signals_dedup)} 个独特信号（原始 {len(perfect_signals)} 个）\n")
     print("【TOP 20 100%准确度信号】")
-    for i, signal in enumerate(perfect_signals_sorted[:20], 1):
+    for i, signal in enumerate(perfect_signals_dedup[:20], 1):
         # 判断操作方向
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
@@ -468,8 +513,8 @@ if perfect_signals:
         print(f"   总天数: {signal['total_days']}")
         print(f"   信号频率: {signal['signal_count']/signal['total_days']*100:.2f}%")
     
-    # 保存结果
-    df_perfect = pd.DataFrame(perfect_signals_sorted)
+    # 保存结果（使用去重后的数据）
+    df_perfect = pd.DataFrame(perfect_signals_dedup)
     df_perfect.to_csv('perfect_accuracy_signals.csv', index=False)
     
     # 按指标统计
