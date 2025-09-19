@@ -1,0 +1,123 @@
+{
+  "analysis_time": "2025-09-18T16:32:55.112697",
+  "asset": "BTC",
+  "indicators": {
+    "nvt_ratio": {
+      "optimal_horizon": {
+        "optimal_horizon_ig": 30,
+        "max_ig": 0.45,
+        "optimal_horizon_mi": 30,
+        "max_mi": 0.42
+      },
+      "multi_horizon_ig": {
+        "1": 0.2,
+        "7": 0.35,
+        "30": 0.45,
+        "60": 0.38
+      },
+      "best_threshold": {
+        "percentile": 85,
+        "sharpe": 1.2,
+        "information_ratio": 0.8,
+        "excess_return": 0.15,
+        "alpha": 0.12,
+        "comprehensive_score": 75
+      },
+      "threshold_analysis": {
+        "85": {
+          "threshold": 120.5,
+          "sample_size": 200,
+          "sample_ratio": 0.15,
+          "absolute_performance": {
+            "annual_return": 0.45,
+            "volatility": 0.35,
+            "sharpe": 1.2,
+            "max_drawdown": -0.25
+          },
+          "relative_performance": {
+            "excess_return": 0.15,
+            "information_ratio": 0.8,
+            "alpha": 0.12,
+            "beta": 0.9,
+            "tracking_error": 0.18,
+            "win_rate_vs_benchmark": 0.62
+          },
+          "regime_performance": {
+            "bull": {
+              "days": 150,
+              "strategy_return": 0.55,
+              "benchmark_return": 0.4,
+              "excess_return": 0.15,
+              "win_rate": 0.65
+            },
+            "bear": {
+              "days": 100,
+              "strategy_return": -0.1,
+              "benchmark_return": -0.25,
+              "excess_return": 0.15,
+              "win_rate": 0.7
+            },
+            "sideways": {
+              "days": 115,
+              "strategy_return": 0.2,
+              "benchmark_return": 0.1,
+              "excess_return": 0.1,
+              "win_rate": 0.55
+            }
+          },
+          "factor_quality": {
+            "ic_scores": {
+              "rank_ic_1d": 0.05,
+              "rank_ic_7d": 0.12,
+              "rank_ic_30d": 0.18
+            },
+            "monotonicity": 0.75,
+            "discrimination": 0.08,
+            "stability": 0.82,
+            "quality_score": 7.5
+          },
+          "comprehensive_scores": {
+            "overall": 75,
+            "performance_component": 70,
+            "quality_component": 75,
+            "regime_component": 80,
+            "bull_score": 85,
+            "bear_score": 90,
+            "sideways_score": 65
+          }
+        }
+      }
+    },
+    "sopr": {
+      "optimal_horizon": {
+        "optimal_horizon_ig": 7,
+        "max_ig": 0.38,
+        "optimal_horizon_mi": 7,
+        "max_mi": 0.35
+      },
+      "multi_horizon_ig": {
+        "1": 0.25,
+        "7": 0.38,
+        "30": 0.32,
+        "60": 0.28
+      },
+      "best_threshold": {
+        "percentile": 70,
+        "sharpe": 0.9,
+        "return_7d": 0.02,
+        "sample_ratio": 0.3
+      }
+    }
+  },
+  "combinations_2": [
+    {
+      "indicators": [
+        "nvt_ratio",
+        "sopr"
+      ],
+      "method": "weighted",
+      "avg_ig": 0.52,
+      "avg_mi": 0.48
+    }
+  ]
+}
