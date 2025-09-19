@@ -5,10 +5,8 @@ import os
 
 # 读取JSON文件
 print("正在加载数据...")
-# with open('indicator_analysis_results_BTC_20250919_152957.json', 'r') as f:
-#     data = json.load(f)
 
-with open('indicator_analysis_results_ETH_20250919_155001.json', 'r') as f:
+with open('indicator_analysis_results_BTC_20250919_162921.json', 'r') as f:
     data = json.load(f)
     
 # 获取指标数量信息
@@ -172,13 +170,85 @@ if 'short' in full_regime_benchmarks:
             print(f"    夏普比率: {r.get('benchmark_sharpe', 0):.3f}")
 
 # =============================================================================
-# 3. 寻找全市场正收益策略
+# 3. TOP IC 指标分析
+# =============================================================================
+print("\n" + "=" * 80)
+print("TOP IC 指标分析")
+print("=" * 80)
+
+indicators = data.get('indicators', {})
+
+# 创建列表存储所有指标的IC信息
+ic_results = []
+
+for indicator_name, indicator_data in indicators.items():
+    if 'optimal' in indicator_data:
+        optimal_data = indicator_data['optimal']
+        
+        # 提取Pearson IC和Rank IC
+        pearson_ic = optimal_data.get('max_pearson_ic', 0)
+        rank_ic = optimal_data.get('max_rank_ic', 0)
+        optimal_horizon_pearson = optimal_data.get('optimal_horizon_pearson_ic', 0)
+        optimal_horizon_rank = optimal_data.get('optimal_horizon_rank_ic', 0)
+        max_ig = optimal_data.get('max_ig', 0)
+        max_mi = optimal_data.get('max_mi', 0)
+        
+        ic_results.append({
+            'indicator': indicator_name,
+            'max_rank_ic': rank_ic,
+            'optimal_horizon_rank': optimal_horizon_rank,
+            'max_pearson_ic': pearson_ic,
+            'optimal_horizon_pearson': optimal_horizon_pearson,
+            'max_ig': max_ig,
+            'max_mi': max_mi
+        })
+
+# 转换为DataFrame
+import pandas as pd
+df_ic = pd.DataFrame(ic_results)
+
+# 按Rank IC排序，取前30
+top30_by_rank_ic = df_ic.nlargest(30, 'max_rank_ic')
+
+print("\n【Top 30 指标 - 按 Rank IC (秩相关信息系数) 排序】")
+for i, (idx, row) in enumerate(top30_by_rank_ic.iterrows(), 1):
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Rank IC: {row['max_rank_ic']:.4f} | 最优周期: {row['optimal_horizon_rank']:3d}天")
+    if i % 10 == 0 and i < 30:
+        print("  " + "-" * 100)
+
+# 按Pearson IC排序，取前30
+top30_by_pearson_ic = df_ic.nlargest(30, 'max_pearson_ic')
+
+print("\n【Top 30 指标 - 按 Pearson IC (线性相关信息系数) 排序】")
+for i, (idx, row) in enumerate(top30_by_pearson_ic.iterrows(), 1):
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Pearson IC: {row['max_pearson_ic']:.4f} | 最优周期: {row['optimal_horizon_pearson']:3d}天")
+    if i % 10 == 0 and i < 30:
+        print("  " + "-" * 100)
+
+# 按信息增益排序，取前30
+top30_by_ig = df_ic.nlargest(30, 'max_ig')
+
+print("\n【Top 30 指标 - 按信息增益 (Information Gain) 排序】")
+for i, (idx, row) in enumerate(top30_by_ig.iterrows(), 1):
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | MI: {row['max_mi']:.4f}")
+    if i % 10 == 0 and i < 30:
+        print("  " + "-" * 100)
+
+# IC统计摘要
+print("\n【IC指标统计摘要】")
+print(f"  总指标数量: {len(df_ic)}")
+print(f"  Rank IC 范围: [{df_ic['max_rank_ic'].min():.4f}, {df_ic['max_rank_ic'].max():.4f}]")
+print(f"  Pearson IC 范围: [{df_ic['max_pearson_ic'].min():.4f}, {df_ic['max_pearson_ic'].max():.4f}]")
+print(f"  信息增益范围: [{df_ic['max_ig'].min():.4f}, {df_ic['max_ig'].max():.4f}]")
+print(f"  平均 Rank IC: {df_ic['max_rank_ic'].mean():.4f}")
+print(f"  平均 Pearson IC: {df_ic['max_pearson_ic'].mean():.4f}")
+
+# =============================================================================
+# 4. 寻找全市场正收益策略
 # =============================================================================
 print("\n" + "=" * 80)
 print("全市场正收益策略分析")
 print("=" * 80)
-
-indicators = data.get('indicators', {})
 
 # 收集所有符合条件的策略
 all_weather_positive_long = []
@@ -220,7 +290,7 @@ for indicator_name, indicator_data in indicators.items():
                             'win_rate': r.get('excess_return_win_rate', 0)
                         }
                         
-                        if strategy_return <= 0 or excess_return <= 0:
+                        if strategy_return <= 0:
                             all_positive = False
                     else:
                         all_positive = False
@@ -274,7 +344,7 @@ for indicator_name, indicator_data in indicators.items():
                             'win_rate': r.get('excess_return_win_rate', 0)
                         }
                         
-                        if strategy_return <= 0 or excess_return <= 0:
+                        if strategy_return <= 0:
                             all_positive = False
                     else:
                         all_positive = False
@@ -350,7 +420,7 @@ if all_weather_positive_short:
     df_short_sorted.to_csv('all_weather_positive_short_strategies.csv', index=False)
 
 # =============================================================================
-# 4. 寻找100%准确度的信号
+# 5. 寻找100%准确度的信号
 # =============================================================================
 print("\n" + "=" * 80)
 print("100%准确度信号分析 (Signal Accuracy = 100%)")
@@ -474,8 +544,8 @@ if perfect_signals:
                                   reverse=True)
     
     print(f"去重后剩余 {len(perfect_signals_dedup)} 个独特信号（原始 {len(perfect_signals)} 个）\n")
-    print("【TOP 20 100%准确度信号】")
-    for i, signal in enumerate(perfect_signals_dedup[:20], 1):
+    print("【100%准确度信号】")
+    for i, signal in enumerate(perfect_signals_dedup, 1):
         # 判断操作方向
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
@@ -538,7 +608,7 @@ if perfect_signals:
               f"最大信息增益: {stats['max_ig']:.6f}")
 
 # =============================================================================
-# 5. 相关性类型分析
+# 6. 相关性类型分析
 # =============================================================================
 print("\n" + "=" * 80)
 print("相关性类型分析")
@@ -614,8 +684,8 @@ if all_strategies_correlation:
         print(f"  平均相关系数: {positive_corr['correlation_value'].mean():.4f}")
         
         # 找出最强正相关的指标
-        top_positive = positive_corr.nlargest(5, 'correlation_value')
-        print("\n  最强正相关指标TOP 5:")
+        top_positive = positive_corr.nlargest(20, 'correlation_value')
+        print("\n  最强正相关指标TOP 20:")
         for i, row in top_positive.iterrows():
             print(f"    {row['indicator']} (百分位={row['percentile']}%): 相关系数={row['correlation_value']:.4f}")
             if 'long_bear_excess' in row:
@@ -631,8 +701,8 @@ if all_strategies_correlation:
         print(f"  平均相关系数: {negative_corr['correlation_value'].mean():.4f}")
         
         # 找出最强负相关的指标
-        top_negative = negative_corr.nsmallest(5, 'correlation_value')
-        print("\n  最强负相关指标TOP 5:")
+        top_negative = negative_corr.nsmallest(20, 'correlation_value')
+        print("\n  最强负相关指标TOP 20:")
         for i, row in top_negative.iterrows():
             print(f"    {row['indicator']} (百分位={row['percentile']}%): 相关系数={row['correlation_value']:.4f}")
             if 'long_bear_excess' in row:
@@ -661,7 +731,7 @@ if all_strategies_correlation:
     print("\n  相关性分析已保存至: correlation_analysis.csv")
 
 # =============================================================================
-# 6. 综合统计
+# 7. 综合统计
 # =============================================================================
 print("\n" + "=" * 80)
 print("综合统计摘要")

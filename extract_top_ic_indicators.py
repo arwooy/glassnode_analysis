@@ -2,7 +2,7 @@ import json
 import pandas as pd
 
 # 读取JSON文件
-with open('indicator_analysis_results_BTC_20250919_131040.json', 'r') as f:
+with open('indicator_analysis_results_ETH_20250919_162431.json', 'r') as f:
     data = json.load(f)
 
 # 提取indicators部分

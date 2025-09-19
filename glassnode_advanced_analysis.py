@@ -1836,7 +1836,7 @@ def main():
     
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='Glassnode 高级分析系统')
-    parser.add_argument('--asset', type=str, default='ETH', 
+    parser.add_argument('--asset', type=str, default='BTC', 
                        help='要分析的资产代码 (BTC, ETH, LTC, 等)')
     parser.add_argument('--api-key', type=str, default="myapi_sk_b3fa36048ea022be1c21e626742d4dec",
                        help='Glassnode API密钥')
