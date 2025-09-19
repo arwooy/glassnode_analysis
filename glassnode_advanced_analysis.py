@@ -18,6 +18,11 @@ import pickle
 from datetime import datetime, timedelta
 from scipy.stats import entropy
 from typing import Dict, List, Tuple, Optional
+from multiprocessing import Pool, cpu_count
+import traceback
+
+# 导入独立的保存函数
+from save_analysis_json import save_analysis_results_to_json
 import warnings
 from scipy import stats
 warnings.filterwarnings('ignore')
@@ -35,6 +40,16 @@ plt.rcParams['axes.unicode_minus'] = False
 
 API_KEY = "myapi_sk_b3fa36048ea022be1c21e626742d4dec"
 headers = {"x-key": API_KEY}
+
+# 全局分析器实例（用于多进程）
+_global_analyzer = None
+
+def process_indicator_wrapper(args):
+    """全局函数包装器，用于多进程池调用"""
+    global _global_analyzer
+    if _global_analyzer is None:
+        return None
+    return _global_analyzer._process_single_indicator(args)
 
 class GlassnodeAdvancedAnalyzer:
     """Glassnode高级分析器"""
@@ -403,18 +418,19 @@ class GlassnodeAdvancedAnalyzer:
             'optimal_horizon_rank_ic': horizons[optimal_rank_ic_idx],
             'max_rank_ic': rank_ic_values[optimal_rank_ic_idx],
             'all_horizons': horizons,
-            'all_ig': ig_values,
-            'all_rank_ic': rank_ic_values,
-            'all_pearson_ic': pearson_ic_values
+            # 'all_ig': ig_values,
+            # 'all_rank_ic': rank_ic_values,
+            # 'all_pearson_ic': pearson_ic_values
         }
     
     def analyze_threshold_impact(self, 
                                 indicator_data: pd.Series,
                                 price_data: pd.Series,
                                 percentiles: List[float] = None,
-                                benchmark_returns: pd.DataFrame = None,
                                 market_regime: pd.Series = None,
-                                full_regime_benchmarks: Dict = None) -> Dict:
+                                full_regime_benchmarks: Dict = None,
+                                benchmark_long: pd.DataFrame = None,
+                                benchmark_short: pd.DataFrame = None) -> Dict:
         """
         分析不同阈值过滤后的影响 - 改进版
         
@@ -426,7 +442,7 @@ class GlassnodeAdvancedAnalyzer:
         """
         if percentiles is None:
             # 增加90以上的细粒度分析
-            percentiles = [10, 20, 30, 40, 50, 60, 70, 80, 85, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+            percentiles = [1,2,3,4,5,6,7,8,9,10, 20, 30, 40, 50, 60, 70, 80, 85, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
         
         results = {}
         
@@ -440,79 +456,205 @@ class GlassnodeAdvancedAnalyzer:
                 # 计算阈值
                 threshold = np.percentile(indicator_data.dropna(), pct)
                 
-                # 根据相关性方向设置持有条件
+                # 根据相关性方向设置持有条件和策略类型
+                # 计算反向阈值（用于空头策略）
+                reverse_threshold = np.percentile(indicator_data.dropna(), 100 - pct)
+                
                 if is_positive_correlation:
-                    # 正相关：高于阈值时持有
-                    mask = indicator_data >= threshold
+                    # 正相关：指标高 -> 价格涨
+                    long_mask = indicator_data >= threshold  # 高于阈值时做多
+                    short_mask = indicator_data <= reverse_threshold  # 低于反向阈值时做空
                 else:
-                    # 负相关：低于阈值时持有（例如恐慌指数等）
-                    mask = indicator_data <= threshold
+                    # 负相关：指标高 -> 价格跌（如恐慌指数）
+                    long_mask = indicator_data <= threshold  # 低于阈值时做多（逆向思维）
+                    short_mask = indicator_data >= reverse_threshold  # 高于反向阈值时做空
                 
-                if mask.sum() < 50:
-                    continue
+                # 存储该阈值下两种策略的结果
+                pct_results = {}
                 
-                # 构建策略信号
-                strategy_signal = mask.astype(int)  # 1=持有, 0=空仓
-                
-                # 计算策略收益
-                strategy_returns = self._calculate_strategy_returns(
-                    price_data, 
-                    strategy_signal,
-                    indicator_data.index
-                )
-                
-                # 计算性能指标（包含超额收益和信息比率）
-                performance = self._calculate_performance_metrics(
-                    strategy_returns,
-                    benchmark_returns,
-                    strategy_signal
-                )
-                
-                # 分离不同市场状态下的表现
-                regime_performance = self._calculate_regime_performance(
-                    strategy_returns,
-                    benchmark_returns,
-                    market_regime,
-                    full_regime_benchmarks
-                )
-                
-                # 计算综合评分
-                comprehensive_score = self._calculate_comprehensive_score(
-                    performance, regime_performance
-                )
-                
-                results[pct] = {
-                    'threshold': threshold,
-                    'sample_size': mask.sum(),
-                    'sample_ratio': mask.sum() / len(indicator_data),
-                    'correlation_type': 'positive' if is_positive_correlation else 'negative',
-                    'correlation_value': correlation,
+                # 测试两种策略：多头和空头
+                for strategy_type in ['long', 'short']:
+                    if strategy_type == 'long':
+                        mask = long_mask
+                        position_signal = mask.astype(int)  # 1=做多, 0=空仓
+                    else:
+                        mask = short_mask
+                        position_signal = mask.astype(int) * -1  # -1=做空, 0=空仓
                     
-                    # 绝对性能
-                    'absolute_performance': {
-                        'total_return': strategy_returns['cumulative'].iloc[-1] - 1 if len(strategy_returns['cumulative']) > 0 else 0,
-                        'annual_return': strategy_returns['annual_return'],
-                        'volatility': strategy_returns['volatility'],
-                        'sharpe': performance['sharpe'],
-                        'max_drawdown': performance['max_drawdown']
-                    },
+                    if abs(mask.sum()) < 50:
+                        continue
                     
-                    # 相对性能（vs 基准）
-                    'relative_performance': {
-                        'excess_return': performance['excess_return'],
-                        'information_ratio': performance['information_ratio'],
-                        'alpha': performance['alpha'],
-                        'beta': performance['beta'],
-                        'tracking_error': performance['tracking_error'],
-                        'win_rate_vs_benchmark': performance['win_rate_vs_benchmark']
-                    },
+                    # 计算策略收益
+                    strategy_returns = self._calculate_strategy_returns(
+                        price_data, 
+                        position_signal,
+                        indicator_data.index,
+                        strategy_type=strategy_type
+                    )
                     
-                    # 市场状态下的表现
-                    'regime_performance': regime_performance,
+                    # 使用预先计算的基准收益
+                    strategy_benchmark = benchmark_long if strategy_type == 'long' else benchmark_short
                     
-                    # 综合评分
-                    'comprehensive_scores': comprehensive_score
-                }
+                    # 计算性能指标（包含超额收益和信息比率）
+                    performance = self._calculate_performance_metrics(
+                        strategy_returns,
+                        strategy_benchmark,
+                        position_signal
+                    )
+                    
+                    # 计算信号的信息增益
+                    # 信号分类：1=有信号，0=无信号
+                    signal_binary = (position_signal != 0).astype(int)
+                    
+                    # 计算不同周期的信息增益
+                    signal_ig_results = {}
+                    for horizon in [1, 5, 10, 20, 30, 60, 120, 360, 720]:
+                        try:
+                            # 计算未来收益
+                            future_returns = price_data.shift(-horizon).pct_change(horizon)
+                            
+                            # 如果是空头策略，反转收益符号
+                            if strategy_type == 'short':
+                                future_returns = -future_returns
+                            
+                            # 将未来收益分为正负两类
+                            returns_binary = (future_returns > 0).astype(int)
+                            
+                            # 对齐数据
+                            valid_data = pd.DataFrame({
+                                'signal': signal_binary,
+                                'returns': returns_binary
+                            }).dropna()
+                            
+                            if len(valid_data) > 50:
+                                # 计算信息增益
+                                # H(Y) - 未来收益的熵
+                                p_positive = (valid_data['returns'] == 1).mean()
+                                p_negative = 1 - p_positive
+                                H_returns = -p_positive * np.log2(p_positive + 1e-10) - p_negative * np.log2(p_negative + 1e-10)
+                                
+                                # H(Y|X) - 给定信号的条件熵
+                                H_conditional = 0
+                                for signal_val in [0, 1]:
+                                    mask = valid_data['signal'] == signal_val
+                                    p_signal = mask.mean()
+                                    
+                                    if p_signal > 0 and mask.sum() > 10:
+                                        subset = valid_data[mask]
+                                        p_pos_given_signal = (subset['returns'] == 1).mean()
+                                        p_neg_given_signal = 1 - p_pos_given_signal
+                                        
+                                        if p_pos_given_signal > 0 and p_neg_given_signal > 0:
+                                            h_given = -p_pos_given_signal * np.log2(p_pos_given_signal) - p_neg_given_signal * np.log2(p_neg_given_signal)
+                                            H_conditional += p_signal * h_given
+                                
+                                # 信息增益
+                                ig = H_returns - H_conditional
+                                
+                                # 计算信号准确率
+                                signal_mask = valid_data['signal'] == 1
+                                if signal_mask.sum() > 0:
+                                    accuracy = (valid_data[signal_mask]['returns'] == 1).mean()
+                                else:
+                                    accuracy = 0
+                                
+                                signal_ig_results[f'{horizon}d'] = {
+                                    'information_gain': ig,
+                                    'strategy_type': strategy_type,
+                                    'signal_accuracy': accuracy,
+                                    'signal_count': signal_mask.sum(),
+                                    'total_days': len(valid_data)
+                                }
+                        except Exception as e:
+                            continue
+                    
+                    # 找出最优的时间窗口
+                    best_horizon = None
+                    best_ig = 0
+                    best_accuracy = 0
+                    best_signal_count = 0
+                    best_total_days = 0
+                    
+                    for horizon_key, horizon_data in signal_ig_results.items():
+                        ig = horizon_data.get('information_gain', 0)
+                        if ig > best_ig:
+                            best_ig = ig
+                            best_horizon = horizon_key
+                            best_accuracy = horizon_data.get('signal_accuracy', 0)
+                            best_strategy_type = horizon_data.get('strategy_type', '')
+                            best_signal_count = horizon_data.get('signal_count', 0)
+                            best_total_days = horizon_data.get('total_days', 0)
+                    
+                    if not signal_ig_results:
+                        signal_ig_results = {}
+                    
+                    # 分离不同市场状态下的表现（使用对应策略类型的基准）
+                    regime_performance = self._calculate_regime_performance(
+                        strategy_returns,
+                        strategy_benchmark,
+                        market_regime,
+                        full_regime_benchmarks[strategy_type],  # 使用对应策略类型的基准
+                        strategy_type=strategy_type
+                    )
+                    
+                    # 计算综合评分
+                    comprehensive_score = self._calculate_comprehensive_score(
+                        performance, regime_performance
+                    )
+                    
+                    # 存储该策略的结果
+                    pct_results[strategy_type] = {
+                        'strategy_type': strategy_type,  # 明确标记策略类型
+                        'sample_size': abs(mask.sum()),
+                        'sample_ratio': abs(mask.sum()) / len(indicator_data),
+                        
+                        # 绝对性能
+                        'absolute_performance': {
+                            'total_return': strategy_returns['cumulative'].iloc[-1] - 1 if len(strategy_returns['cumulative']) > 0 else 0,
+                            'annual_return': strategy_returns['annual_return'],
+                            'volatility': strategy_returns['volatility'],
+                            'sharpe': performance['sharpe'],
+                            'max_drawdown': performance['max_drawdown']
+                        },
+                        
+                        # 相对性能（vs 基准）
+                        'relative_performance': {
+                            'excess_return': performance['excess_return'],
+                            'information_ratio': performance['information_ratio'],
+                            'alpha': performance['alpha'],
+                            'beta': performance['beta'],
+                            'tracking_error': performance['tracking_error'],
+                            'win_rate_vs_benchmark': performance['win_rate_vs_benchmark']
+                        },
+                        
+                        # 信号信息增益分析
+                        'signal_ig_analysis': signal_ig_results,
+                        
+                        # 最优预测窗口
+                        'optimal_horizon': {
+                            'horizon': best_horizon,
+                            'information_gain': best_ig,
+                            'signal_accuracy': best_accuracy,
+                            'strategy_type': best_strategy_type,
+                            'signal_count': best_signal_count,
+                            'total_days': best_total_days
+                        } if best_horizon else None,
+                        
+                        # 市场状态下的表现
+                        'regime_performance': regime_performance,
+                        
+                        # 综合评分
+                        'comprehensive_scores': comprehensive_score
+                    }
+                
+                # 如果有有效的策略结果，存储
+                if pct_results:
+                    results[pct] = {
+                        'threshold': threshold,
+                        'correlation_type': 'positive' if is_positive_correlation else 'negative',
+                        'correlation_value': correlation,
+                        'strategies': pct_results  # 包含long和short两种策略的结果
+                    }
                 
             except Exception as e:
                 print(f"Error analyzing percentile {pct}: {e}")
@@ -520,14 +662,28 @@ class GlassnodeAdvancedAnalyzer:
         
         return results
     
-    def _calculate_benchmark_returns(self, price_data: pd.Series) -> pd.DataFrame:
-        """计算基准（买入持有）收益"""
+    def _calculate_benchmark_returns(self, price_data: pd.Series, strategy_type: str = 'long') -> pd.DataFrame:
+        """计算基准收益
+        
+        Args:
+            price_data: 价格数据
+            strategy_type: 'long' 为买入持有，'short' 为做空持有
+        """
         returns = price_data.pct_change().fillna(0)
-        cumulative_returns = (1 + returns).cumprod()
+        
+        if strategy_type == 'short':
+            # 空头基准：做空持有的收益（价格下跌时赚钱）
+            benchmark_returns = -returns
+        else:
+            # 多头基准：买入持有的收益
+            benchmark_returns = returns
+        
+        cumulative_returns = (1 + benchmark_returns).cumprod()
         
         return pd.DataFrame({
-            'daily': returns,
-            'cumulative': cumulative_returns
+            'daily': benchmark_returns,
+            'cumulative': cumulative_returns,
+            'strategy_type': strategy_type
         })
     
     def _calculate_full_regime_benchmarks(self, benchmark_returns: pd.DataFrame, 
@@ -540,7 +696,10 @@ class GlassnodeAdvancedAnalyzer:
         benchmark_aligned = benchmark_returns.loc[common_index]
         regime_aligned = market_regime.loc[common_index]
         
-        print("\n  统一市场状态基准收益:")
+        # 获取策略类型
+        strategy_type = benchmark_returns.get('strategy_type', 'long').iloc[0] if 'strategy_type' in benchmark_returns.columns else 'long'
+        
+        print(f"\n  统一市场状态基准收益 ({strategy_type.upper()}):")
         for regime_value, regime_name in [(1, 'bull'), (-1, 'bear'), (0, 'sideways')]:
             mask = regime_aligned == regime_value
             
@@ -554,21 +713,111 @@ class GlassnodeAdvancedAnalyzer:
                 drawdown = (cumulative_returns - running_max) / running_max
                 max_drawdown = drawdown.min() if len(drawdown) > 0 else 0
                 
+                # 计算夏普比率
+                annual_return = regime_benchmark_returns.mean() * 252 if len(regime_benchmark_returns) > 0 else 0
+                annual_volatility = regime_benchmark_returns.std() * np.sqrt(252) if len(regime_benchmark_returns) > 1 else 0
+                sharpe = (annual_return - 0.02) / annual_volatility if annual_volatility > 0 else 0
+                
                 full_regime_benchmarks[regime_name] = {
                     'total_days': mask.sum(),
-                    'benchmark_return': regime_benchmark_returns.mean() * 252 if len(regime_benchmark_returns) > 0 else 0,
+                    'benchmark_annual_return': annual_return,
                     'benchmark_cumulative': (1 + regime_benchmark_returns).prod() - 1 if len(regime_benchmark_returns) > 0 else 0,
-                    'benchmark_volatility': regime_benchmark_returns.std() * np.sqrt(252) if len(regime_benchmark_returns) > 1 else 0,
-                    'benchmark_max_drawdown': max_drawdown
+                    'benchmark_annual_volatility': annual_volatility,
+                    'benchmark_max_drawdown': max_drawdown,
+                    'benchmark_sharpe': sharpe
                 }
                 
                 # 打印基准信息
                 print(f"    {regime_name:8s}: {full_regime_benchmarks[regime_name]['total_days']:4d}天, "
-                      f"年化收益: {full_regime_benchmarks[regime_name]['benchmark_return']:6.1f}%, "
+                      f"年化收益: {full_regime_benchmarks[regime_name]['benchmark_annual_return']:6.1f}%, "
                       f"累计收益: {full_regime_benchmarks[regime_name]['benchmark_cumulative']*100:6.1f}%, "
                       f"最大回撤: {full_regime_benchmarks[regime_name]['benchmark_max_drawdown']*100:6.1f}%")
         
         return full_regime_benchmarks
+    
+    def _calculate_market_metrics(self, 
+                                 benchmark_returns_long: pd.DataFrame,
+                                 benchmark_returns_short: pd.DataFrame,
+                                 price_data: pd.Series) -> Dict:
+        """
+        计算市场基准的详细指标
+        """
+        market_metrics = {}
+        
+        for strategy_type, benchmark_returns in [('long', benchmark_returns_long), 
+                                                 ('short', benchmark_returns_short)]:
+            
+            # 获取每日收益
+            daily_returns = benchmark_returns['daily']
+            
+            # 计算累计收益
+            cumulative_returns = (1 + daily_returns).cumprod()
+            total_return = cumulative_returns.iloc[-1] - 1 if len(cumulative_returns) > 0 else 0
+            
+            # 年化收益
+            n_days = len(daily_returns)
+            annual_return = ((1 + total_return) ** (252 / n_days) - 1) if n_days > 0 else 0
+            
+            # 波动率（年化）
+            volatility = daily_returns.std() * np.sqrt(252) if len(daily_returns) > 1 else 0
+            
+            # 夏普比率
+            risk_free_rate = 0.02  # 假设无风险利率为2%
+            sharpe_ratio = (annual_return - risk_free_rate) / volatility if volatility > 0 else 0
+            
+            # 最大回撤
+            running_max = cumulative_returns.expanding().max()
+            drawdown = (cumulative_returns - running_max) / running_max
+            max_drawdown = drawdown.min() if len(drawdown) > 0 else 0
+            
+            # 最大回撤持续时间
+            drawdown_periods = []
+            in_drawdown = False
+            start_idx = 0
+            
+            for i in range(len(drawdown)):
+                if drawdown.iloc[i] < 0 and not in_drawdown:
+                    in_drawdown = True
+                    start_idx = i
+                elif drawdown.iloc[i] >= 0 and in_drawdown:
+                    in_drawdown = False
+                    drawdown_periods.append(i - start_idx)
+            
+            max_drawdown_duration = max(drawdown_periods) if drawdown_periods else 0
+            
+            # 胜率（正收益天数比例）
+            win_rate = (daily_returns > 0).mean() if len(daily_returns) > 0 else 0
+            
+            # 盈亏比
+            winning_returns = daily_returns[daily_returns > 0]
+            losing_returns = daily_returns[daily_returns < 0]
+            avg_win = winning_returns.mean() if len(winning_returns) > 0 else 0
+            avg_loss = abs(losing_returns.mean()) if len(losing_returns) > 0 else 1
+            profit_loss_ratio = avg_win / avg_loss if avg_loss > 0 else 0
+            
+            market_metrics[strategy_type] = {
+                'total_return': total_return,
+                'annual_return': annual_return,
+                'volatility': volatility,
+                'sharpe_ratio': sharpe_ratio,
+                'max_drawdown': max_drawdown,
+                'max_drawdown_duration': max_drawdown_duration,
+                'win_rate': win_rate,
+                'profit_loss_ratio': profit_loss_ratio,
+                'total_days': n_days,
+                'start_date': daily_returns.index[0].strftime('%Y-%m-%d') if len(daily_returns) > 0 else None,
+                'end_date': daily_returns.index[-1].strftime('%Y-%m-%d') if len(daily_returns) > 0 else None
+            }
+            
+            # 打印关键指标
+            print(f"\n  市场基准指标 ({strategy_type.upper()}):")
+            print(f"    年化收益: {annual_return*100:.2f}%")
+            print(f"    波动率: {volatility*100:.2f}%")
+            print(f"    夏普比率: {sharpe_ratio:.3f}")
+            print(f"    最大回撤: {max_drawdown*100:.2f}%")
+            print(f"    胜率: {win_rate*100:.1f}%")
+        
+        return market_metrics
     
     def _identify_market_regime(self, price_data: pd.Series, window: int = 50) -> pd.Series:
         """
@@ -852,8 +1101,15 @@ class GlassnodeAdvancedAnalyzer:
                 print(f"    {name}: {count}天 ({pct:.1f}%)")
     
     def _calculate_strategy_returns(self, price_data: pd.Series, signal: pd.Series, 
-                                   index_align: pd.Index) -> Dict:
-        """计算策略收益"""
+                                   index_align: pd.Index, strategy_type: str = 'long') -> Dict:
+        """计算策略收益
+        
+        Args:
+            price_data: 价格数据
+            signal: 交易信号 (1=做多, -1=做空, 0=空仓)
+            index_align: 用于对齐的索引
+            strategy_type: 策略类型 ('long' 或 'short')
+        """
         # 对齐数据
         aligned_price = price_data.reindex(index_align).fillna(method='ffill')
         aligned_signal = signal.reindex(index_align).fillna(0)
@@ -861,10 +1117,16 @@ class GlassnodeAdvancedAnalyzer:
         # 计算日收益率
         daily_returns = aligned_price.pct_change().fillna(0)
         
-        # 策略收益 = 信号 * 日收益率 (shift(1)避免前瞻偏差)
+        # 策略收益计算
+        # aligned_signal已经包含了方向：1=多头，-1=空头，0=空仓
+        # 多头(signal=1)：1 * 日收益率 = 价格上涨时赚钱
+        # 空头(signal=-1)：-1 * 日收益率 = 价格下跌时赚钱
+        # shift(1)避免前瞻偏差（今天的信号明天生效）
         strategy_returns = aligned_signal.shift(1) * daily_returns
         
         # 累积收益
+        # 注意：这是简化计算，实际空头可能面临保证金追加或强制平仓
+        # 真实交易中，空头损失可能超过100%（需要追加保证金）
         cumulative_returns = (1 + strategy_returns).cumprod()
         
         # 年化收益和波动率
@@ -875,7 +1137,8 @@ class GlassnodeAdvancedAnalyzer:
             'daily': strategy_returns,
             'cumulative': cumulative_returns,
             'annual_return': annual_return,
-            'volatility': volatility
+            'volatility': volatility,
+            'strategy_type': strategy_type
         }
     
     def _calculate_performance_metrics(self, strategy_returns: Dict, 
@@ -987,12 +1250,21 @@ class GlassnodeAdvancedAnalyzer:
     def _calculate_regime_performance(self, strategy_returns: Dict,
                                      benchmark_returns: pd.DataFrame,
                                      market_regime: pd.Series,
-                                     full_regime_benchmarks: Dict = None) -> Dict:
-        """计算不同市场状态下的表现"""
+                                     full_regime_benchmarks: Dict = None,
+                                     strategy_type: str = 'long') -> Dict:
+        """计算不同市场状态下的表现
+        
+        Args:
+            strategy_returns: 策略收益
+            benchmark_returns: 基准收益（根据策略类型已经调整过）
+            market_regime: 市场状态
+            full_regime_benchmarks: 统一的市场基准（可选）
+            strategy_type: 策略类型 ('long' 或 'short')
+        """
         if not strategy_returns or 'daily' not in strategy_returns:
             return {}
         
-        #计算策略表现（处理缺失值后）
+        # 计算策略表现（处理缺失值后）
         aligned_data = pd.DataFrame({
             'strategy': strategy_returns['daily'],
             'benchmark': benchmark_returns['daily'],
@@ -1027,10 +1299,11 @@ class GlassnodeAdvancedAnalyzer:
                 
                 regime_performance[regime_name] = {
                     'days': unified_benchmark['total_days'],  # 使用完整数据的天数
+                    'strategy_type': strategy_type,  # 策略类型
                     'strategy_return': strategy_return,
-                    'benchmark_return': unified_benchmark['benchmark_return'],  # 统一的基准
+                    'benchmark_return': unified_benchmark.get('benchmark_annual_return'),  # 统一的基准（兼容旧字段名）
                     'benchmark_max_drawdown': unified_benchmark['benchmark_max_drawdown'],  # 基准的最大回撤
-                    'excess_return': strategy_return - unified_benchmark['benchmark_return'],
+                    'excess_return': strategy_return - unified_benchmark.get('benchmark_annual_return'),
                     'excess_return_win_rate': (strategy_regime > benchmark_regime).mean() if len(strategy_regime) > 0 else 0,
                     'sharpe': (strategy_regime.mean() / strategy_regime.std() * np.sqrt(252)) if strategy_regime.std() > 0 else 0,
                     'strategy_max_drawdown': strategy_max_drawdown  # 策略的最大回撤
@@ -1083,7 +1356,7 @@ class GlassnodeAdvancedAnalyzer:
         return scores
     
     
-    def run_comprehensive_analysis(self, asset: str = 'BTC', end_date: datetime = None, only_cache: bool = False):
+    def run_comprehensive_analysis(self, asset: str = 'BTC', end_date: datetime = None, only_cache: bool = False, num_workers: int = 12):
         """运行综合分析
         
         Args:
@@ -1122,12 +1395,73 @@ class GlassnodeAdvancedAnalyzer:
         print(f"✓ 获取到 {len(price_data)} 天的价格数据")
         
         # 分析关键指标
-        self.analyze_key_indicators(price_data, only_cache=only_cache)
+        self.analyze_key_indicators(price_data, only_cache=only_cache, num_workers=num_workers)
         
-        # 生成报告
-        self.generate_advanced_report()
+        # 保存完整的分析结果到 JSON
+        save_analysis_results_to_json(self.asset, self.analysis_results)
+        
     
-    def analyze_key_indicators(self, price_data: pd.Series, only_cache: bool = False):
+    def _process_single_indicator(self, args):
+        """处理单个指标的方法（用于多进程）"""
+        try:
+            category, endpoint_info, price_data, market_regime, \
+            full_regime_benchmarks, benchmark_returns_long, \
+            benchmark_returns_short, asset, only_cache = args
+            
+            # 从endpoint_info中提取metric和path
+            if isinstance(endpoint_info, dict):
+                metric = endpoint_info['metric']
+                path = endpoint_info.get('path', None)
+            else:
+                metric = endpoint_info
+                path = None
+            
+            print(f"[进程 {os.getpid()}] 分析 {metric}...")
+            
+            # 获取数据
+            df = self.fetch_metric_data(category, metric, 
+                                       price_data.index[0], 
+                                       price_data.index[-1],
+                                       path=path,
+                                       asset=asset,
+                                       only_cache=only_cache)
+            if df.empty:
+                return None
+            
+            indicator_data = df[metric]
+            
+            # 1. 多时间窗口分析
+            multi_horizon = self.calculate_information_gain_multi_horizon(
+                indicator_data, price_data
+            )
+            
+            # 2. 找最优窗口
+            optimal = self.find_optimal_horizon(multi_horizon)
+            
+            # 3. 阈值影响分析
+            threshold_impact = self.analyze_threshold_impact(
+                indicator_data, price_data,
+                market_regime=market_regime,
+                full_regime_benchmarks=full_regime_benchmarks,
+                benchmark_long=benchmark_returns_long,
+                benchmark_short=benchmark_returns_short
+            )
+            
+            # 返回结果
+            result_dict = {
+                'multi_horizon': multi_horizon,
+                'optimal': optimal,
+                'threshold_impact': threshold_impact
+            }
+            
+            return (metric, result_dict)
+            
+        except Exception as e:
+            print(f"[进程 {os.getpid()}] 处理 {metric if 'metric' in locals() else 'unknown'} 时出错: {str(e)}")
+            traceback.print_exc()
+            return None
+    
+    def analyze_key_indicators(self, price_data: pd.Series, only_cache: bool = False, num_workers: int = 12):
         """分析关键指标
         
         Args:
@@ -1155,692 +1489,69 @@ class GlassnodeAdvancedAnalyzer:
         
         key_indicators = all_indicators
         
-        self.indicator_analysis_results = {}
+        # 初始化分析结果的两个主要类别
+        self.analysis_results = {
+            'market': {},  # 市场基准相关
+            'indicators': {}  # 指标分析结果
+        }
+        self.indicator_analysis_results = {}  # 保留以向后兼容
         
         # 预先计算基准收益和市场状态（只需计算一次）
         print("\n  计算基准收益和市场状态...")
-        benchmark_returns = self._calculate_benchmark_returns(price_data)
+        benchmark_returns_long = self._calculate_benchmark_returns(price_data, 'long')
+        benchmark_returns_short = self._calculate_benchmark_returns(price_data, 'short')
         market_regime = self._identify_market_regime(price_data)
         
-        # 计算统一的市场状态基准收益（所有指标共享）
-        full_regime_benchmarks = self._calculate_full_regime_benchmarks(benchmark_returns, market_regime)
+        # 计算统一的市场状态基准收益（多头和空头分别计算）
+        full_regime_benchmarks = {
+            'long': self._calculate_full_regime_benchmarks(benchmark_returns_long, market_regime),
+            'short': self._calculate_full_regime_benchmarks(benchmark_returns_short, market_regime)
+        }
+        
+        # 计算市场基准的详细指标
+        market_metrics = self._calculate_market_metrics(
+            benchmark_returns_long, 
+            benchmark_returns_short,
+            price_data
+        )
+        
+        # 存储市场相关数据到 analysis_results
+        self.analysis_results['market'] = {
+            'benchmark_metrics': market_metrics,
+            'market_regime': market_regime.to_dict() if hasattr(market_regime, 'to_dict') else market_regime,
+            'full_regime_benchmarks': full_regime_benchmarks
+        }
         
         # 可视化市场状态
         self._plot_market_regime(price_data, market_regime)
         
+        # 准备并行处理的参数
+        process_args = []
         for category, endpoint_info in key_indicators:
-            # 从endpoint_info中提取metric和path
-            if isinstance(endpoint_info, dict):
-                metric = endpoint_info['metric']
-                path = endpoint_info.get('path', None)
-            else:
-                metric = endpoint_info
-                path = None
-            
-            print(f"\n分析 {metric}...")
-            
-            # 获取数据，传入path参数、asset和only_cache
-            df = self.fetch_metric_data(category, metric, 
-                                       price_data.index[0], 
-                                       price_data.index[-1],
-                                       path=path,
-                                       asset=self.asset,
-                                       only_cache=only_cache)
-            if df.empty:
-                continue
-            
-            indicator_data = df[metric]
-            
-            # 1. 多时间窗口分析
-            multi_horizon = self.calculate_information_gain_multi_horizon(
-                indicator_data, price_data
-            )
-            
-            # 2. 找最优窗口
-            optimal = self.find_optimal_horizon(multi_horizon)
-            
-            # 3. 阈值影响分析（传入预计算的基准收益、市场状态和统一基准）
-            threshold_impact = self.analyze_threshold_impact(
-                indicator_data, price_data,
-                benchmark_returns=benchmark_returns,
-                market_regime=market_regime,
-                full_regime_benchmarks=full_regime_benchmarks
-            )
-            
-            # 保存结果
-            self.indicator_analysis_results[metric] = {
-                'multi_horizon': multi_horizon,
-                'optimal': optimal,
-                'threshold_impact': threshold_impact
-            }
-            
-            # 打印关键结果
-            if optimal:
-                print(f"  最优预测窗口: {optimal.get('optimal_horizon_ig', 'N/A')}天")
-                print(f"  最大信息增益: {optimal.get('max_ig', 0):.4f}")
-                
-            # 打印相关性信息
-            if threshold_impact:
-                first_result = next(iter(threshold_impact.values()))
-                corr_type = first_result.get('correlation_type', 'unknown')
-                corr_value = first_result.get('correlation_value', 0)
-                print(f"  相关性: {corr_type} ({corr_value:.3f})")
-            
-            
-    
-    
-    def generate_advanced_report(self):
-        """生成高级分析报告"""
-        print("\n" + "="*60)
-        print("生成高级分析报告")
-        print("="*60)
+            process_args.append((
+                category, endpoint_info, price_data, market_regime, 
+                full_regime_benchmarks, benchmark_returns_long, 
+                benchmark_returns_short, self.asset, only_cache
+            ))
         
-        # 生成可视化
-        self.create_visualizations()
+        # 使用多进程并行处理指标
+        print(f"\n使用 {num_workers} 个进程并行处理 {len(process_args)} 个指标...")
         
-        # 生成HTML报告
-        self.generate_html_report()
+        # 设置全局分析器实例
+        global _global_analyzer
+        _global_analyzer = self
         
-        # 保存JSON结果
-        self.save_json_results()
+        # 使用多进程池
+        with Pool(processes=num_workers) as pool:
+            results = pool.map(process_indicator_wrapper, process_args)
         
-        print("\n✓ 报告生成完成")
-        print("  - HTML报告: glassnode_advanced_analysis.html")
-        print("  - JSON结果: glassnode_advanced_results.json")
-        print("  - 可视化图表: advanced_analysis_*.png")
-    
-    def create_visualizations(self):
-        """创建可视化图表"""
-        if not hasattr(self, 'indicator_analysis_results'):
-            return
+        # 收集结果
+        for result in results:
+            if result is not None:
+                metric_name, result_dict = result
+                self.results[metric_name] = result_dict
         
-        # 1. 多时间窗口信息增益热力图
-        self.plot_multi_horizon_heatmap()
-        
-        # 2. 阈值影响分析图
-        self.plot_threshold_impact()
-        
-    
-    def plot_multi_horizon_heatmap(self):
-        """绘制多时间窗口信息增益热力图"""
-        try:
-            # 准备数据
-            indicators = []
-            horizons = []
-            ig_matrix = []
-            
-            for indicator, results in self.indicator_analysis_results.items():
-                if 'multi_horizon' in results and results['multi_horizon']:
-                    indicators.append(indicator)
-                    horizon_results = results['multi_horizon']
-                    
-                    if not horizons:
-                        horizons = sorted(horizon_results.keys())
-                    
-                    row = [horizon_results.get(h, {}).get('information_gain', 0) 
-                          for h in horizons]
-                    ig_matrix.append(row)
-            
-            if not ig_matrix:
-                return
-            
-            # 创建热力图
-            plt.figure(figsize=(16, 8))
-            sns.heatmap(ig_matrix, 
-                       xticklabels=[f"{h}d" if h < 30 else f"{h/30:.0f}m" for h in horizons],
-                       yticklabels=indicators,
-                       cmap='YlOrRd',
-                       annot=True,
-                       fmt='.3f',
-                       cbar_kws={'label': '信息增益'})
-            
-            plt.title('多时间窗口信息增益分析')
-            plt.xlabel('预测时间窗口')
-            plt.ylabel('指标')
-            plt.tight_layout()
-            plt.savefig('advanced_analysis_horizon_heatmap.png', dpi=100)
-            plt.close()
-            
-        except Exception as e:
-            print(f"绘制热力图失败: {e}")
-    
-    def plot_threshold_impact(self):
-        """绘制阈值影响分析图"""
-        try:
-            fig, axes = plt.subplots(3, 2, figsize=(14, 15))
-            axes = axes.flatten()
-            
-            # 绘制每个指标的阈值影响
-            for idx, (indicator, results) in enumerate(self.indicator_analysis_results.items()):
-                if idx >= 5:
-                    break
-                    
-                if 'threshold_impact' not in results:
-                    continue
-                    
-                threshold_data = results['threshold_impact']
-                if not threshold_data:
-                    continue
-                
-                ax = axes[idx]
-                
-                # 提取数据
-                percentiles = sorted(threshold_data.keys())
-                returns_30d = []
-                sharpe_30d = []
-                sample_ratios = []
-                
-                for pct in percentiles:
-                    if '30d' in threshold_data[pct].get('returns', {}):
-                        returns_30d.append(threshold_data[pct]['returns']['30d']['mean'])
-                        sharpe_30d.append(threshold_data[pct]['returns']['30d']['sharpe'])
-                        sample_ratios.append(threshold_data[pct]['sample_ratio'])
-                
-                if returns_30d:
-                    ax2 = ax.twinx()
-                    
-                    # 收益率
-                    line1 = ax.plot(percentiles, returns_30d, 'b-', marker='o', 
-                                   markersize=4, label='30天收益率')
-                    # 夏普比率
-                    line2 = ax2.plot(percentiles, sharpe_30d, 'r-', marker='s', 
-                                    markersize=4, label='夏普比率')
-                    
-                    # 突出显示90以上的区域
-                    ax.axvspan(90, 99, alpha=0.1, color='yellow')
-                    
-                    ax.set_xlabel('阈值百分位')
-                    ax.set_ylabel('30天平均收益率', color='b')
-                    ax2.set_ylabel('夏普比率', color='r')
-                    ax.set_title(f'{indicator} 阈值影响分析')
-                    ax.grid(True, alpha=0.3)
-                    
-                    # 合并图例
-                    lines = line1 + line2
-                    labels = [l.get_label() for l in lines]
-                    ax.legend(lines, labels, loc='best')
-            
-            # 添加90+细粒度分析图
-            ax = axes[5]
-            
-            # 收集所有指标在90+的表现
-            high_threshold_data = []
-            for indicator, results in self.indicator_analysis_results.items():
-                if 'threshold_impact' in results:
-                    for pct in [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]:
-                        if pct in results['threshold_impact']:
-                            if '30d' in results['threshold_impact'][pct].get('returns', {}):
-                                high_threshold_data.append({
-                                    'indicator': indicator,
-                                    'percentile': pct,
-                                    'sharpe': results['threshold_impact'][pct]['returns']['30d']['sharpe']
-                                })
-            
-            if high_threshold_data:
-                df = pd.DataFrame(high_threshold_data)
-                pivot = df.pivot(index='indicator', columns='percentile', values='sharpe')
-                sns.heatmap(pivot, annot=True, fmt='.2f', cmap='RdYlGn', 
-                           center=0, ax=ax, cbar_kws={'label': '夏普比率'})
-                ax.set_title('90%以上阈值细粒度分析（夏普比率）')
-                ax.set_xlabel('阈值百分位')
-                ax.set_ylabel('指标')
-            
-            plt.suptitle('不同阈值对指标预测效果的影响', fontsize=14, y=1.02)
-            plt.tight_layout()
-            plt.savefig('advanced_analysis_threshold_impact.png', dpi=100)
-            plt.close()
-            
-        except Exception as e:
-            print(f"绘制阈值影响图失败: {e}")
-    
-    
-    def generate_html_report(self):
-        """生成HTML报告"""
-        asset_name = getattr(self, 'asset', 'BTC')
-        html = f"""
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Glassnode高级分析报告 - {asset_name}</title>
-    <meta charset="utf-8">
-    <style>
-        body {{ font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }}
-        h1 {{ color: #333; text-align: center; background: white; padding: 20px; }}
-        h2 {{ color: #666; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; }}
-        h3 {{ color: #888; }}
-        .container {{ max-width: 1200px; margin: 0 auto; }}
-        .section {{ background: white; padding: 20px; margin: 20px 0; border-radius: 5px; 
-                   box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-        table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
-        th {{ background: #4CAF50; color: white; padding: 10px; text-align: left; }}
-        td {{ padding: 8px; border-bottom: 1px solid #ddd; }}
-        tr:hover {{ background: #f5f5f5; }}
-        .metric-box {{ display: inline-block; padding: 10px; margin: 10px;
-                     background: #e8f5e9; border-radius: 5px; }}
-        .highlight {{ background: #fff3cd; font-weight: bold; }}
-        img {{ max-width: 100%; margin: 20px 0; }}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Glassnode 高级分析报告 - {asset_name}</h1>
-        <div class="section">
-            <h2>分析概览</h2>
-            <div class="metric-box">
-                <strong>资产:</strong> {asset_name}
-            </div>
-            <div class="metric-box">
-                <strong>分析时间:</strong> {datetime.now().strftime("%Y-%m-%d %H:%M")}
-            </div>
-            <div class="metric-box">
-                <strong>分析指标数:</strong> {len(self.indicator_analysis_results)}
-            </div>
-        </div>
-"""
-        
-        # 最优时间窗口分析
-        html += """
-        <div class="section">
-            <h2>最优预测时间窗口分析</h2>
-            <table>
-                <tr>
-                    <th>指标</th>
-                    <th>最优窗口(IG)</th>
-                    <th>最大IG</th>
-                    <th>最优窗口(MI)</th>
-                    <th>最大MI</th>
-                    <th>最优窗口(Rank IC)</th>
-                    <th>最大Rank IC</th>
-                    <th>最优窗口(Pearson IC)</th>
-                    <th>最大Pearson IC</th>
-                </tr>
-"""
-        
-        for indicator, results in self.indicator_analysis_results.items():
-            if 'optimal' in results and results['optimal']:
-                opt = results['optimal']
-                html += f"""
-                <tr>
-                    <td><strong>{indicator}</strong></td>
-                    <td class="highlight">{opt.get('optimal_horizon_ig', 'N/A')}天</td>
-                    <td>{opt.get('max_ig', 0):.4f}</td>
-                    <td>{opt.get('optimal_horizon_mi', 'N/A')}天</td>
-                    <td>{opt.get('max_mi', 0):.4f}</td>
-                    <td>{opt.get('optimal_horizon_rank_ic', opt.get('optimal_horizon_corr', 'N/A'))}天</td>
-                    <td>{opt.get('max_rank_ic', opt.get('max_correlation', 0)):.4f}</td>
-                    <td>{opt.get('optimal_horizon_pearson_ic', opt.get('optimal_horizon_corr', 'N/A'))}天</td>
-                    <td>{opt.get('max_pearson_ic', opt.get('max_correlation', 0)):.4f}</td>
-                </tr>
-"""
-        
-        html += """
-            </table>
-            <img src="advanced_analysis_horizon_heatmap.png" alt="时间窗口热力图">
-        </div>
-"""
-        
-        # 阈值影响分析
-        html += """
-        <div class="section">
-            <h2>阈值优化分析</h2>
-            <p>通过设置不同的阈值百分位，分析指标筛选后的预测效果：</p>
-            <img src="advanced_analysis_threshold_impact.png" alt="阈值影响分析">
-"""
-        
-        # 添加改进的最优阈值表（包含相对性能和市场状态）
-        html += """
-            <h3>各指标最优阈值分析（改进版）</h3>
-            <table>
-                <tr>
-                    <th rowspan="2">指标</th>
-                    <th rowspan="2">相关性</th>
-                    <th rowspan="2">最优阈值</th>
-                    <th colspan="5">绝对性能</th>
-                    <th colspan="4">相对性能</th>
-                    <th colspan="3">交易统计</th>
-                    <th colspan="3">市场状态表现</th>
-                    <th rowspan="2">综合评分</th>
-                </tr>
-                <tr>
-                    <!-- 绝对性能 -->
-                    <th>年化收益</th>
-                    <th>波动率</th>
-                    <th>夏普</th>
-                    <th>最大回撤</th>
-                    <th>样本占比</th>
-                    <!-- 相对性能 -->
-                    <th>超额收益</th>
-                    <th>信息比率</th>
-                    <th>Alpha</th>
-                    <th>跟踪误差</th>
-                    <!-- 交易统计 -->
-                    <th>胜率</th>
-                    <th>盈亏比</th>
-                    <th>期望值</th>
-                    <!-- 市场状态 -->
-                    <th>牛市超额</th>
-                    <th>熊市超额</th>
-                    <th>震荡超额</th>
-                </tr>
-"""
-        
-        for indicator, results in self.indicator_analysis_results.items():
-            if 'threshold_impact' in results and results['threshold_impact']:
-                # 找最优阈值（基于信息比率而非夏普比率）
-                best_pct = None
-                best_ir = -999
-                best_data = None
-                
-                for pct, data in results['threshold_impact'].items():
-                    # 优先使用信息比率
-                    ir = data.get('relative_performance', {}).get('information_ratio', -999)
-                    if ir > best_ir:
-                        best_ir = ir
-                        best_pct = pct
-                        best_data = data
-                
-                # 如果没有相对性能数据，回退到旧版本
-                if best_data is None:
-                    for pct, data in results['threshold_impact'].items():
-                        if 'returns' in data and '7d' in data['returns']:
-                            sharpe = data['returns']['7d']['sharpe']
-                            if sharpe > best_sharpe:
-                                best_sharpe = sharpe
-                                best_pct = pct
-                                best_data = data
-                
-                if best_pct and best_data:
-                    # 提取各项数据
-                    abs_perf = best_data.get('absolute_performance', {})
-                    rel_perf = best_data.get('relative_performance', {})
-                    regime_perf = best_data.get('regime_performance', {})
-                    scores = best_data.get('comprehensive_scores', {})
-                    
-                    # 获取市场状态超额收益
-                    bull_excess = regime_perf.get('bull', {}).get('excess_return', 0) * 100 if regime_perf else 0
-                    bear_excess = regime_perf.get('bear', {}).get('excess_return', 0) * 100 if regime_perf else 0
-                    sideways_excess = regime_perf.get('sideways', {}).get('excess_return', 0) * 100 if regime_perf else 0
-                    
-                    # 根据综合评分设置行的背景色
-                    overall_score = scores.get('overall', 0)
-                    row_class = ""
-                    if overall_score > 70:
-                        row_class = "style='background-color: #d4edda;'"  # 绿色
-                    elif overall_score > 40:
-                        row_class = "style='background-color: #fff3cd;'"  # 黄色
-                    else:
-                        row_class = "style='background-color: #f8d7da;'"  # 红色
-                    
-                    # 获取相关性信息
-                    corr_type = best_data.get('correlation_type', 'positive')
-                    corr_value = best_data.get('correlation_value', 0)
-                    corr_color = 'green' if corr_type == 'positive' else 'red'
-                    
-                    html += f"""
-                <tr {row_class}>
-                    <td><strong>{indicator}</strong></td>
-                    <td style="color: {corr_color}">
-                        {corr_type[:3].upper()}<br>
-                        <small>({corr_value:.2f})</small>
-                    </td>
-                    <td class="highlight">{best_pct}%</td>
-                    <!-- 绝对性能 -->
-                    <td>{abs_perf.get('annual_return', 0)*100:.1f}%</td>
-                    <td>{abs_perf.get('volatility', 0)*100:.1f}%</td>
-                    <td>{abs_perf.get('sharpe', 0):.2f}</td>
-                    <td>{abs_perf.get('max_drawdown', 0)*100:.1f}%</td>
-                    <td>{best_data.get('sample_ratio', 0)*100:.1f}%</td>
-                    <!-- 相对性能 -->
-                    <td style="color: {'green' if rel_perf.get('excess_return', 0) > 0 else 'red'}">
-                        {rel_perf.get('excess_return', 0)*100:.1f}%
-                    </td>
-                    <td style="color: {'green' if rel_perf.get('information_ratio', 0) > 0 else 'red'}">
-                        {rel_perf.get('information_ratio', 0):.2f}
-                    </td>
-                    <td>{rel_perf.get('alpha', 0)*100:.1f}%</td>
-                    <td>{rel_perf.get('tracking_error', 0)*100:.1f}%</td>
-                    <!-- 交易统计 -->
-                    <td style="color: {'green' if rel_perf.get('win_rate', 0) > 0.5 else 'orange' if rel_perf.get('win_rate', 0) > 0.4 else 'red'}">
-                        {rel_perf.get('win_rate', 0)*100:.1f}%
-                    </td>
-                    <td style="color: {'green' if rel_perf.get('profit_loss_ratio', 0) > 1.5 else 'orange' if rel_perf.get('profit_loss_ratio', 0) > 1 else 'red'}">
-                        {rel_perf.get('profit_loss_ratio', 0):.2f}
-                    </td>
-                    <td style="color: {'green' if rel_perf.get('expectancy', 0) > 0 else 'red'}">
-                        {rel_perf.get('expectancy', 0):.1f}%
-                    </td>
-                    <!-- 市场状态 -->
-                    <td style="color: {'green' if bull_excess > 0 else 'red'}">{bull_excess:.1f}%</td>
-                    <td style="color: {'green' if bear_excess > 0 else 'red'}">{bear_excess:.1f}%</td>
-                    <td style="color: {'green' if sideways_excess > 0 else 'red'}">{sideways_excess:.1f}%</td>
-                    <!-- 综合评分 -->
-                    <td style="font-weight: bold; color: {'green' if overall_score > 60 else 'orange' if overall_score > 30 else 'red'}">
-                        {overall_score:.1f}
-                    </td>
-                </tr>
-"""
-        
-        html += """
-            </table>
-            
-            <h4>指标说明</h4>
-            <div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 20px;">
-                <p><strong>改进版分析的关键优势：</strong></p>
-                <ul style="line-height: 1.8;">
-                    <li><strong>相关性类型</strong>：
-                        <ul>
-                            <li>POS（正相关）：指标值越高，未来收益越好，高于阈值时持有</li>
-                            <li>NEG（负相关）：指标值越低，未来收益越好，低于阈值时持有（如恐慌指数）</li>
-                        </ul>
-                    </li>
-                    <li><strong>超额收益</strong>：策略收益 - 买入持有收益，剔除市场整体影响，真实反映策略价值</li>
-                    <li><strong>信息比率 (IR)</strong>：超额收益 / 跟踪误差，衡量每单位风险获得的超额收益
-                        <ul>
-                            <li>IR > 1.0: 优秀策略</li>
-                            <li>IR > 0.5: 良好策略</li>
-                            <li>IR > 0: 有价值</li>
-                            <li>IR < 0: 跑输基准</li>
-                        </ul>
-                    </li>
-                    <li><strong>Alpha</strong>：风险调整后的超额收益，代表策略的纯alpha贡献</li>
-                    <li><strong>跟踪误差</strong>：超额收益的标准差，反映策略偏离基准的稳定性</li>
-                    <li><strong>胜率</strong>：盈利天数占总交易天数的比例
-                        <ul>
-                            <li>> 50%: 赢多输少</li>
-                            <li>> 45%: 可接受（配合高盈亏比）</li>
-                            <li>< 40%: 需要优化</li>
-                        </ul>
-                    </li>
-                    <li><strong>盈亏比</strong>：平均盈利 / 平均亏损，衡量风险回报比
-                        <ul>
-                            <li>> 2.0: 优秀的风险回报</li>
-                            <li>> 1.5: 良好</li>
-                            <li>> 1.0: 基本合格</li>
-                            <li>< 1.0: 风险大于回报</li>
-                        </ul>
-                    </li>
-                    <li><strong>期望值</strong>：每次交易的数学期望收益，综合考虑胜率和盈亏比
-                        <ul>
-                            <li>期望值 = 胜率 × 平均盈利 - (1-胜率) × 平均亏损</li>
-                            <li>> 0: 长期盈利策略</li>
-                            <li>< 0: 长期亏损策略</li>
-                        </ul>
-                    </li>
-                    <li><strong>市场状态超额</strong>：在牛市、熊市、震荡市分别的超额表现，评估策略的市场适应性</li>
-                    <li><strong>综合评分</strong>：结合性能指标(50%)、市场适应性(50%)的综合评估</li>
-                </ul>
-                <p style="margin-top: 10px; color: #666;">
-                    <em>注：表格中绿色背景表示综合评分>70分，黄色表示40-70分，红色表示<40分</em>
-                </p>
-            </div>
-        </div>
-"""
-        
-        # 指标组合分析
-        html += """
-        <div class="section">
-            <h2>指标组合分析（2元组合）</h2>
-            <img src="advanced_analysis_combination.png" alt="组合效果对比">
-            
-            <h3>最佳2元组合 TOP 10</h3>
-            <table>
-                <tr>
-                    <th>排名</th>
-                    <th>指标组合</th>
-                    <th>组合方法</th>
-                    <th>平均IG</th>
-                    <th>平均MI</th>
-                </tr>
-"""
-        
-        # 2元组合
-        if hasattr(self, 'combo_2_results'):
-            combo_list = []
-            for combo, methods in self.combo_2_results.items():
-                for method, results in methods.items():
-                    combo_list.append({
-                        'combo': combo,
-                        'method': method,
-                        'avg_ig': results['avg_ig'],
-                        'avg_mi': results['avg_mi']
-                    })
-            
-            combo_list.sort(key=lambda x: x['avg_ig'], reverse=True)
-            
-            for i, item in enumerate(combo_list[:10], 1):
-                html += f"""
-                <tr>
-                    <td>{i}</td>
-                    <td><strong>{' + '.join(item['combo'])}</strong></td>
-                    <td>{item['method']}</td>
-                    <td class="highlight">{item['avg_ig']:.4f}</td>
-                    <td>{item['avg_mi']:.4f}</td>
-                </tr>
-"""
-        
-        html += """
-            </table>
-        </div>
-        
-        <div class="section">
-            <h2>结论与建议</h2>
-            <ul>
-                <li>不同指标有不同的最优预测时间窗口，应根据具体需求选择</li>
-                <li>设置适当的阈值可以提高预测准确性，但需要权衡样本量</li>
-                <li>指标组合通常比单一指标有更好的预测效果</li>
-                <li>加权组合方法在大多数情况下优于简单平均</li>
-            </ul>
-        </div>
-    </div>
-</body>
-</html>
-"""
-        
-        with open('glassnode_advanced_analysis.html', 'w', encoding='utf-8') as f:
-            f.write(html)
-    
-    def save_json_results(self):
-        """保存JSON格式结果"""
-        asset_name = getattr(self, 'asset', 'BTC')
-        results = {
-            'analysis_time': datetime.now().isoformat(),
-            'asset': asset_name,
-            'indicators': {}
-        }
-        
-        # 指标分析结果
-        for indicator, data in self.indicator_analysis_results.items():
-            # 保存改进版的阈值分析数据
-            if 'threshold_impact' in data:
-                # 保存完整的阈值分析数据
-                threshold_analysis = data['threshold_impact']
-            else:
-                threshold_analysis = {}
-            
-            results['indicators'][indicator] = {
-                'optimal_horizon': data.get('optimal', {}),
-                'multi_horizon_ig': {
-                    str(k): v['information_gain'] 
-                    for k, v in data.get('multi_horizon', {}).items()
-                },
-                'best_threshold': self._find_best_threshold(data.get('threshold_impact', {})),
-                # 添加完整的阈值分析数据供Dashboard使用
-                'threshold_analysis': threshold_analysis
-            }
-        
-        # 组合结果
-        if hasattr(self, 'combo_2_results'):
-            results['combinations_2'] = self._format_combo_results(self.combo_2_results)
-        
-        with open('glassnode_advanced_results.json', 'w') as f:
-            json.dump(results, f, indent=2)
-    
-    def _find_best_threshold(self, threshold_data: Dict) -> Dict:
-        """找出最佳阈值（改进版：优先使用信息比率）"""
-        if not threshold_data:
-            return {}
-        
-        best = None
-        best_score = -999
-        
-        for pct, data in threshold_data.items():
-            # 优先使用信息比率
-            if 'relative_performance' in data:
-                score = data['relative_performance'].get('information_ratio', -999)
-                metric_type = 'information_ratio'
-            # 其次使用综合评分
-            elif 'comprehensive_scores' in data:
-                score = data['comprehensive_scores'].get('overall', -999)
-                metric_type = 'comprehensive_score'
-            # 最后使用夏普比率（兼容旧版）
-            elif '7d' in data.get('returns', {}):
-                score = data['returns']['7d']['sharpe']
-                metric_type = 'sharpe'
-            else:
-                continue
-            
-            if score > best_score:
-                best_score = score
-                
-                # 根据数据格式构建返回结果
-                if 'relative_performance' in data:
-                    # 新版数据格式
-                    best = {
-                        'percentile': pct,
-                        'sharpe': data.get('absolute_performance', {}).get('sharpe', 0),
-                        'information_ratio': data['relative_performance'].get('information_ratio', 0),
-                        'excess_return': data['relative_performance'].get('excess_return', 0),
-                        'alpha': data['relative_performance'].get('alpha', 0),
-                        'comprehensive_score': data.get('comprehensive_scores', {}).get('overall', 0),
-                        'sample_ratio': data.get('sample_ratio', 0),
-                        'metric_type': metric_type
-                    }
-                else:
-                    # 旧版数据格式
-                    best = {
-                        'percentile': pct,
-                        'sharpe': score if metric_type == 'sharpe' else 0,
-                        'return_7d': data.get('returns', {}).get('7d', {}).get('mean', 0),
-                        'sample_ratio': data.get('sample_ratio', 0),
-                        'metric_type': metric_type
-                    }
-        
-        return best if best else {}
-    
-    def _format_combo_results(self, combo_results: Dict) -> List[Dict]:
-        """格式化组合结果"""
-        formatted = []
-        
-        for combo, methods in combo_results.items():
-            for method, results in methods.items():
-                formatted.append({
-                    'indicators': list(combo),
-                    'method': method,
-                    'avg_ig': results['avg_ig'],
-                    'avg_mi': results['avg_mi']
-                })
-        
-        return sorted(formatted, key=lambda x: x['avg_ig'], reverse=True)
+        print(f"\n成功分析了 {len(self.results)} 个指标")
 
 
 def main():
@@ -1857,6 +1568,8 @@ def main():
     parser.add_argument('--only-cache', type=str, default='True',
                        choices=['True', 'False', 'true', 'false'],
                        help='只使用缓存数据，不发起网络请求 (True/False，默认False)')
+    parser.add_argument('--num-workers', type=int, default=12,
+                       help='并行处理的进程数 (默认12)')
     
     args = parser.parse_args()
     
@@ -1884,7 +1597,7 @@ def main():
         print("模式: 仅使用缓存（不发起网络请求）")
     
     # 运行综合分析
-    analyzer.run_comprehensive_analysis(asset=args.asset, end_date=end_date, only_cache=only_cache)
+    analyzer.run_comprehensive_analysis(asset=args.asset, end_date=end_date, only_cache=only_cache, num_workers=args.num_workers)
 
 
 if __name__ == "__main__":
