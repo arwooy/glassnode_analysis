@@ -6,7 +6,7 @@ import os
 # 读取JSON文件
 print("正在加载数据...")
 
-with open('indicator_analysis_results_ETH_20250919_162431.json', 'r') as f:
+with open('indicator_analysis_results_BTC_20250919_182844.json', 'r') as f:
     data = json.load(f)
     
 # 获取指标数量信息
@@ -211,21 +211,25 @@ for indicator_name, indicator_data in indicators.items():
 import pandas as pd
 df_ic = pd.DataFrame(ic_results)
 
-# 按Rank IC排序，取前30
-top30_by_rank_ic = df_ic.nlargest(30, 'max_rank_ic')
+# 按Rank IC绝对值排序，取前30
+df_ic['abs_rank_ic'] = df_ic['max_rank_ic'].abs()
+top30_by_rank_ic = df_ic.nlargest(30, 'abs_rank_ic')
 
 print("\n【Top 30 指标 - 按 Rank IC (秩相关信息系数) 排序】")
 for i, (idx, row) in enumerate(top30_by_rank_ic.iterrows(), 1):
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Rank IC: {row['max_rank_ic']:.4f} | 最优周期: {row['optimal_horizon_rank']:3d}天")
+    # 显示带符号的IC值
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Rank IC: {row['max_rank_ic']:+.4f} | 最优周期: {row['optimal_horizon_rank']:3d}天")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
-# 按Pearson IC排序，取前30
-top30_by_pearson_ic = df_ic.nlargest(30, 'max_pearson_ic')
+# 按Pearson IC绝对值排序，取前30
+df_ic['abs_pearson_ic'] = df_ic['max_pearson_ic'].abs()
+top30_by_pearson_ic = df_ic.nlargest(30, 'abs_pearson_ic')
 
 print("\n【Top 30 指标 - 按 Pearson IC (线性相关信息系数) 排序】")
 for i, (idx, row) in enumerate(top30_by_pearson_ic.iterrows(), 1):
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Pearson IC: {row['max_pearson_ic']:.4f} | 最优周期: {row['optimal_horizon_pearson']:3d}天")
+    # 显示带符号的IC值
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Pearson IC: {row['max_pearson_ic']:+.4f} | 最优周期: {row['optimal_horizon_pearson']:3d}天")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
