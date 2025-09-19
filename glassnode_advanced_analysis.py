@@ -621,6 +621,7 @@ class GlassnodeAdvancedAnalyzer:
                                 signal_ig_results[f'{horizon}d'] = {
                                     'information_gain': ig,
                                     'strategy_type': strategy_type,
+                                    'correlation': correlation,
                                     'signal_accuracy': accuracy,
                                     'signal_count': signal_mask.sum(),
                                     'total_days': len(valid_data)
@@ -729,16 +730,31 @@ class GlassnodeAdvancedAnalyzer:
             price_data: 价格数据
             strategy_type: 'long' 为买入持有，'short' 为做空持有
         """
-        returns = price_data.pct_change().fillna(0)
+        import numpy as np
         
         if strategy_type == 'short':
-            # 空头基准：做空持有的收益（价格下跌时赚钱）
-            benchmark_returns = -returns
+            # 做空收益的正确计算方法
+            # 如果价格从P1变到P2，做空收益 = (P1 - P2) / P1 = 1 - P2/P1
+            # 但考虑到复利，我们使用倒数关系：
+            # 做空收益 = 1/price_ratio - 1
+            # 这确保了正确的对称性：价格跌50%（ratio=0.5），做空赚100%（1/0.5-1=1）
+            
+            # 计算价格比率（相对于初始价格）
+            price_ratio = price_data / price_data.iloc[0]
+            
+            # 做空的累计收益：使用倒数关系
+            # 如果价格变为原来的r倍，做空收益是1/r - 1
+            # 例如：价格跌到0.5倍，做空收益 = 1/0.5 - 1 = 1 (100%)
+            short_cumulative = 1 / price_ratio
+            
+            # 计算每日收益（从累计收益推导）
+            benchmark_returns = short_cumulative.pct_change().fillna(0)
+            cumulative_returns = short_cumulative
         else:
             # 多头基准：买入持有的收益
+            returns = price_data.pct_change().fillna(0)
             benchmark_returns = returns
-        
-        cumulative_returns = (1 + benchmark_returns).cumprod()
+            cumulative_returns = (1 + benchmark_returns).cumprod()
         
         return pd.DataFrame({
             'daily': benchmark_returns,
@@ -1775,7 +1791,7 @@ def main():
     
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='Glassnode 高级分析系统')
-    parser.add_argument('--asset', type=str, default='BTC', 
+    parser.add_argument('--asset', type=str, default='ETH', 
                        help='要分析的资产代码 (BTC, ETH, LTC, 等)')
     parser.add_argument('--api-key', type=str, default="myapi_sk_b3fa36048ea022be1c21e626742d4dec",
                        help='Glassnode API密钥')
