@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import numpy as np
+import os
 
 # 读取JSON文件
 print("正在加载数据...")
@@ -16,12 +17,35 @@ indicators_list = metadata.get('indicators_list', [])
 total_indicators = len(indicators_list) if indicators_list else 0
 tested_indicators = len(indicators)
 
+# 读取Glassnode平台的所有端点信息
+platform_total_endpoints = 0
+platform_category_breakdown = {}
+if os.path.exists('glassnode_endpoints_detailed.json'):
+    with open('glassnode_endpoints_detailed.json', 'r') as f:
+        endpoints_data = json.load(f)
+        for category, endpoints in endpoints_data.items():
+            if isinstance(endpoints, list):
+                count = len(endpoints)
+                platform_category_breakdown[category] = count
+                platform_total_endpoints += count
+
 print(f"\n【指标统计】")
-print(f"  配置的总指标数: {total_indicators}")
+print(f"  Glassnode平台总指标数: {platform_total_endpoints}")
+if platform_category_breakdown:
+    # 显示主要类别
+    main_categories = ['addresses', 'indicators', 'derivatives', 'transactions', 'supply']
+    print(f"  主要类别分布:")
+    for cat in main_categories:
+        if cat in platform_category_breakdown:
+            print(f"    - {cat}: {platform_category_breakdown[cat]}个")
+print(f"\n  本次配置的指标数: {total_indicators}")
 print(f"  实际测试的指标数: {tested_indicators}")
 if total_indicators > 0:
     completion_rate = (tested_indicators / total_indicators) * 100
     print(f"  测试完成率: {completion_rate:.1f}%")
+if platform_total_endpoints > 0:
+    coverage_rate = (total_indicators / platform_total_endpoints) * 100
+    print(f"  平台覆盖率: {coverage_rate:.1f}%")
 
 # =============================================================================
 # 1. 基准市场表现分析
