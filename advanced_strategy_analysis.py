@@ -34,8 +34,8 @@ print(f"\n【指标统计】")
 print(f"  Glassnode平台总指标数: {platform_total_endpoints}")
 if platform_category_breakdown:
     # 显示主要类别
-    main_categories = ['addresses', 'indicators', 'derivatives', 'transactions', 'supply']
-    print(f"  主要类别分布:")
+    main_categories = list(platform_category_breakdown.keys())
+    print(f"  类别测试分布:")
     for cat in main_categories:
         if cat in platform_category_breakdown:
             print(f"    - {cat}: {platform_category_breakdown[cat]}个")
@@ -232,7 +232,7 @@ for i, (idx, row) in enumerate(top30_by_pearson_ic.iterrows(), 1):
 # 按信息增益排序，取前30
 top30_by_ig = df_ic.nlargest(30, 'max_ig')
 
-print("\n【Top 30 指标 - 按信息增益 (Information Gain) 排序】")
+print("\n【Top 30 指标 - 按信息增益 (Information Gain 分桶数10) 排序】")
 for i, (idx, row) in enumerate(top30_by_ig.iterrows(), 1):
     print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | 最优周期: {row['optimal_horizon_ig']:3d}天 | MI: {row['max_mi']:.4f}")
     if i % 10 == 0 and i < 30:
@@ -407,13 +407,13 @@ for indicator_name, indicator_data in indicators.items():
 
 # 输出做多全天候策略
 print(f"\n【做多策略 - 全市场正收益】")
-print(f"找到 {len(all_weather_positive_long)} 个策略\n")
+print(f"找到 {len(all_weather_positive_long)} 个策略，平均超额收益 TOP20\n")
 
 if all_weather_positive_long:
     df_long = pd.DataFrame(all_weather_positive_long)
     df_long_sorted = df_long.sort_values('avg_excess', ascending=False)
     
-    for i, row in df_long_sorted.head(10).iterrows():
+    for i, row in df_long_sorted.head(20).iterrows():
         print(f"{list(df_long_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
@@ -443,13 +443,13 @@ if all_weather_positive_long:
 
 # 输出做空全天候策略
 print(f"\n【做空策略 - 全市场正收益】")
-print(f"找到 {len(all_weather_positive_short)} 个策略\n")
+print(f"找到 {len(all_weather_positive_short)} 个策略，平均超额收益 TOP20\n")
 
 if all_weather_positive_short:
     df_short = pd.DataFrame(all_weather_positive_short)
     df_short_sorted = df_short.sort_values('avg_excess', ascending=False)
     
-    for i, row in df_short_sorted.head(10).iterrows():
+    for i, row in df_short_sorted.head(20).iterrows():
         print(f"{list(df_short_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
@@ -554,7 +554,7 @@ for indicator_name, indicator_data in indicators.items():
                                 'total_days': horizon_data.get('total_days', 0)
                             })
 
-print(f"\n找到 {len(perfect_signals)} 个100%准确度的信号\n")
+print(f"\n找到 {len(perfect_signals)} 个100%准确度的信号， 按信息增益排序TOP20\n")
 
 if perfect_signals:
     # 按信息增益排序
@@ -602,8 +602,8 @@ if perfect_signals:
                                   reverse=True)
     
     print(f"去重后剩余 {len(perfect_signals_dedup)} 个独特信号（原始 {len(perfect_signals)} 个）\n")
-    print("【100%准确度信号】")
-    for i, signal in enumerate(perfect_signals_dedup, 1):
+    print("【100%准确度信号 TOP20】")
+    for i, signal in enumerate(perfect_signals_dedup[:20], 1):
         # 判断操作方向
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
@@ -640,6 +640,10 @@ if perfect_signals:
         print(f"   信息增益: {signal['information_gain']:.6f}")
         print(f"   总天数: {signal['total_days']}")
         print(f"   信号频率: {signal['signal_count']/signal['total_days']*100:.2f}%")
+    
+    # 如果有超过20个信号，提示只显示了TOP 20
+    if len(perfect_signals_dedup) > 20:
+        print(f"\n(注: 共有 {len(perfect_signals_dedup)} 个100%准确度信号，此处仅显示信息增益TOP 20)")
     
     # 保存结果（使用去重后的数据）
     df_perfect = pd.DataFrame(perfect_signals_dedup)
