@@ -418,18 +418,18 @@ if all_weather_positive_long:
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
         
-        # 处理可能为None的市场状态数据
-        if row['bull_return'] is not None:
+        # 处理可能为None或NaN的市场状态数据
+        if row['bull_return'] is not None and not pd.isna(row['bull_return']):
             print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
         else:
             print(f"   牛市: 无数据")
             
-        if row['bear_return'] is not None:
+        if row['bear_return'] is not None and not pd.isna(row['bear_return']):
             print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
         else:
             print(f"   熊市: 无数据")
             
-        if row['sideways_return'] is not None:
+        if row['sideways_return'] is not None and not pd.isna(row['sideways_return']):
             print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
         else:
             print(f"   震荡: 无数据")
@@ -454,18 +454,18 @@ if all_weather_positive_short:
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
         
-        # 处理可能为None的市场状态数据
-        if row['bull_return'] is not None:
+        # 处理可能为None或NaN的市场状态数据
+        if row['bull_return'] is not None and not pd.isna(row['bull_return']):
             print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
         else:
             print(f"   牛市: 无数据")
             
-        if row['bear_return'] is not None:
+        if row['bear_return'] is not None and not pd.isna(row['bear_return']):
             print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
         else:
             print(f"   熊市: 无数据")
             
-        if row['sideways_return'] is not None:
+        if row['sideways_return'] is not None and not pd.isna(row['sideways_return']):
             print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
         else:
             print(f"   震荡: 无数据")
