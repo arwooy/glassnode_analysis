@@ -455,18 +455,24 @@ class GlassnodeAdvancedAnalyzer:
         ig_values = [r['information_gain'] for r in multi_horizon_results.values()]
         mi_values = [r['normalized_mi'] for r in multi_horizon_results.values()]
         
-        # 提取IC值
+        # 提取IC值（保存原始值和绝对值）
         pearson_ic_values = []
         rank_ic_values = []
+        pearson_ic_abs_values = []
+        rank_ic_abs_values = []
         for r in multi_horizon_results.values():
-            pearson_ic_values.append(abs(r.get('pearson_ic', r.get('correlation', 0))))
-            rank_ic_values.append(abs(r.get('rank_ic', r.get('pearson_ic', r.get('correlation', 0)))))
+            pearson = r.get('pearson_ic', r.get('correlation', 0))
+            rank = r.get('rank_ic', r.get('pearson_ic', r.get('correlation', 0)))
+            pearson_ic_values.append(pearson)
+            rank_ic_values.append(rank)
+            pearson_ic_abs_values.append(abs(pearson))
+            rank_ic_abs_values.append(abs(rank))
         
-        # 找最优值
+        # 找最优值（基于绝对值）
         optimal_ig_idx = np.argmax(ig_values)
         optimal_mi_idx = np.argmax(mi_values)
-        optimal_pearson_ic_idx = np.argmax(pearson_ic_values)
-        optimal_rank_ic_idx = np.argmax(rank_ic_values)
+        optimal_pearson_ic_idx = np.argmax(pearson_ic_abs_values)
+        optimal_rank_ic_idx = np.argmax(rank_ic_abs_values)
         
         return {
             'optimal_horizon_ig': horizons[optimal_ig_idx],
@@ -474,9 +480,9 @@ class GlassnodeAdvancedAnalyzer:
             'optimal_horizon_mi': horizons[optimal_mi_idx],
             'max_mi': mi_values[optimal_mi_idx],
             'optimal_horizon_pearson_ic': horizons[optimal_pearson_ic_idx],
-            'max_pearson_ic': pearson_ic_values[optimal_pearson_ic_idx],
+            'max_pearson_ic': pearson_ic_values[optimal_pearson_ic_idx],  # 返回原始值，保留符号
             'optimal_horizon_rank_ic': horizons[optimal_rank_ic_idx],
-            'max_rank_ic': rank_ic_values[optimal_rank_ic_idx],
+            'max_rank_ic': rank_ic_values[optimal_rank_ic_idx],  # 返回原始值，保留符号
             'all_horizons': horizons,
             # 'all_ig': ig_values,
             # 'all_rank_ic': rank_ic_values,
