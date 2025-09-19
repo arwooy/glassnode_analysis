@@ -435,16 +435,27 @@ if perfect_signals:
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
         
+        # 根据百分位判断是高分位还是低分位
+        # 对于做多策略，通常使用低分位（买入信号）
+        # 对于做空策略，通常使用高分位（卖出信号）
+        percentile = signal['percentile']
+        
         if signal['strategy_type'] == 'long':
+            # 做多策略
             if correlation_type == 'positive':
-                operation = f"≥ {signal['threshold']:.6f} 时做多"
+                # 正相关：指标高->价格高，所以高于阈值时做多
+                operation = f"指标值 ≥ {signal['threshold']:.6f} 时做多"
             else:
-                operation = f"≤ {signal['threshold']:.6f} 时做多"
+                # 负相关：指标高->价格低，所以低于阈值时做多
+                operation = f"指标值 ≤ {signal['threshold']:.6f} 时做多"
         else:  # short
-            if correlation_type == 'positive':
-                operation = f"≤ {100-signal['percentile']}%分位时做空"
-            else:
-                operation = f"≥ {signal['threshold']:.6f} 时做空"
+            # 做空策略
+            if percentile >= 50:  # 高分位
+                # 高分位阈值，指标值>=阈值时触发
+                operation = f"指标值 ≥ {signal['threshold']:.6f} 时做空"
+            else:  # 低分位
+                # 低分位阈值，指标值<=阈值时触发
+                operation = f"指标值 ≤ {signal['threshold']:.6f} 时做空"
         
         print(f"\n{i}. {signal['indicator']} ({signal['strategy_type']})")
         print(f"   百分位: {signal['percentile']}%, 阈值: {signal['threshold']:.6f}")
