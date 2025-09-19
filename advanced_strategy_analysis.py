@@ -152,10 +152,12 @@ if 'long' in full_regime_benchmarks:
         if regime in long_regimes:
             r = long_regimes[regime]
             print(f"\n  {regime.upper()}市场:")
-            print(f"    天数: {r.get('days', 0):.0f}天")
-            print(f"    收益率: {r.get('benchmark_return', 0)*100:.2f}%")
+            print(f"    天数: {r.get('total_days', 0):.0f}天")
+            print(f"    累计收益率: {r.get('benchmark_cumulative', 0)*100:.2f}%")
+            print(f"    年化收益率: {r.get('benchmark_annual_return', 0)*100:.2f}%")
+            print(f"    年化波动率: {r.get('benchmark_annual_volatility', 0)*100:.2f}%")
             print(f"    最大回撤: {r.get('benchmark_max_drawdown', 0)*100:.2f}%")
-            print(f"    夏普比率: {r.get('sharpe_ratio', 0):.3f}")
+            print(f"    夏普比率: {r.get('benchmark_sharpe', 0):.3f}")
 
 if 'short' in full_regime_benchmarks:
     print("\n【做空基准 - 不同市场状态】")
@@ -164,9 +166,12 @@ if 'short' in full_regime_benchmarks:
         if regime in short_regimes:
             r = short_regimes[regime]
             print(f"\n  {regime.upper()}市场:")
-            print(f"    天数: {r.get('days', 0):.0f}天")
-            print(f"    收益率: {r.get('benchmark_return', 0)*100:.2f}%")
+            print(f"    天数: {r.get('total_days', 0):.0f}天")
+            print(f"    累计收益率: {r.get('benchmark_cumulative', 0)*100:.2f}%")
+            print(f"    年化收益率: {r.get('benchmark_annual_return', 0)*100:.2f}%")
+            print(f"    年化波动率: {r.get('benchmark_annual_volatility', 0)*100:.2f}%")
             print(f"    最大回撤: {r.get('benchmark_max_drawdown', 0)*100:.2f}%")
+            print(f"    夏普比率: {r.get('benchmark_sharpe', 0):.3f}")
 
 # =============================================================================
 # 3. 寻找全市场正收益+正超额策略
