@@ -7,6 +7,22 @@ print("正在加载数据...")
 with open('indicator_analysis_results_BTC_20250919_143653.json', 'r') as f:
     data = json.load(f)
 
+# 获取指标数量信息
+metadata = data.get('metadata', {})
+indicators = data.get('indicators', {})
+indicators_list = metadata.get('indicators_list', [])
+
+# 统计总指标数和测试的指标数
+total_indicators = len(indicators_list) if indicators_list else 0
+tested_indicators = len(indicators)
+
+print(f"\n【指标统计】")
+print(f"  配置的总指标数: {total_indicators}")
+print(f"  实际测试的指标数: {tested_indicators}")
+if total_indicators > 0:
+    completion_rate = (tested_indicators / total_indicators) * 100
+    print(f"  测试完成率: {completion_rate:.1f}%")
+
 # =============================================================================
 # 1. 基准市场表现分析
 # =============================================================================
@@ -43,6 +59,65 @@ if 'short' in benchmark_metrics:
 print("\n" + "=" * 80)
 print("各市场状态下的基准表现")
 print("=" * 80)
+
+# 获取市场状态时间段信息
+market_regime = market_data.get('market_regime', {})
+print("\n【市场状态时间段】")
+
+# 如果market_regime是日期字典，处理并统计各市场状态
+if market_regime:
+    # 统计各市场状态的天数和时间段
+    # 映射数值到市场状态：1.0=bull, -1.0=bear, 0.0=sideways
+    regime_map = {1.0: 'bull', -1.0: 'bear', 0.0: 'sideways'}
+    regime_stats = {'bull': [], 'bear': [], 'sideways': []}
+    current_regime_val = None
+    current_start = None
+    
+    sorted_dates = sorted(market_regime.keys())
+    
+    for date in sorted_dates:
+        regime_val = market_regime[date]
+        
+        if regime_val != current_regime_val:
+            # 保存上一个时间段
+            if current_regime_val is not None and current_start:
+                regime_name = regime_map.get(current_regime_val, 'unknown')
+                if regime_name != 'unknown':
+                    regime_stats[regime_name].append({
+                        'start': current_start,
+                        'end': prev_date,
+                        'days': (pd.to_datetime(prev_date) - pd.to_datetime(current_start)).days + 1
+                    })
+            
+            # 开始新的时间段
+            current_regime_val = regime_val
+            current_start = date
+        
+        prev_date = date
+    
+    # 保存最后一个时间段
+    if current_regime_val is not None and current_start:
+        regime_name = regime_map.get(current_regime_val, 'unknown')
+        if regime_name != 'unknown':
+            regime_stats[regime_name].append({
+                'start': current_start,
+                'end': prev_date,
+                'days': (pd.to_datetime(prev_date) - pd.to_datetime(current_start)).days + 1
+            })
+    
+    # 输出统计信息
+    for regime in ['bull', 'bear', 'sideways']:
+        periods = regime_stats[regime]
+        total_days = sum(p['days'] for p in periods)
+        print(f"\n  {regime.upper()}市场:")
+        print(f"    总天数: {total_days}天")
+        print(f"    时间段数: {len(periods)}个")
+        if periods:
+            # 显示前3个时间段作为示例
+            for i, period in enumerate(periods[:3], 1):
+                print(f"      段{i}: {period['start'][:10]} 至 {period['end'][:10]} ({period['days']}天)")
+            if len(periods) > 3:
+                print(f"      ... 还有{len(periods)-3}个时间段")
 
 full_regime_benchmarks = market_data.get('full_regime_benchmarks', {})
 
