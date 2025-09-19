@@ -274,11 +274,14 @@ for indicator_name, indicator_data in indicators.items():
                 regime_perf = long_strategy['regime_performance']
                 
                 # 检查是否所有市场都有正收益和正超额
+                # 注意：只检查有数据的市场状态
                 all_positive = True
                 regime_results = {}
+                has_any_regime = False
                 
                 for regime in ['bull', 'bear', 'sideways']:
                     if regime in regime_perf:
+                        has_any_regime = True
                         r = regime_perf[regime]
                         strategy_return = r.get('strategy_return', 0)
                         excess_return = r.get('excess_return', 0)
@@ -293,12 +296,22 @@ for indicator_name, indicator_data in indicators.items():
                         if strategy_return <= 0:
                             all_positive = False
                     else:
-                        all_positive = False
+                        # 如果某个市场状态没有数据，设置为None但不影响all_positive
+                        regime_results[regime] = None
+                
+                # 只有当完全没有市场状态数据时才设为False
+                if not has_any_regime:
+                    all_positive = False
                 
                 if all_positive:
                     # 获取相关性信息
                     correlation_type = percentile_data.get('correlation_type', 'unknown')
                     correlation_value = percentile_data.get('correlation_value', 0)
+                    
+                    # 计算有效市场的平均和最小超额收益
+                    valid_regimes = [r for r in ['bull', 'bear', 'sideways'] if regime_results[r] is not None]
+                    avg_excess = np.mean([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
+                    min_excess = min([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
                     
                     all_weather_positive_long.append({
                         'indicator': indicator_name,
@@ -306,17 +319,17 @@ for indicator_name, indicator_data in indicators.items():
                         'threshold': percentile_data.get('threshold', 0),
                         'correlation_type': correlation_type,
                         'correlation_value': correlation_value,
-                        'bull_return': regime_results['bull']['return'],
-                        'bull_excess': regime_results['bull']['excess'],
-                        'bull_sharpe': regime_results['bull']['sharpe'],
-                        'bear_return': regime_results['bear']['return'],
-                        'bear_excess': regime_results['bear']['excess'],
-                        'bear_sharpe': regime_results['bear']['sharpe'],
-                        'sideways_return': regime_results['sideways']['return'],
-                        'sideways_excess': regime_results['sideways']['excess'],
-                        'sideways_sharpe': regime_results['sideways']['sharpe'],
-                        'avg_excess': np.mean([regime_results[r]['excess'] for r in ['bull', 'bear', 'sideways']]),
-                        'min_excess': min([regime_results[r]['excess'] for r in ['bull', 'bear', 'sideways']]),
+                        'bull_return': regime_results['bull']['return'] if regime_results['bull'] else None,
+                        'bull_excess': regime_results['bull']['excess'] if regime_results['bull'] else None,
+                        'bull_sharpe': regime_results['bull']['sharpe'] if regime_results['bull'] else None,
+                        'bear_return': regime_results['bear']['return'] if regime_results['bear'] else None,
+                        'bear_excess': regime_results['bear']['excess'] if regime_results['bear'] else None,
+                        'bear_sharpe': regime_results['bear']['sharpe'] if regime_results['bear'] else None,
+                        'sideways_return': regime_results['sideways']['return'] if regime_results['sideways'] else None,
+                        'sideways_excess': regime_results['sideways']['excess'] if regime_results['sideways'] else None,
+                        'sideways_sharpe': regime_results['sideways']['sharpe'] if regime_results['sideways'] else None,
+                        'avg_excess': avg_excess,
+                        'min_excess': min_excess,
                         'max_rank_ic': optimal_data.get('max_rank_ic', 0),
                         'max_pearson_ic': optimal_data.get('max_pearson_ic', 0)
                     })
@@ -328,11 +341,14 @@ for indicator_name, indicator_data in indicators.items():
                 regime_perf = short_strategy['regime_performance']
                 
                 # 检查是否所有市场都有正收益和正超额
+                # 注意：只检查有数据的市场状态
                 all_positive = True
                 regime_results = {}
+                has_any_regime = False
                 
                 for regime in ['bull', 'bear', 'sideways']:
                     if regime in regime_perf:
+                        has_any_regime = True
                         r = regime_perf[regime]
                         strategy_return = r.get('strategy_return', 0)
                         excess_return = r.get('excess_return', 0)
@@ -347,12 +363,22 @@ for indicator_name, indicator_data in indicators.items():
                         if strategy_return <= 0:
                             all_positive = False
                     else:
-                        all_positive = False
+                        # 如果某个市场状态没有数据，设置为None但不影响all_positive
+                        regime_results[regime] = None
+                
+                # 只有当完全没有市场状态数据时才设为False
+                if not has_any_regime:
+                    all_positive = False
                 
                 if all_positive:
                     # 获取相关性信息
                     correlation_type = percentile_data.get('correlation_type', 'unknown')
                     correlation_value = percentile_data.get('correlation_value', 0)
+                    
+                    # 计算有效市场的平均和最小超额收益
+                    valid_regimes = [r for r in ['bull', 'bear', 'sideways'] if regime_results[r] is not None]
+                    avg_excess = np.mean([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
+                    min_excess = min([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
                     
                     all_weather_positive_short.append({
                         'indicator': indicator_name,
@@ -360,17 +386,17 @@ for indicator_name, indicator_data in indicators.items():
                         'threshold': percentile_data.get('threshold', 0),
                         'correlation_type': correlation_type,
                         'correlation_value': correlation_value,
-                        'bull_return': regime_results['bull']['return'],
-                        'bull_excess': regime_results['bull']['excess'],
-                        'bull_sharpe': regime_results['bull']['sharpe'],
-                        'bear_return': regime_results['bear']['return'],
-                        'bear_excess': regime_results['bear']['excess'],
-                        'bear_sharpe': regime_results['bear']['sharpe'],
-                        'sideways_return': regime_results['sideways']['return'],
-                        'sideways_excess': regime_results['sideways']['excess'],
-                        'sideways_sharpe': regime_results['sideways']['sharpe'],
-                        'avg_excess': np.mean([regime_results[r]['excess'] for r in ['bull', 'bear', 'sideways']]),
-                        'min_excess': min([regime_results[r]['excess'] for r in ['bull', 'bear', 'sideways']]),
+                        'bull_return': regime_results['bull']['return'] if regime_results['bull'] else None,
+                        'bull_excess': regime_results['bull']['excess'] if regime_results['bull'] else None,
+                        'bull_sharpe': regime_results['bull']['sharpe'] if regime_results['bull'] else None,
+                        'bear_return': regime_results['bear']['return'] if regime_results['bear'] else None,
+                        'bear_excess': regime_results['bear']['excess'] if regime_results['bear'] else None,
+                        'bear_sharpe': regime_results['bear']['sharpe'] if regime_results['bear'] else None,
+                        'sideways_return': regime_results['sideways']['return'] if regime_results['sideways'] else None,
+                        'sideways_excess': regime_results['sideways']['excess'] if regime_results['sideways'] else None,
+                        'sideways_sharpe': regime_results['sideways']['sharpe'] if regime_results['sideways'] else None,
+                        'avg_excess': avg_excess,
+                        'min_excess': min_excess,
                         'max_rank_ic': optimal_data.get('max_rank_ic', 0),
                         'max_pearson_ic': optimal_data.get('max_pearson_ic', 0)
                     })
@@ -387,9 +413,23 @@ if all_weather_positive_long:
         print(f"{list(df_long_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
-        print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
-        print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
-        print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+        
+        # 处理可能为None的市场状态数据
+        if row['bull_return'] is not None:
+            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
+        else:
+            print(f"   牛市: 无数据")
+            
+        if row['bear_return'] is not None:
+            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
+        else:
+            print(f"   熊市: 无数据")
+            
+        if row['sideways_return'] is not None:
+            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+        else:
+            print(f"   震荡: 无数据")
+            
         print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%")
         print(f"   Rank IC: {row['max_rank_ic']:.4f}, Pearson IC: {row['max_pearson_ic']:.4f}")
         print("-" * 40)
@@ -409,9 +449,23 @@ if all_weather_positive_short:
         print(f"{list(df_short_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
-        print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
-        print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
-        print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+        
+        # 处理可能为None的市场状态数据
+        if row['bull_return'] is not None:
+            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
+        else:
+            print(f"   牛市: 无数据")
+            
+        if row['bear_return'] is not None:
+            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
+        else:
+            print(f"   熊市: 无数据")
+            
+        if row['sideways_return'] is not None:
+            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+        else:
+            print(f"   震荡: 无数据")
+            
         print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%")
         print(f"   Rank IC: {row['max_rank_ic']:.4f}, Pearson IC: {row['max_pearson_ic']:.4f}")
         print("-" * 40)
