@@ -5,7 +5,7 @@ import os
 
 # 读取JSON文件
 print("正在加载数据...")
-with open('indicator_analysis_results_BTC_20250919_143653.json', 'r') as f:
+with open('indicator_analysis_results_BTC_20250919_152957.json', 'r') as f:
     data = json.load(f)
 
 # 获取指标数量信息
@@ -38,11 +38,8 @@ if platform_category_breakdown:
     for cat in main_categories:
         if cat in platform_category_breakdown:
             print(f"    - {cat}: {platform_category_breakdown[cat]}个")
-print(f"\n  本次配置的指标数: {total_indicators}")
 print(f"  实际测试的指标数: {tested_indicators}")
-if total_indicators > 0:
-    completion_rate = (tested_indicators / total_indicators) * 100
-    print(f"  测试完成率: {completion_rate:.1f}%")
+
 if platform_total_endpoints > 0:
     coverage_rate = (total_indicators / platform_total_endpoints) * 100
     print(f"  平台覆盖率: {coverage_rate:.1f}%")
@@ -138,10 +135,8 @@ if market_regime:
         print(f"    时间段数: {len(periods)}个")
         if periods:
             # 显示前3个时间段作为示例
-            for i, period in enumerate(periods[:3], 1):
+            for i, period in enumerate(periods, 1):
                 print(f"      段{i}: {period['start'][:10]} 至 {period['end'][:10]} ({period['days']}天)")
-            if len(periods) > 3:
-                print(f"      ... 还有{len(periods)-3}个时间段")
 
 full_regime_benchmarks = market_data.get('full_regime_benchmarks', {})
 
@@ -382,11 +377,17 @@ for indicator_name, indicator_data in indicators.items():
                     if isinstance(horizon_data, dict):
                         accuracy = horizon_data.get('signal_accuracy', 0)
                         if accuracy >= 0.999:  # 99.9%以上视为100%
+                            # 获取相关性信息
+                            correlation = horizon_data.get('correlation', 0)
+                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
+                            
                             perfect_signals.append({
                                 'indicator': indicator_name,
                                 'strategy_type': 'long',
                                 'percentile': int(percentile),
                                 'threshold': percentile_data.get('threshold', 0),
+                                'correlation': correlation,
+                                'correlation_type': correlation_type,
                                 'horizon': horizon,
                                 'signal_accuracy': accuracy,
                                 'signal_count': horizon_data.get('signal_count', 0),
@@ -404,11 +405,17 @@ for indicator_name, indicator_data in indicators.items():
                     if isinstance(horizon_data, dict):
                         accuracy = horizon_data.get('signal_accuracy', 0)
                         if accuracy >= 0.999:  # 99.9%以上视为100%
+                            # 获取相关性信息
+                            correlation = horizon_data.get('correlation', 0)
+                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
+                            
                             perfect_signals.append({
                                 'indicator': indicator_name,
                                 'strategy_type': 'short',
                                 'percentile': int(percentile),
                                 'threshold': percentile_data.get('threshold', 0),
+                                'correlation': correlation,
+                                'correlation_type': correlation_type,
                                 'horizon': horizon,
                                 'signal_accuracy': accuracy,
                                 'signal_count': horizon_data.get('signal_count', 0),
@@ -424,8 +431,25 @@ if perfect_signals:
     
     print("【TOP 20 100%准确度信号】")
     for i, signal in enumerate(perfect_signals_sorted[:20], 1):
+        # 判断操作方向
+        correlation_type = signal.get('correlation_type', 'unknown')
+        correlation_value = signal.get('correlation', 0)
+        
+        if signal['strategy_type'] == 'long':
+            if correlation_type == 'positive':
+                operation = f"≥ {signal['threshold']:.6f} 时做多"
+            else:
+                operation = f"≤ {signal['threshold']:.6f} 时做多"
+        else:  # short
+            if correlation_type == 'positive':
+                operation = f"≤ {100-signal['percentile']}%分位时做空"
+            else:
+                operation = f"≥ {signal['threshold']:.6f} 时做空"
+        
         print(f"\n{i}. {signal['indicator']} ({signal['strategy_type']})")
         print(f"   百分位: {signal['percentile']}%, 阈值: {signal['threshold']:.6f}")
+        print(f"   操作: {operation}")
+        print(f"   相关性: {correlation_type} (相关系数={correlation_value:.4f})")
         print(f"   预测周期: {signal['horizon']}")
         print(f"   信号准确度: {signal['signal_accuracy']*100:.1f}%")
         print(f"   信号数量: {signal['signal_count']:.0f}")
