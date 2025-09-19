@@ -1201,7 +1201,10 @@ class GlassnodeAdvancedAnalyzer:
         cumulative_returns = (1 + strategy_returns).cumprod()
         
         # 年化收益和波动率
-        annual_return = strategy_returns.mean() * 252
+        # 使用几何平均计算年化收益率
+        cumulative_return = cumulative_returns.iloc[-1] - 1 if len(cumulative_returns) > 0 else 0
+        n_days = len(strategy_returns)
+        annual_return = ((1 + cumulative_return) ** (252 / n_days) - 1) if n_days > 0 and cumulative_return > -1 else 0
         volatility = strategy_returns.std() * np.sqrt(252)
         
         return {
@@ -1242,7 +1245,10 @@ class GlassnodeAdvancedAnalyzer:
         
         # 超额收益
         excess_returns = aligned_data['strategy'] - aligned_data['benchmark']
-        excess_return = excess_returns.mean() * 252  # 年化
+        # 年化超额收益：使用几何平均
+        excess_cumulative = (1 + excess_returns).prod() - 1 if len(excess_returns) > 0 else 0
+        n_days = len(excess_returns)
+        excess_return = ((1 + excess_cumulative) ** (252 / n_days) - 1) if n_days > 0 and excess_cumulative > -1 else excess_returns.mean() * 252
         
         # 跟踪误差
         tracking_error = excess_returns.std() * np.sqrt(252)
@@ -1359,8 +1365,10 @@ class GlassnodeAdvancedAnalyzer:
                 # 使用统一的基准收益
                 unified_benchmark = full_regime_benchmarks[regime_name]
                 
-                # 策略收益计算
-                strategy_return = strategy_regime.mean() * 252 if len(strategy_regime) > 0 else 0
+                # 策略收益计算（使用几何平均）
+                strategy_cumulative_return = (1 + strategy_regime).prod() - 1 if len(strategy_regime) > 0 else 0
+                regime_days = len(strategy_regime)
+                strategy_return = ((1 + strategy_cumulative_return) ** (252 / regime_days) - 1) if regime_days > 0 and strategy_cumulative_return > -1 else 0
                 
                 # 计算策略的最大回撤
                 strategy_cumulative = (1 + strategy_regime).cumprod()
