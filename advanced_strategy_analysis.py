@@ -6,9 +6,12 @@ import os
 # 读取JSON文件
 print("正在加载数据...")
 
-with open('indicator_analysis_results_BTC_20250919_182844.json', 'r') as f:
+# with open('indicator_analysis_results_BTC_20250920_004329.json', 'r') as f:
+#     data = json.load(f)
+
+with open('indicator_analysis_results_ETH_20250920_004753.json', 'r') as f:
     data = json.load(f)
-    
+        
 # 获取指标数量信息
 metadata = data.get('metadata', {})
 indicators = data.get('indicators', {})
@@ -485,7 +488,7 @@ if all_weather_positive_short:
 # 5. 寻找100%准确度的信号
 # =============================================================================
 print("\n" + "=" * 80)
-print("100%准确度信号分析 (Signal Accuracy = 100%)")
+print("70%以上准确度信号分析 (Signal Accuracy > 70%)")
 print("=" * 80)
 
 perfect_signals = []
@@ -511,7 +514,7 @@ for indicator_name, indicator_data in indicators.items():
                 for horizon, horizon_data in sig_analysis.items():
                     if isinstance(horizon_data, dict):
                         accuracy = horizon_data.get('signal_accuracy', 0)
-                        if accuracy >= 0.999:  # 99.9%以上视为100%
+                        if accuracy >= 0.70:  # 99.9%以上视为100%
                             # 获取相关性信息
                             correlation = horizon_data.get('correlation', 0)
                             correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
@@ -529,6 +532,7 @@ for indicator_name, indicator_data in indicators.items():
                                 'information_gain': horizon_data.get('information_gain', 0),
                                 'total_days': horizon_data.get('total_days', 0)
                             })
+                    
         
         # 检查做空策略的信号准确度
         if 'short' in strategies:
@@ -539,7 +543,7 @@ for indicator_name, indicator_data in indicators.items():
                 for horizon, horizon_data in sig_analysis.items():
                     if isinstance(horizon_data, dict):
                         accuracy = horizon_data.get('signal_accuracy', 0)
-                        if accuracy >= 0.999:  # 99.9%以上视为100%
+                        if accuracy >= 0.70:  # 99.9%以上视为100%
                             # 获取相关性信息
                             correlation = horizon_data.get('correlation', 0)
                             correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
@@ -557,8 +561,9 @@ for indicator_name, indicator_data in indicators.items():
                                 'information_gain': horizon_data.get('information_gain', 0),
                                 'total_days': horizon_data.get('total_days', 0)
                             })
+                    
 
-print(f"\n找到 {len(perfect_signals)} 个100%准确度的信号， 按信息增益排序TOP20\n")
+print(f"\n找到 {len(perfect_signals)} 个信号\n")
 
 if perfect_signals:
     # 按信息增益排序
@@ -606,8 +611,7 @@ if perfect_signals:
                                   reverse=True)
     
     print(f"去重后剩余 {len(perfect_signals_dedup)} 个独特信号（原始 {len(perfect_signals)} 个）\n")
-    print("【100%准确度信号 TOP20】")
-    for i, signal in enumerate(perfect_signals_dedup[:20], 1):
+    for i, signal in enumerate(perfect_signals_dedup, 1):
         # 判断操作方向
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
@@ -645,16 +649,11 @@ if perfect_signals:
         print(f"   总天数: {signal['total_days']}")
         print(f"   信号频率: {signal['signal_count']/signal['total_days']*100:.2f}%")
     
-    # 如果有超过20个信号，提示只显示了TOP 20
-    if len(perfect_signals_dedup) > 20:
-        print(f"\n(注: 共有 {len(perfect_signals_dedup)} 个100%准确度信号，此处仅显示信息增益TOP 20)")
-    
     # 保存结果（使用去重后的数据）
     df_perfect = pd.DataFrame(perfect_signals_dedup)
     df_perfect.to_csv('perfect_accuracy_signals.csv', index=False)
     
     # 按指标统计
-    print("\n【按指标统计100%准确度信号】")
     indicator_stats = {}
     for signal in perfect_signals:
         ind = signal['indicator']
@@ -667,7 +666,7 @@ if perfect_signals:
     # 按数量排序
     sorted_stats = sorted(indicator_stats.items(), key=lambda x: x[1]['count'], reverse=True)
     
-    print("\n最多100%准确信号的指标:")
+    print("\n最多准确信号的指标:")
     for i, (indicator, stats) in enumerate(sorted_stats[:10], 1):
         print(f"{i}. {indicator}: {stats['count']}个信号, "
               f"周期: {', '.join(sorted(stats['horizons']))}, "

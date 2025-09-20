@@ -367,7 +367,7 @@ class GlassnodeAdvancedAnalyzer:
                                                  horizons: List[int] = None) -> Dict:
         """计算多个时间窗口的信息增益"""
         if horizons is None:
-            horizons = [1, 2, 3, 5, 7, 10, 14, 21, 30, 45, 60, 90, 120, 150, 180, 270, 365, 450, 730]
+            horizons = [1, 2, 3]
         
         results = {}
         
@@ -574,7 +574,7 @@ class GlassnodeAdvancedAnalyzer:
                     
                     # 计算不同周期的信息增益
                     signal_ig_results = {}
-                    for horizon in [1, 5, 10, 20, 30, 60, 120, 360, 720]:
+                    for horizon in [1, 2, 3]:
                         try:
                             # 计算未来收益
                             if strategy_type == 'short':
