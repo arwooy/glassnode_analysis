@@ -22,7 +22,7 @@
 ## 🎨 指标体系结构图
 
 ```mermaid
-graph TD
+graph LR
     A["实体分析<br/>共18个指标"]
     A:::mainNode
     

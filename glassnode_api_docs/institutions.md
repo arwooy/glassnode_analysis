@@ -17,7 +17,7 @@
 ## 🎨 指标体系结构图
 
 ```mermaid
-graph TD
+graph LR
     A["机构数据<br/>共7个指标"]
     A:::mainNode
     

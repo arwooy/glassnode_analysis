@@ -15,7 +15,7 @@
 ## 🎨 指标体系结构图
 
 ```mermaid
-graph TD
+graph LR
     A["DeFi协议数据<br/>共1个指标"]
     A:::mainNode
     

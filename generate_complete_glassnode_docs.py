@@ -478,7 +478,7 @@ def generate_complete_mermaid_diagram(category: str, endpoints: List[Dict], subc
     sorted_subcats = sorted(subcategories.items(), key=lambda x: len(x[1]), reverse=True)[:6]
     
     mermaid = f"""```mermaid
-graph TD
+graph LR
     A["{cat_zh}<br/>共{len(endpoints)}个指标"]
     A:::mainNode
     """
