@@ -2,16 +2,45 @@ import json
 import pandas as pd
 import numpy as np
 import os
+import sys
+import argparse
+
+# 解析命令行参数
+parser = argparse.ArgumentParser(description='高级策略分析')
+parser.add_argument('--time-unit', type=str, default='天', 
+                    help='时间单位，如: 1d, 4h, 1h, 30min, 10min, 5min (默认: 10min)')
+args = parser.parse_args()
+
+# 配置参数
+TIME_UNIT = args.time_unit  # 从命令行参数获取时间单位
 
 # 读取JSON文件
 print("正在加载数据...")
-
-# with open('indicator_analysis_results_BTC_20250920_004329.json', 'r') as f:
+# 10分钟
+# with open('indicator_analysis_results_BTC_20250922_034954.json', 'r') as f:
 #     data = json.load(f)
 
-with open('indicator_analysis_results_ETH_20250920_004753.json', 'r') as f:
+# 短周期
+# with open('indicator_analysis_results_BTC_20250921_143047.json', 'r') as f:
+#     data = json.load(f)
+
+# with open('indicator_analysis_results_ETH_20250921_152105.json', 'r') as f:
+#     data = json.load(f)
+
+#长周期
+# with open('indicator_analysis_results_BTC_20250921_165321.json', 'r') as f:
+#     data = json.load(f)
+
+# with open('indicator_analysis_results_ETH_20250921_170703.json', 'r') as f:
+#     data = json.load(f)
+    
+#中期
+# with open('indicator_analysis_results_BTC_20250922_135349.json', 'r') as f:
+#     data = json.load(f)
+
+with open('indicator_analysis_results_ETH_20250922_140325.json', 'r') as f:
     data = json.load(f)
-        
+              
 # 获取指标数量信息
 metadata = data.get('metadata', {})
 indicators = data.get('indicators', {})
@@ -24,24 +53,40 @@ tested_indicators = len(indicators)
 # 读取Glassnode平台的所有端点信息
 platform_total_endpoints = 0
 platform_category_breakdown = {}
+tested_by_category = {}
+
 if os.path.exists('glassnode_endpoints_detailed.json'):
     with open('glassnode_endpoints_detailed.json', 'r') as f:
         endpoints_data = json.load(f)
+        
+        # 获取已测试的指标集合
+        tested_indicators_set = set(indicators.keys())
+        
         for category, endpoints in endpoints_data.items():
             if isinstance(endpoints, list):
-                count = len(endpoints)
-                platform_category_breakdown[category] = count
-                platform_total_endpoints += count
+                # 获取该类别的所有指标名称
+                category_metrics = []
+                for ep in endpoints:
+                    if isinstance(ep, dict) and 'metric' in ep:
+                        category_metrics.append(ep['metric'])
+                
+                # 统计该类别中被测试的指标数
+                tested_in_category = [m for m in category_metrics if m in tested_indicators_set]
+                
+                platform_category_breakdown[category] = len(category_metrics)
+                tested_by_category[category] = len(tested_in_category)
+                platform_total_endpoints += len(category_metrics)
 
 print(f"\n【指标统计】")
 print(f"  Glassnode平台总指标数: {platform_total_endpoints}")
 if platform_category_breakdown:
-    # 显示主要类别
-    main_categories = list(platform_category_breakdown.keys())
-    print(f"  类别测试分布:")
-    for cat in main_categories:
-        if cat in platform_category_breakdown:
-            print(f"    - {cat}: {platform_category_breakdown[cat]}个")
+    print(f"  类别测试分布 (已测试/总数):")
+    for cat in sorted(platform_category_breakdown.keys()):
+        total = platform_category_breakdown[cat]
+        tested = tested_by_category.get(cat, 0)
+        if total > 0:
+            percentage = (tested / total) * 100
+            print(f"    - {cat}: {tested}/{total}个 ({percentage:.1f}%)")
 print(f"  实际测试的指标数: {tested_indicators}")
 
 if platform_total_endpoints > 0:
@@ -63,20 +108,20 @@ if 'long' in benchmark_metrics:
     long_bench = benchmark_metrics['long']
     print("\n【做多基准表现 (Buy & Hold)】")
     print(f"  总收益率 (Total Return): {long_bench.get('total_return', 0)*100:.2f}%")
-    print(f"  年化收益率 (Annual Return): {long_bench.get('annualized_return', 0)*100:.2f}%")
+    print(f"  年化收益率 (Annual Return): {long_bench.get('annual_return', 0)*100:.2f}%")
     print(f"  夏普比率 (Sharpe Ratio): {long_bench.get('sharpe_ratio', 0):.3f}")
     print(f"  最大回撤 (Max Drawdown): {long_bench.get('max_drawdown', 0)*100:.2f}%")
-    print(f"  年化波动率 (Annual Volatility): {long_bench.get('annual_volatility', 0)*100:.2f}%")
+    print(f"  年化波动率 (Annual Volatility): {long_bench.get('volatility', 0)*100:.2f}%")
 
 # 做空基准
 if 'short' in benchmark_metrics:
     short_bench = benchmark_metrics['short']
     print("\n【做空基准表现 (Short)】")
     print(f"  总收益率 (Total Return): {short_bench.get('total_return', 0)*100:.2f}%")
-    print(f"  年化收益率 (Annual Return): {short_bench.get('annualized_return', 0)*100:.2f}%")
+    print(f"  年化收益率 (Annual Return): {short_bench.get('annual_return', 0)*100:.2f}%")
     print(f"  夏普比率 (Sharpe Ratio): {short_bench.get('sharpe_ratio', 0):.3f}")
     print(f"  最大回撤 (Max Drawdown): {short_bench.get('max_drawdown', 0)*100:.2f}%")
-    print(f"  年化波动率 (Annual Volatility): {short_bench.get('annual_volatility', 0)*100:.2f}%")
+    print(f"  年化波动率 (Annual Volatility): {short_bench.get('volatility', 0)*100:.2f}%")
 
 # =============================================================================
 # 2. 各市场状态下的基准表现
@@ -135,12 +180,18 @@ if market_regime:
         periods = regime_stats[regime]
         total_days = sum(p['days'] for p in periods)
         print(f"\n  {regime.upper()}市场:")
-        print(f"    总天数: {total_days}天")
+        if TIME_UNIT == "10min":
+            print(f"    总周期数: {total_days} ({TIME_UNIT}周期)")
+        else:
+            print(f"    总天数: {total_days}天")
         print(f"    时间段数: {len(periods)}个")
         if periods:
             # 显示前3个时间段作为示例
             for i, period in enumerate(periods, 1):
-                print(f"      段{i}: {period['start'][:10]} 至 {period['end'][:10]} ({period['days']}天)")
+                if TIME_UNIT == "10min":
+                    print(f"      段{i}: {period['start'][:10]} 至 {period['end'][:10]} ({period['days']}个{TIME_UNIT}周期)")
+                else:
+                    print(f"      段{i}: {period['start'][:10]} 至 {period['end'][:10]} ({period['days']}天)")
 
 full_regime_benchmarks = market_data.get('full_regime_benchmarks', {})
 
@@ -151,7 +202,10 @@ if 'long' in full_regime_benchmarks:
         if regime in long_regimes:
             r = long_regimes[regime]
             print(f"\n  {regime.upper()}市场:")
-            print(f"    天数: {r.get('total_days', 0):.0f}天")
+            if TIME_UNIT == "10min":
+                print(f"    周期数: {r.get('total_days', 0):.0f}个{TIME_UNIT}周期")
+            else:
+                print(f"    天数: {r.get('total_days', 0):.0f}天")
             print(f"    累计收益率: {r.get('benchmark_cumulative', 0)*100:.2f}%")
             print(f"    年化收益率: {r.get('benchmark_annual_return', 0)*100:.2f}%")
             print(f"    年化波动率: {r.get('benchmark_annual_volatility', 0)*100:.2f}%")
@@ -165,7 +219,10 @@ if 'short' in full_regime_benchmarks:
         if regime in short_regimes:
             r = short_regimes[regime]
             print(f"\n  {regime.upper()}市场:")
-            print(f"    天数: {r.get('total_days', 0):.0f}天")
+            if TIME_UNIT == "10min":
+                print(f"    周期数: {r.get('total_days', 0):.0f}个{TIME_UNIT}周期")
+            else:
+                print(f"    天数: {r.get('total_days', 0):.0f}天")
             print(f"    累计收益率: {r.get('benchmark_cumulative', 0)*100:.2f}%")
             print(f"    年化收益率: {r.get('benchmark_annual_return', 0)*100:.2f}%")
             print(f"    年化波动率: {r.get('benchmark_annual_volatility', 0)*100:.2f}%")
@@ -173,10 +230,135 @@ if 'short' in full_regime_benchmarks:
             print(f"    夏普比率: {r.get('benchmark_sharpe', 0):.3f}")
 
 # =============================================================================
-# 3. TOP IC 指标分析
+# 3. 筛选有效信号（必须先执行，后续分析基于有效信号）
 # =============================================================================
 print("\n" + "=" * 80)
-print("TOP IC 指标分析")
+print("有效信号筛选 (过滤条件: 准确度>52%, 信号数>500, 信息增益≥0.005, 最早信号≤2021年, 最后信号≥2024年)")
+print("=" * 80)
+
+# 收集所有信号并应用过滤条件
+all_signals = []
+valid_indicators = set()  # 存储包含有效信号的指标名称
+
+# 过滤条件参数
+MIN_ACCURACY = 0.52          # 最小准确度 (52%)
+MIN_SIGNAL_COUNT = 500       # 最小信号数量
+MIN_INFORMATION_GAIN = 0.005  # 最小信息增益
+MAX_FIRST_SIGNAL_YEAR = '2021'  # 最早信号不晚于这一年（包含2021及之前）
+MIN_LAST_SIGNAL_YEAR = '2024'   # 最后信号最早年份（确保近期活跃）
+
+for indicator_name, indicator_data in indicators.items():
+    if 'threshold_impact' not in indicator_data:
+        continue
+    
+    threshold_data = indicator_data['threshold_impact']
+    
+    for percentile, percentile_data in threshold_data.items():
+        if not isinstance(percentile_data, dict) or 'strategies' not in percentile_data:
+            continue
+        
+        strategies = percentile_data['strategies']
+        
+        # 检查做多策略
+        if 'long' in strategies:
+            long_strategy = strategies['long']
+            if 'signal_ig_analysis' in long_strategy:
+                sig_analysis = long_strategy['signal_ig_analysis']
+                
+                for horizon, horizon_data in sig_analysis.items():
+                    if isinstance(horizon_data, dict):
+                        accuracy = horizon_data.get('signal_accuracy', 0)
+                        time_range_days = horizon_data.get('time_range_days', 0)
+                        signal_count = horizon_data.get('signal_count', 0)
+                        information_gain = horizon_data.get('information_gain', 0)
+                        last_signal_time = horizon_data.get('last_signal_time', '')
+                        
+                        # 应用过滤条件
+                        first_signal_time = horizon_data.get('first_signal_time', '')
+                        if (accuracy > MIN_ACCURACY 
+                            and signal_count > MIN_SIGNAL_COUNT
+                            and information_gain >= MIN_INFORMATION_GAIN
+                            and first_signal_time[:4] <= MAX_FIRST_SIGNAL_YEAR
+                            and last_signal_time[:4] >= MIN_LAST_SIGNAL_YEAR):  # 确保近期仍活跃
+                            
+                            correlation = horizon_data.get('correlation', 0)
+                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
+                            
+                            signal_info = {
+                                'indicator': indicator_name,
+                                'strategy_type': 'long',
+                                'percentile': int(percentile),
+                                'threshold': percentile_data.get('threshold', 0),
+                                'correlation': correlation,
+                                'correlation_type': correlation_type,
+                                'horizon': horizon,
+                                'signal_accuracy': accuracy,
+                                'signal_count': signal_count,
+                                'information_gain': information_gain,
+                                'total_days': horizon_data.get('total_days', 0),
+                                'first_signal_time': horizon_data.get('first_signal_time'),
+                                'last_signal_time': last_signal_time,
+                                'time_range_days': time_range_days,
+                                'signal_density': horizon_data.get('signal_density', 0),
+                                'signal_dispersion': horizon_data.get('signal_dispersion', 0)
+                            }
+                            all_signals.append(signal_info)
+                            valid_indicators.add(indicator_name)
+        
+        # 检查做空策略
+        if 'short' in strategies:
+            short_strategy = strategies['short']
+            if 'signal_ig_analysis' in short_strategy:
+                sig_analysis = short_strategy['signal_ig_analysis']
+                
+                for horizon, horizon_data in sig_analysis.items():
+                    if isinstance(horizon_data, dict):
+                        accuracy = horizon_data.get('signal_accuracy', 0)
+                        time_range_days = horizon_data.get('time_range_days', 0)
+                        signal_count = horizon_data.get('signal_count', 0)
+                        information_gain = horizon_data.get('information_gain', 0)
+                        last_signal_time = horizon_data.get('last_signal_time', '')
+                        
+                        # 应用过滤条件
+                        first_signal_time = horizon_data.get('first_signal_time', '')
+                        if (accuracy > MIN_ACCURACY 
+                            and signal_count > MIN_SIGNAL_COUNT
+                            and information_gain >= MIN_INFORMATION_GAIN
+                            and first_signal_time[:4] <= MAX_FIRST_SIGNAL_YEAR
+                            and last_signal_time[:4] >= MIN_LAST_SIGNAL_YEAR):  # 确保近期仍活跃
+                            
+                            correlation = horizon_data.get('correlation', 0)
+                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
+                            
+                            signal_info = {
+                                'indicator': indicator_name,
+                                'strategy_type': 'short',
+                                'percentile': int(percentile),
+                                'threshold': percentile_data.get('threshold', 0),
+                                'correlation': correlation,
+                                'correlation_type': correlation_type,
+                                'horizon': horizon,
+                                'signal_accuracy': accuracy,
+                                'signal_count': signal_count,
+                                'information_gain': information_gain,
+                                'total_days': horizon_data.get('total_days', 0),
+                                'first_signal_time': horizon_data.get('first_signal_time'),
+                                'last_signal_time': last_signal_time,
+                                'time_range_days': time_range_days,
+                                'signal_density': horizon_data.get('signal_density', 0),
+                                'signal_dispersion': horizon_data.get('signal_dispersion', 0)
+                            }
+                            all_signals.append(signal_info)
+                            valid_indicators.add(indicator_name)
+
+print(f"\n找到 {len(all_signals)} 个有效信号")
+print(f"涉及 {len(valid_indicators)} 个有效指标\n")
+
+# =============================================================================
+# 4. TOP IC 指标分析（仅基于有效指标）
+# =============================================================================
+print("\n" + "=" * 80)
+print("TOP IC 指标分析 (仅基于有效指标)")
 print("=" * 80)
 
 indicators = data.get('indicators', {})
@@ -185,7 +367,8 @@ indicators = data.get('indicators', {})
 ic_results = []
 
 for indicator_name, indicator_data in indicators.items():
-    if 'optimal' in indicator_data:
+    # 只处理包含有效信号的指标
+    if indicator_name in valid_indicators and 'optimal' in indicator_data:
         optimal_data = indicator_data['optimal']
         
         # 提取Pearson IC和Rank IC
@@ -221,7 +404,7 @@ top30_by_rank_ic = df_ic.nlargest(30, 'abs_rank_ic')
 print("\n【Top 30 指标 - 按 Rank IC (秩相关信息系数) 排序】")
 for i, (idx, row) in enumerate(top30_by_rank_ic.iterrows(), 1):
     # 显示带符号的IC值
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Rank IC: {row['max_rank_ic']:+.4f} | 最优周期: {row['optimal_horizon_rank']:3d}天")
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Rank IC: {row['max_rank_ic']:+.4f} | 最优周期: {row['optimal_horizon_rank']:3d}{TIME_UNIT}")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
@@ -232,7 +415,7 @@ top30_by_pearson_ic = df_ic.nlargest(30, 'abs_pearson_ic')
 print("\n【Top 30 指标 - 按 Pearson IC (线性相关信息系数) 排序】")
 for i, (idx, row) in enumerate(top30_by_pearson_ic.iterrows(), 1):
     # 显示带符号的IC值
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Pearson IC: {row['max_pearson_ic']:+.4f} | 最优周期: {row['optimal_horizon_pearson']:3d}天")
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | Pearson IC: {row['max_pearson_ic']:+.4f} | 最优周期: {row['optimal_horizon_pearson']:3d}{TIME_UNIT}")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
@@ -241,7 +424,7 @@ top30_by_ig = df_ic.nlargest(30, 'max_ig')
 
 print("\n【Top 30 指标 - 按信息增益 (Information Gain 分桶数10) 排序】")
 for i, (idx, row) in enumerate(top30_by_ig.iterrows(), 1):
-    print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | 最优周期: {row['optimal_horizon_ig']:3d}天 | MI: {row['max_mi']:.4f}")
+    print(f"  {i:2d}. {row['indicator'][:60]:<60} | IG: {row['max_ig']:.4f} | 最优周期: {row['optimal_horizon_ig']:3d}{TIME_UNIT} | MI: {row['max_mi']:.4f}")
     if i % 10 == 0 and i < 30:
         print("  " + "-" * 100)
 
@@ -255,10 +438,10 @@ print(f"  平均 Rank IC: {df_ic['max_rank_ic'].mean():.4f}")
 print(f"  平均 Pearson IC: {df_ic['max_pearson_ic'].mean():.4f}")
 
 # =============================================================================
-# 4. 寻找全市场正收益策略
+# 5. 全市场正收益策略分析 (仅基于有效指标)
 # =============================================================================
 print("\n" + "=" * 80)
-print("全市场正收益策略分析")
+print("全市场正收益策略分析 (仅基于有效指标)")
 print("=" * 80)
 
 # 收集所有符合条件的策略
@@ -266,7 +449,8 @@ all_weather_positive_long = []
 all_weather_positive_short = []
 
 for indicator_name, indicator_data in indicators.items():
-    if 'threshold_impact' not in indicator_data:
+    # 只处理包含有效信号的指标
+    if indicator_name not in valid_indicators or 'threshold_impact' not in indicator_data:
         continue
     
     threshold_data = indicator_data['threshold_impact']
@@ -301,10 +485,11 @@ for indicator_name, indicator_data in indicators.items():
                             'return': strategy_return,
                             'excess': excess_return,
                             'sharpe': r.get('sharpe', 0),
-                            'win_rate': r.get('excess_return_win_rate', 0)
+                            'win_rate': r.get('excess_return_win_rate', 0),
+                            'max_drawdown': r.get('strategy_max_drawdown', 0)
                         }
                         
-                        if strategy_return <= 0:
+                        if strategy_return <= 0 or excess_return <= 0:
                             all_positive = False
                     else:
                         # 如果某个市场状态没有数据，设置为None但不影响all_positive
@@ -319,10 +504,11 @@ for indicator_name, indicator_data in indicators.items():
                     correlation_type = percentile_data.get('correlation_type', 'unknown')
                     correlation_value = percentile_data.get('correlation_value', 0)
                     
-                    # 计算有效市场的平均和最小超额收益
+                    # 计算有效市场的平均和最小超额收益，以及最大回撤
                     valid_regimes = [r for r in ['bull', 'bear', 'sideways'] if regime_results[r] is not None]
                     avg_excess = np.mean([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
                     min_excess = min([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
+                    max_drawdown = min([regime_results[r]['max_drawdown'] for r in valid_regimes]) if valid_regimes else 0  # 取最大回撤（最负的值）
                     
                     all_weather_positive_long.append({
                         'indicator': indicator_name,
@@ -333,14 +519,18 @@ for indicator_name, indicator_data in indicators.items():
                         'bull_return': regime_results['bull']['return'] if regime_results['bull'] else None,
                         'bull_excess': regime_results['bull']['excess'] if regime_results['bull'] else None,
                         'bull_sharpe': regime_results['bull']['sharpe'] if regime_results['bull'] else None,
+                        'bull_drawdown': regime_results['bull']['max_drawdown'] if regime_results['bull'] else None,
                         'bear_return': regime_results['bear']['return'] if regime_results['bear'] else None,
                         'bear_excess': regime_results['bear']['excess'] if regime_results['bear'] else None,
                         'bear_sharpe': regime_results['bear']['sharpe'] if regime_results['bear'] else None,
+                        'bear_drawdown': regime_results['bear']['max_drawdown'] if regime_results['bear'] else None,
                         'sideways_return': regime_results['sideways']['return'] if regime_results['sideways'] else None,
                         'sideways_excess': regime_results['sideways']['excess'] if regime_results['sideways'] else None,
                         'sideways_sharpe': regime_results['sideways']['sharpe'] if regime_results['sideways'] else None,
+                        'sideways_drawdown': regime_results['sideways']['max_drawdown'] if regime_results['sideways'] else None,
                         'avg_excess': avg_excess,
                         'min_excess': min_excess,
+                        'max_drawdown': max_drawdown,
                         'max_rank_ic': optimal_data.get('max_rank_ic', 0),
                         'max_pearson_ic': optimal_data.get('max_pearson_ic', 0)
                     })
@@ -368,10 +558,11 @@ for indicator_name, indicator_data in indicators.items():
                             'return': strategy_return,
                             'excess': excess_return,
                             'sharpe': r.get('sharpe', 0),
-                            'win_rate': r.get('excess_return_win_rate', 0)
+                            'win_rate': r.get('excess_return_win_rate', 0),
+                            'max_drawdown': r.get('strategy_max_drawdown', 0)
                         }
                         
-                        if strategy_return <= 0:
+                        if strategy_return <= 0 or excess_return <= 0:
                             all_positive = False
                     else:
                         # 如果某个市场状态没有数据，设置为None但不影响all_positive
@@ -386,10 +577,11 @@ for indicator_name, indicator_data in indicators.items():
                     correlation_type = percentile_data.get('correlation_type', 'unknown')
                     correlation_value = percentile_data.get('correlation_value', 0)
                     
-                    # 计算有效市场的平均和最小超额收益
+                    # 计算有效市场的平均和最小超额收益，以及最大回撤
                     valid_regimes = [r for r in ['bull', 'bear', 'sideways'] if regime_results[r] is not None]
                     avg_excess = np.mean([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
                     min_excess = min([regime_results[r]['excess'] for r in valid_regimes]) if valid_regimes else 0
+                    max_drawdown = min([regime_results[r]['max_drawdown'] for r in valid_regimes]) if valid_regimes else 0  # 取最大回撤（最负的值）
                     
                     all_weather_positive_short.append({
                         'indicator': indicator_name,
@@ -400,14 +592,18 @@ for indicator_name, indicator_data in indicators.items():
                         'bull_return': regime_results['bull']['return'] if regime_results['bull'] else None,
                         'bull_excess': regime_results['bull']['excess'] if regime_results['bull'] else None,
                         'bull_sharpe': regime_results['bull']['sharpe'] if regime_results['bull'] else None,
+                        'bull_drawdown': regime_results['bull']['max_drawdown'] if regime_results['bull'] else None,
                         'bear_return': regime_results['bear']['return'] if regime_results['bear'] else None,
                         'bear_excess': regime_results['bear']['excess'] if regime_results['bear'] else None,
                         'bear_sharpe': regime_results['bear']['sharpe'] if regime_results['bear'] else None,
+                        'bear_drawdown': regime_results['bear']['max_drawdown'] if regime_results['bear'] else None,
                         'sideways_return': regime_results['sideways']['return'] if regime_results['sideways'] else None,
                         'sideways_excess': regime_results['sideways']['excess'] if regime_results['sideways'] else None,
                         'sideways_sharpe': regime_results['sideways']['sharpe'] if regime_results['sideways'] else None,
+                        'sideways_drawdown': regime_results['sideways']['max_drawdown'] if regime_results['sideways'] else None,
                         'avg_excess': avg_excess,
                         'min_excess': min_excess,
+                        'max_drawdown': max_drawdown,
                         'max_rank_ic': optimal_data.get('max_rank_ic', 0),
                         'max_pearson_ic': optimal_data.get('max_pearson_ic', 0)
                     })
@@ -423,25 +619,36 @@ if all_weather_positive_long:
     for i, row in df_long_sorted.head(20).iterrows():
         print(f"{list(df_long_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
+        
+        # 判断操作方向
+        correlation_type = row['correlation_type']
+        if correlation_type == 'positive':
+            # 正相关：指标高->价格高，高分位时做多
+            operation = f"指标值 ≥ {row['threshold']:.6f} 时做多"
+        else:  # negative
+            # 负相关：指标高->价格低，低分位时做多
+            operation = f"指标值 ≤ {row['threshold']:.6f} 时做多"
+        
+        print(f"   操作: {operation}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
         
         # 处理可能为None或NaN的市场状态数据
         if row['bull_return'] is not None and not pd.isna(row['bull_return']):
-            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
+            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}, 回撤={row['bull_drawdown']*100:.2f}%")
         else:
             print(f"   牛市: 无数据")
             
         if row['bear_return'] is not None and not pd.isna(row['bear_return']):
-            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
+            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}, 回撤={row['bear_drawdown']*100:.2f}%")
         else:
             print(f"   熊市: 无数据")
             
         if row['sideways_return'] is not None and not pd.isna(row['sideways_return']):
-            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}, 回撤={row['sideways_drawdown']*100:.2f}%")
         else:
             print(f"   震荡: 无数据")
             
-        print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%")
+        print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%, 最大回撤: {row['max_drawdown']*100:.2f}%")
         print(f"   Rank IC: {row['max_rank_ic']:.4f}, Pearson IC: {row['max_pearson_ic']:.4f}")
         print("-" * 40)
     
@@ -459,25 +666,40 @@ if all_weather_positive_short:
     for i, row in df_short_sorted.head(20).iterrows():
         print(f"{list(df_short_sorted.index).index(i)+1}. {row['indicator']} (百分位={row['percentile']}%)")
         print(f"   阈值: {row['threshold']:.6f}")
+        
+        # 判断操作方向（做空策略）
+        correlation_type = row['correlation_type']
+        
+        # 做空策略的逻辑：
+        # - 正相关：指标低->价格低，所以低分位时做空
+        # - 负相关：指标高->价格低，所以高分位时做空
+        if correlation_type == 'positive':
+            # 正相关：低分位做空（指标低，预期价格也低）
+            operation = f"指标值 ≤ {row['threshold']:.6f} 时做空"
+        else:  # negative
+            # 负相关：高分位做空（指标高，预期价格低）
+            operation = f"指标值 ≥ {row['threshold']:.6f} 时做空"
+        
+        print(f"   操作: {operation}")
         print(f"   相关性: {row['correlation_type']} (相关系数={row['correlation_value']:.4f})")
         
         # 处理可能为None或NaN的市场状态数据
         if row['bull_return'] is not None and not pd.isna(row['bull_return']):
-            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}")
+            print(f"   牛市: 收益={row['bull_return']*100:.2f}%, 超额={row['bull_excess']*100:.2f}%, 夏普={row['bull_sharpe']:.2f}, 回撤={row['bull_drawdown']*100:.2f}%")
         else:
             print(f"   牛市: 无数据")
             
         if row['bear_return'] is not None and not pd.isna(row['bear_return']):
-            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}")
+            print(f"   熊市: 收益={row['bear_return']*100:.2f}%, 超额={row['bear_excess']*100:.2f}%, 夏普={row['bear_sharpe']:.2f}, 回撤={row['bear_drawdown']*100:.2f}%")
         else:
             print(f"   熊市: 无数据")
             
         if row['sideways_return'] is not None and not pd.isna(row['sideways_return']):
-            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}")
+            print(f"   震荡: 收益={row['sideways_return']*100:.2f}%, 超额={row['sideways_excess']*100:.2f}%, 夏普={row['sideways_sharpe']:.2f}, 回撤={row['sideways_drawdown']*100:.2f}%")
         else:
             print(f"   震荡: 无数据")
             
-        print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%")
+        print(f"   平均超额: {row['avg_excess']*100:.2f}%, 最小超额: {row['min_excess']*100:.2f}%, 最大回撤: {row['max_drawdown']*100:.2f}%")
         print(f"   Rank IC: {row['max_rank_ic']:.4f}, Pearson IC: {row['max_pearson_ic']:.4f}")
         print("-" * 40)
     
@@ -485,89 +707,23 @@ if all_weather_positive_short:
     df_short_sorted.to_csv('all_weather_positive_short_strategies.csv', index=False)
 
 # =============================================================================
-# 5. 寻找100%准确度的信号
+# 6. 有效信号详细分析 (显示所有有效信号)
 # =============================================================================
 print("\n" + "=" * 80)
-print("70%以上准确度信号分析 (Signal Accuracy > 70%)")
+print("有效信号详细分析 (所有符合过滤条件的信号)")
 print("=" * 80)
 
-perfect_signals = []
-
-for indicator_name, indicator_data in indicators.items():
-    if 'threshold_impact' not in indicator_data:
-        continue
-    
-    threshold_data = indicator_data['threshold_impact']
-    
-    for percentile, percentile_data in threshold_data.items():
-        if not isinstance(percentile_data, dict) or 'strategies' not in percentile_data:
-            continue
-        
-        strategies = percentile_data['strategies']
-        
-        # 检查做多策略的信号准确度
-        if 'long' in strategies:
-            long_strategy = strategies['long']
-            if 'signal_ig_analysis' in long_strategy:
-                sig_analysis = long_strategy['signal_ig_analysis']
-                
-                for horizon, horizon_data in sig_analysis.items():
-                    if isinstance(horizon_data, dict):
-                        accuracy = horizon_data.get('signal_accuracy', 0)
-                        if accuracy >= 0.70:  # 99.9%以上视为100%
-                            # 获取相关性信息
-                            correlation = horizon_data.get('correlation', 0)
-                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
-                            
-                            perfect_signals.append({
-                                'indicator': indicator_name,
-                                'strategy_type': 'long',
-                                'percentile': int(percentile),
-                                'threshold': percentile_data.get('threshold', 0),
-                                'correlation': correlation,
-                                'correlation_type': correlation_type,
-                                'horizon': horizon,
-                                'signal_accuracy': accuracy,
-                                'signal_count': horizon_data.get('signal_count', 0),
-                                'information_gain': horizon_data.get('information_gain', 0),
-                                'total_days': horizon_data.get('total_days', 0)
-                            })
-                    
-        
-        # 检查做空策略的信号准确度
-        if 'short' in strategies:
-            short_strategy = strategies['short']
-            if 'signal_ig_analysis' in short_strategy:
-                sig_analysis = short_strategy['signal_ig_analysis']
-                
-                for horizon, horizon_data in sig_analysis.items():
-                    if isinstance(horizon_data, dict):
-                        accuracy = horizon_data.get('signal_accuracy', 0)
-                        if accuracy >= 0.70:  # 99.9%以上视为100%
-                            # 获取相关性信息
-                            correlation = horizon_data.get('correlation', 0)
-                            correlation_type = percentile_data.get('correlation_type', 'positive' if correlation > 0 else 'negative')
-                            
-                            perfect_signals.append({
-                                'indicator': indicator_name,
-                                'strategy_type': 'short',
-                                'percentile': int(percentile),
-                                'threshold': percentile_data.get('threshold', 0),
-                                'correlation': correlation,
-                                'correlation_type': correlation_type,
-                                'horizon': horizon,
-                                'signal_accuracy': accuracy,
-                                'signal_count': horizon_data.get('signal_count', 0),
-                                'information_gain': horizon_data.get('information_gain', 0),
-                                'total_days': horizon_data.get('total_days', 0)
-                            })
+# 使用已经筛选好的有效信号
+perfect_signals = all_signals  # 直接使用前面筛选的有效信号
                     
 
-print(f"\n找到 {len(perfect_signals)} 个信号\n")
+print(f"\n准备显示 {len(perfect_signals)} 个有效信号的详细信息\n")
 
 if perfect_signals:
-    # 按信息增益排序
-    perfect_signals_sorted = sorted(perfect_signals, key=lambda x: x['information_gain'], reverse=True)
+    # 按信号准确度排序（从大到小），准确度相同则按信息增益排序
+    perfect_signals_sorted = sorted(perfect_signals, 
+                                   key=lambda x: (x['signal_accuracy'], x['information_gain']), 
+                                   reverse=True)
     
     # 去重逻辑：对于相同指标、相同策略类型、相同预测周期的信号，保留范围最大的
     deduplicated_signals = {}
@@ -605,13 +761,17 @@ if perfect_signals:
                 if signal['threshold'] > existing['threshold']:
                     deduplicated_signals[key] = signal
     
-    # 转换为列表并按信息增益重新排序
+    # 转换为列表并按信号准确度重新排序（从大到小），准确度相同则按信息增益排序
     perfect_signals_dedup = sorted(deduplicated_signals.values(), 
-                                  key=lambda x: x['information_gain'], 
+                                  key=lambda x: (x['signal_accuracy'], x['information_gain']), 
                                   reverse=True)
     
     print(f"去重后剩余 {len(perfect_signals_dedup)} 个独特信号（原始 {len(perfect_signals)} 个）\n")
-    for i, signal in enumerate(perfect_signals_dedup, 1):
+    
+    # 输出TOP20信号
+    print(f"显示TOP20 高准确度信号（共{len(perfect_signals_dedup)}个）：\n")
+    top20_signals = perfect_signals_dedup[:20]
+    for i, signal in enumerate(top20_signals, 1):
         # 判断操作方向
         correlation_type = signal.get('correlation_type', 'unknown')
         correlation_value = signal.get('correlation', 0)
@@ -642,12 +802,41 @@ if perfect_signals:
         print(f"   百分位: {signal['percentile']}%, 阈值: {signal['threshold']:.6f}")
         print(f"   操作: {operation}")
         print(f"   相关性: {correlation_type} (相关系数={correlation_value:.4f})")
-        print(f"   预测周期: {signal['horizon']}")
+        print(f"   预测周期: {signal['horizon']}{TIME_UNIT}")
         print(f"   信号准确度: {signal['signal_accuracy']*100:.1f}%")
         print(f"   信号数量: {signal['signal_count']:.0f}")
         print(f"   信息增益: {signal['information_gain']:.6f}")
-        print(f"   总天数: {signal['total_days']}")
+        # 根据时间单位调整显示
+        if TIME_UNIT == "10min":
+            total_periods = signal['total_days']  # 实际是10分钟周期数
+            print(f"   总周期数: {total_periods} (10分钟周期)")
+        else:
+            print(f"   总天数: {signal['total_days']}")
         print(f"   信号频率: {signal['signal_count']/signal['total_days']*100:.2f}%")
+        
+        # 添加信号分布信息
+        if signal.get('first_signal_time') and signal.get('last_signal_time'):
+            print(f"   信号时间范围: {signal['first_signal_time'][:10]} 至 {signal['last_signal_time'][:10]}")
+            # 根据时间单位调整信号跨度显示
+            if TIME_UNIT == "10min":
+                # 如果是10分钟数据，转换为天数
+                time_range_periods = signal.get('time_range_days', 0)
+                time_range_days = time_range_periods * 10 / (60 * 24)  # 10分钟周期转天
+                print(f"   信号跨度: {time_range_periods}个{TIME_UNIT}周期 (约{time_range_days:.1f}天)")
+            else:
+                print(f"   信号跨度: {signal.get('time_range_days', 0)}天")
+            # 根据时间单位调整信号密度显示
+            if TIME_UNIT == "10min":
+                print(f"   信号密度: {signal.get('signal_density', 0):.4f} 个/{TIME_UNIT}")
+            else:
+                print(f"   信号密度: {signal.get('signal_density', 0):.4f} 个/天")
+            dispersion = signal.get('signal_dispersion', 0)
+            if dispersion > 0:
+                # 熵值范围0-1，越大越分散
+                dispersion_desc = "完全均匀" if dispersion > 0.9 else "非常分散" if dispersion > 0.7 else "较分散" if dispersion > 0.5 else "较集中" if dispersion > 0.3 else "非常集中"
+                print(f"   信号分散度(熵): {dispersion:.3f} ({dispersion_desc})")
+            else:
+                print(f"   信号分散度(熵): N/A (信号太少)")
     
     # 保存结果（使用去重后的数据）
     df_perfect = pd.DataFrame(perfect_signals_dedup)
@@ -669,6 +858,9 @@ if perfect_signals:
     print("\n最多准确信号的指标:")
     for i, (indicator, stats) in enumerate(sorted_stats[:10], 1):
         print(f"{i}. {indicator}: {stats['count']}个信号, "
-              f"周期: {', '.join(sorted(stats['horizons']))}, "
+              f"周期: {', '.join(sorted(stats['horizons']))}{TIME_UNIT}, "
               f"最大信息增益: {stats['max_ig']:.6f}")
+else:
+    print("没有找到符合过滤条件的有效信号。")
+    print(f"提示: 可以尝试降低过滤条件。")
 

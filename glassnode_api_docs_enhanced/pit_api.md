@@ -4,6 +4,44 @@
 
 PIT (Point in Time) API 提供了在特定历史时间点查询链上数据的能力。这对于回测策略、历史分析和避免数据回填偏差至关重要。
 
+## 🎨 PIT API 概念图
+
+```mermaid
+graph LR
+    A[PIT API<br/>时间点数据查询] 
+    A:::mainNode
+    
+    A --> B1[历史数据快照]
+    A --> B2[避免前视偏差]
+    A --> B3[策略回测]
+    A --> B4[数据一致性]
+    
+    B1 --> C1[特定时间点<br/>数据值]
+    B1 --> C2[原始计算<br/>结果]
+    B1 --> C3[无后续<br/>修正]
+    
+    B2 --> D1[公平回测]
+    B2 --> D2[真实历史<br/>重现]
+    B2 --> D3[准确分析]
+    
+    B3 --> E1[交易策略<br/>验证]
+    B3 --> E2[风险模型<br/>测试]
+    B3 --> E3[绩效评估]
+    
+    B4 --> F1[链重组<br/>处理]
+    B4 --> F2[方法论<br/>更新隔离]
+    B4 --> F3[数据修正<br/>隔离]
+    
+    classDef mainNode fill:#1e3a8a,stroke:#ffffff,stroke-width:3px,color:#ffffff,font-weight:bold
+    classDef categoryNode fill:#0891b2,stroke:#ffffff,stroke-width:2px,color:#ffffff,font-weight:bold
+    classDef subNode fill:#059669,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef detailNode fill:#fbbf24,stroke:#92400e,stroke-width:1px,color:#000000
+    
+    class A mainNode
+    class B1,B2,B3,B4 categoryNode
+    class C1,C2,C3,D1,D2,D3,E1,E2,E3,F1,F2,F3 subNode
+```
+
 ## 📝 什么是 PIT API？
 
 **英文原文：**
@@ -28,9 +66,76 @@ PIT（时间点）API 允许您查询特定历史时间点的链上指标数据�
 3. **方法论更新**：指标计算方法的改进
 4. **延迟数据到达**：某些数据源可能延迟提供信息
 
+### 数据修正影响示例
+
+```mermaid
+gantt
+    title 数据修正对历史分析的影响
+    dateFormat YYYY-MM-DD
+    section 实际数据演变
+    原始数据采集          :done,    raw1, 2024-01-01, 30d
+    发现计算错误          :crit,    error, 2024-02-01, 1d
+    数据修正完成          :done,    fix1, 2024-02-02, 1d
+    方法论更新            :active,  method, 2024-03-01, 1d
+    重新计算历史数据      :done,    recalc, 2024-03-02, 7d
+    
+    section 常规API视角
+    显示原始值            :done,    api1, 2024-01-01, 31d
+    显示修正后的值        :done,    api2, 2024-02-02, 27d
+    显示重算后的值        :active,  api3, 2024-03-09, 30d
+    
+    section PIT API视角
+    T1时间点: 原始值      :done,    pit1, 2024-01-15, 1d
+    T2时间点: 原始值      :done,    pit2, 2024-01-30, 1d
+    T3时间点: 修正值      :done,    pit3, 2024-02-15, 1d
+    T4时间点: 重算值      :active,  pit4, 2024-03-15, 1d
+```
+
 使用 PIT API 可以确保您获得的是在特定时间点实际可用的数据，这对于公平的策略回测和历史分析至关重要。
 
 ## 📚 PIT 端点列表
+
+### PIT 端点体系结构
+
+```mermaid
+graph LR
+    A[PIT 端点<br/>时间点查询]
+    A:::mainNode
+    
+    A --> B1[地址指标<br/>5个端点]
+    A --> B2[市场指标<br/>4个端点]
+    A --> B3[链上指标<br/>3个端点]
+    A --> B4[挖矿指标<br/>待添加]
+    
+    B1 --> C1[active_count<br/>活跃地址]
+    B1 --> C2[new<br/>新增地址]
+    B1 --> C3[non_zero_count<br/>非零地址]
+    B1 --> C4[profit_count<br/>盈利地址]
+    B1 --> C5[loss_count<br/>亏损地址]
+    
+    B2 --> D1[mvrv<br/>MVRV比率]
+    B2 --> D2[price_realized<br/>已实现价格]
+    B2 --> D3[sopr<br/>SOPR指标]
+    B2 --> D4[marketcap_usd<br/>市值]
+    
+    B3 --> E1[volume_sum<br/>交易量]
+    B3 --> E2[count<br/>交易数]
+    B3 --> E3[fees/volume_sum<br/>手续费]
+    
+    B4 --> F1[hashrate<br/>哈希率]
+    B4 --> F2[difficulty<br/>难度]
+    B4 --> F3[revenue<br/>矿工收入]
+    
+    classDef mainNode fill:#1e3a8a,stroke:#ffffff,stroke-width:3px,color:#ffffff,font-weight:bold
+    classDef categoryNode fill:#0891b2,stroke:#ffffff,stroke-width:2px,color:#ffffff,font-weight:bold
+    classDef endpointNode fill:#059669,stroke:#ffffff,stroke-width:1px,color:#ffffff
+    classDef futureNode fill:#94a3b8,stroke:#64748b,stroke-width:1px,color:#ffffff,stroke-dasharray: 5 5
+    
+    class A mainNode
+    class B1,B2,B3,B4 categoryNode
+    class C1,C2,C3,C4,C5,D1,D2,D3,D4,E1,E2,E3 endpointNode
+    class F1,F2,F3 futureNode
+```
 
 ### 1. 地址指标 PIT 端点
 
@@ -166,6 +271,45 @@ for data_point in backtest_data:
 
 ## 🔄 PIT vs 常规 API 的区别
 
+### 数据查询流程对比
+
+```mermaid
+graph TB
+    subgraph "常规 API 查询流程"
+        A1[用户请求] --> B1[API服务器]
+        B1 --> C1[返回最新数据]
+        C1 --> D1[包含所有修正<br/>和更新]
+        D1 --> E1[用户获得<br/>当前视角数据]
+        
+        style E1 fill:#ef4444,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    end
+    
+    subgraph "PIT API 查询流程"
+        A2[用户请求<br/>+时间戳] --> B2[API服务器]
+        B2 --> C2[历史数据库]
+        C2 --> D2[查找时间点<br/>快照]
+        D2 --> E2[返回原始<br/>历史数据]
+        E2 --> F2[用户获得<br/>历史视角数据]
+        
+        style F2 fill:#10b981,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    end
+    
+    G[关键区别]
+    G --> H1[常规: 当前最优数据]
+    G --> H2[PIT: 历史真实数据]
+    
+    H1 --> I1[适用: 实时监控]
+    H2 --> I2[适用: 回测分析]
+    
+    classDef requestNode fill:#3b82f6,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef processNode fill:#8b5cf6,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef resultNode fill:#f59e0b,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    
+    class A1,A2 requestNode
+    class B1,B2,C1,C2,D1,D2,E2 processNode
+    class G,H1,H2,I1,I2 resultNode
+```
+
 | 特性 | 常规 API | PIT API |
 |------|----------|---------|
 | 数据状态 | 当前最新值 | 历史时间点值 |
@@ -193,6 +337,43 @@ for data_point in backtest_data:
 - 建议验证关键时间点的数据可用性
 
 ## 📊 典型应用场景
+
+### 应用场景概览
+
+```mermaid
+graph LR
+    A[PIT API<br/>应用场景]
+    A:::mainNode
+    
+    A --> B1[策略回测]
+    A --> B2[历史研究]
+    A --> B3[风险分析]
+    A --> B4[合规报告]
+    
+    B1 --> C1[交易策略<br/>验证]
+    B1 --> C2[参数优化]
+    B1 --> C3[绩效评估]
+    
+    B2 --> D1[事件影响<br/>分析]
+    B2 --> D2[相关性<br/>研究]
+    B2 --> D3[市场周期<br/>分析]
+    
+    B3 --> E1[VaR计算]
+    B3 --> E2[压力测试]
+    B3 --> E3[情景分析]
+    
+    B4 --> F1[审计追踪]
+    B4 --> F2[历史报表]
+    B4 --> F3[监管合规]
+    
+    classDef mainNode fill:#1e3a8a,stroke:#ffffff,stroke-width:3px,color:#ffffff,font-weight:bold
+    classDef categoryNode fill:#0891b2,stroke:#ffffff,stroke-width:2px,color:#ffffff,font-weight:bold
+    classDef subNode fill:#059669,stroke:#ffffff,stroke-width:1px,color:#ffffff
+    
+    class A mainNode
+    class B1,B2,B3,B4 categoryNode
+    class C1,C2,C3,D1,D2,D3,E1,E2,E3,F1,F2,F3 subNode
+```
 
 ### 1. 策略回测
 ```python

@@ -47,10 +47,10 @@ def process_single_indicator_worker(args):
         # 解包参数
         api_key, cache_dir, categories, asset, category, endpoint_info, price_data, market_regime, \
         full_regime_benchmarks, benchmark_returns_long, \
-        benchmark_returns_short, only_cache = args
+        benchmark_returns_short, only_cache, interval, horizons = args
         
         # 在每个进程中创建一个新的分析器实例
-        analyzer = GlassnodeAdvancedAnalyzer(api_key)
+        analyzer = GlassnodeAdvancedAnalyzer(api_key, interval=interval, horizons=horizons)
         analyzer.cache_dir = cache_dir
         analyzer.categories = categories  # 传递categories配置
         analyzer.asset = asset
@@ -71,7 +71,8 @@ def process_single_indicator_worker(args):
                                    price_data.index[-1],
                                    path=path,
                                    asset=asset,
-                                   only_cache=only_cache)
+                                   only_cache=only_cache,
+                                   interval=interval)
         if df.empty:
             return None
         
@@ -114,8 +115,10 @@ def process_single_indicator_worker(args):
 class GlassnodeAdvancedAnalyzer:
     """Glassnode高级分析器"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, interval: str = '24h', horizons: List[int] = None):
         self.api_key = api_key
+        self.interval = interval
+        self.horizons = horizons  # 存储自定义的horizons
         self.base_url = "https://grassnoodle.cloud/v1/metrics"
         
         # 设置缓存目录
@@ -234,7 +237,7 @@ class GlassnodeAdvancedAnalyzer:
             
     def fetch_metric_data(self, category: str, metric: str, 
                          start_date: datetime, end_date: datetime, path: str = None, 
-                         asset: str = None, only_cache: bool = False) -> pd.DataFrame:
+                         asset: str = None, only_cache: bool = False, interval: str = None) -> pd.DataFrame:
         """获取单个指标数据
         
         Args:
@@ -249,11 +252,14 @@ class GlassnodeAdvancedAnalyzer:
         # 使用提供的asset或默认使用实例的asset属性
         asset_code = asset if asset else getattr(self, 'asset', 'BTC')
         
+        # 使用提供的interval或默认使用实例的interval属性
+        interval_to_use = interval if interval else self.interval
+        
         params = {
             'a': asset_code,
             's': int(start_date.timestamp()),
             'u': int(end_date.timestamp()),
-            'i': '24h'
+            'i': interval_to_use
         }
         
         # 生成更易读的缓存键 (格式: category_metric_BTC_20230101_20250918_24h)
@@ -330,7 +336,7 @@ class GlassnodeAdvancedAnalyzer:
                     continue
                     
                 else:
-                    print(f"  ✗ {metric}: {response.status_code}")
+                    print(f"  ✗ {metric}: {response.status_code} response: {response.text}")
                     self.failed_endpoints.append(f"{category}/{metric}")
                     return pd.DataFrame()
                     
@@ -367,7 +373,11 @@ class GlassnodeAdvancedAnalyzer:
                                                  horizons: List[int] = None) -> Dict:
         """计算多个时间窗口的信息增益"""
         if horizons is None:
-            horizons = [1, 2, 3]
+            # 使用实例化时传入的horizons，如果没有则使用默认值
+            if self.horizons is not None:
+                horizons = self.horizons
+            else:
+                horizons = [1, 2, 3, 5, 7, 10, 14, 21, 30, 45, 60, 90, 120, 150, 180, 270, 365, 450, 730]
         
         results = {}
         
@@ -574,7 +584,9 @@ class GlassnodeAdvancedAnalyzer:
                     
                     # 计算不同周期的信息增益
                     signal_ig_results = {}
-                    for horizon in [1, 2, 3]:
+                    # 使用配置的horizons或默认值
+                    horizons_to_use = self.horizons if self.horizons else [1, 2, 3]
+                    for horizon in horizons_to_use:
                         try:
                             # 计算未来收益
                             if strategy_type == 'short':
@@ -626,8 +638,61 @@ class GlassnodeAdvancedAnalyzer:
                                 signal_mask = valid_data['signal'] == 1
                                 if signal_mask.sum() > 0:
                                     accuracy = (valid_data[signal_mask]['returns'] == 1).mean()
+                                    
+                                    # 获取信号时间分布
+                                    signal_timestamps = valid_data[signal_mask].index
+                                    first_signal_time = str(signal_timestamps[0])
+                                    last_signal_time = str(signal_timestamps[-1])
+                                    
+                                    # 计算时间范围（天数）
+                                    time_range = pd.to_datetime(last_signal_time) - pd.to_datetime(first_signal_time)
+                                    time_range_days = time_range.days + 1  # 包含首尾两天
+                                    
+                                    # 计算信号密度（每天的信号数）
+                                    signal_density = signal_mask.sum() / time_range_days if time_range_days > 0 else 0
+                                    
+                                    # 计算信号分散度（使用熵，熵越大越分散）
+                                    if len(signal_timestamps) > 1:
+                                        # 将时间范围分成10个等长的时间段
+                                        n_bins = min(10, len(signal_timestamps))  # 最多10个bin，但不超过信号数
+                                        
+                                        # 创建时间段
+                                        start_time = pd.to_datetime(first_signal_time)
+                                        end_time = pd.to_datetime(last_signal_time)
+                                        
+                                        if n_bins > 1 and start_time < end_time:
+                                            # 创建时间边界
+                                            time_bins = pd.date_range(start=start_time, end=end_time, periods=n_bins+1)
+                                            
+                                            # 统计每个时间段内的信号数量
+                                            signal_counts, _ = np.histogram(pd.to_datetime(signal_timestamps), bins=time_bins)
+                                            
+                                            # 计算概率分布
+                                            total_signals = signal_counts.sum()
+                                            if total_signals > 0:
+                                                probabilities = signal_counts / total_signals
+                                                # 过滤掉概率为0的项
+                                                probabilities = probabilities[probabilities > 0]
+                                                
+                                                # 计算熵 (以2为底，范围0到log2(n_bins))
+                                                signal_entropy = -np.sum(probabilities * np.log2(probabilities))
+                                                
+                                                # 归一化熵 (0-1之间，1表示完全均匀分布)
+                                                max_entropy = np.log2(n_bins)
+                                                signal_dispersion = signal_entropy / max_entropy if max_entropy > 0 else 0
+                                            else:
+                                                signal_dispersion = 0
+                                        else:
+                                            signal_dispersion = 0
+                                    else:
+                                        signal_dispersion = 0
                                 else:
                                     accuracy = 0
+                                    first_signal_time = None
+                                    last_signal_time = None
+                                    time_range_days = 0
+                                    signal_density = 0
+                                    signal_dispersion = 0
                                 
                                 signal_ig_results[f'{horizon}d'] = {
                                     'information_gain': ig,
@@ -635,7 +700,12 @@ class GlassnodeAdvancedAnalyzer:
                                     'correlation': correlation,
                                     'signal_accuracy': accuracy,
                                     'signal_count': signal_mask.sum(),
-                                    'total_days': len(valid_data)
+                                    'total_days': len(valid_data),
+                                    'first_signal_time': first_signal_time,
+                                    'last_signal_time': last_signal_time,
+                                    'time_range_days': time_range_days,
+                                    'signal_density': signal_density,
+                                    'signal_dispersion': signal_dispersion
                                 }
                         except Exception as e:
                             continue
@@ -734,6 +804,18 @@ class GlassnodeAdvancedAnalyzer:
         
         return results
     
+    def _get_periods_per_year(self, time_interval_seconds: float) -> float:
+        """根据时间间隔计算年化因子
+        
+        Args:
+            time_interval_seconds: 数据点之间的时间间隔（秒）
+            
+        Returns:
+            每年的数据点数
+        """
+        seconds_per_year = 365.25 * 24 * 3600  # 31,557,600 秒
+        return seconds_per_year / time_interval_seconds
+    
     def _calculate_benchmark_returns(self, price_data: pd.Series, strategy_type: str = 'long') -> pd.DataFrame:
         """计算基准收益
         
@@ -768,7 +850,7 @@ class GlassnodeAdvancedAnalyzer:
             cumulative_returns = (1 + benchmark_returns).cumprod()
         
         return pd.DataFrame({
-            'daily': benchmark_returns,
+            'period_returns': benchmark_returns,
             'cumulative': cumulative_returns,
             'strategy_type': strategy_type
         })
@@ -780,8 +862,18 @@ class GlassnodeAdvancedAnalyzer:
         
         # 确保索引对齐
         common_index = benchmark_returns.index.intersection(market_regime.index)
-        benchmark_aligned = benchmark_returns.loc[common_index]
+        benchmark_aligned = benchmark_returns.loc[common_index].copy()  # 使用copy避免SettingWithCopyWarning
         regime_aligned = market_regime.loc[common_index]
+        
+        # 计算每个数据点的时间间隔（秒）
+        time_intervals = benchmark_aligned.index.to_series().diff().dt.total_seconds()
+        # 第一个数据点使用后一个的间隔，如果只有一个数据点则使用默认间隔
+        if len(time_intervals) > 1:
+            time_intervals.iloc[0] = time_intervals.iloc[1]
+        else:
+            # 根据数据频率推断间隔（如果是10分钟数据则600秒）
+            time_intervals.iloc[0] = 600 if len(time_intervals) == 1 else 86400
+        benchmark_aligned['time_interval_seconds'] = time_intervals
         
         # 获取策略类型
         strategy_type = benchmark_returns.get('strategy_type', 'long').iloc[0] if 'strategy_type' in benchmark_returns.columns else 'long'
@@ -792,7 +884,11 @@ class GlassnodeAdvancedAnalyzer:
             
             if mask.sum() > 0:
                 # 使用完整的benchmark数据计算该市场状态的基准收益
-                regime_benchmark_returns = benchmark_aligned.loc[mask, 'daily']
+                regime_benchmark_returns = benchmark_aligned.loc[mask, 'period_returns']
+                
+                # 计算实际总时间（累加时间间隔）
+                total_seconds = benchmark_aligned.loc[mask, 'time_interval_seconds'].sum()
+                total_days = total_seconds / 86400
                 
                 # 计算最大回撤
                 cumulative_returns = (1 + regime_benchmark_returns).cumprod()
@@ -802,9 +898,7 @@ class GlassnodeAdvancedAnalyzer:
                 
                 # 计算累计收益率
                 cumulative_return = (1 + regime_benchmark_returns).prod() - 1 if len(regime_benchmark_returns) > 0 else 0
-                
-                # 计算年化收益率（使用几何平均）
-                total_days = mask.sum()
+                    
                 if total_days > 0 and cumulative_return > -1:
                     years = total_days / 365.25
                     # 使用复利公式计算年化收益率
@@ -813,7 +907,10 @@ class GlassnodeAdvancedAnalyzer:
                     annual_return = 0
                 
                 # 计算年化波动率和夏普比率
-                annual_volatility = regime_benchmark_returns.std() * np.sqrt(252) if len(regime_benchmark_returns) > 1 else 0
+                # 根据实际的时间间隔计算年化因子
+                avg_interval = benchmark_aligned.loc[mask, 'time_interval_seconds'].mean()
+                periods_per_year = self._get_periods_per_year(avg_interval)
+                annual_volatility = regime_benchmark_returns.std() * np.sqrt(periods_per_year) if len(regime_benchmark_returns) > 1 else 0
                 sharpe = (annual_return - 0.02) / annual_volatility if annual_volatility > 0 else 0
                 
                 full_regime_benchmarks[regime_name] = {
@@ -826,8 +923,8 @@ class GlassnodeAdvancedAnalyzer:
                 }
                 
                 # 打印基准信息
-                print(f"    {regime_name:8s}: {full_regime_benchmarks[regime_name]['total_days']:4d}天, "
-                      f"年化收益: {full_regime_benchmarks[regime_name]['benchmark_annual_return']:6.1f}%, "
+                print(f"    {regime_name:8s}: {full_regime_benchmarks[regime_name]['total_days']:4.0f}天, "
+                      f"年化收益: {full_regime_benchmarks[regime_name]['benchmark_annual_return']*100:6.1f}%, "
                       f"累计收益: {full_regime_benchmarks[regime_name]['benchmark_cumulative']*100:6.1f}%, "
                       f"最大回撤: {full_regime_benchmarks[regime_name]['benchmark_max_drawdown']*100:6.1f}%")
         
@@ -845,19 +942,28 @@ class GlassnodeAdvancedAnalyzer:
         for strategy_type, benchmark_returns in [('long', benchmark_returns_long), 
                                                  ('short', benchmark_returns_short)]:
             
-            # 获取每日收益
-            daily_returns = benchmark_returns['daily']
+            # 获取周期收益
+            period_returns = benchmark_returns['period_returns']
             
             # 计算累计收益
-            cumulative_returns = (1 + daily_returns).cumprod()
+            cumulative_returns = (1 + period_returns).cumprod()
             total_return = cumulative_returns.iloc[-1] - 1 if len(cumulative_returns) > 0 else 0
             
+            # 计算时间间隔和年化因子
+            time_index = period_returns.index
+            if len(time_index) > 1:
+                time_diffs = pd.Series(time_index[1:]) - pd.Series(time_index[:-1])
+                avg_interval_seconds = time_diffs.dt.total_seconds().mean()
+                periods_per_year = self._get_periods_per_year(avg_interval_seconds)
+            else:
+                periods_per_year = 252  # 默认为日频
+            
             # 年化收益
-            n_days = len(daily_returns)
-            annual_return = ((1 + total_return) ** (252 / n_days) - 1) if n_days > 0 else 0
+            n_periods = len(period_returns)
+            annual_return = ((1 + total_return) ** (periods_per_year / n_periods) - 1) if n_periods > 0 else 0
             
             # 波动率（年化）
-            volatility = daily_returns.std() * np.sqrt(252) if len(daily_returns) > 1 else 0
+            volatility = period_returns.std() * np.sqrt(periods_per_year) if len(period_returns) > 1 else 0
             
             # 夏普比率
             risk_free_rate = 0.02  # 假设无风险利率为2%
@@ -883,12 +989,12 @@ class GlassnodeAdvancedAnalyzer:
             
             max_drawdown_duration = max(drawdown_periods) if drawdown_periods else 0
             
-            # 胜率（正收益天数比例）
-            win_rate = (daily_returns > 0).mean() if len(daily_returns) > 0 else 0
+            # 胜率（正收益周期比例）
+            win_rate = (period_returns > 0).mean() if len(period_returns) > 0 else 0
             
             # 盈亏比
-            winning_returns = daily_returns[daily_returns > 0]
-            losing_returns = daily_returns[daily_returns < 0]
+            winning_returns = period_returns[period_returns > 0]
+            losing_returns = period_returns[period_returns < 0]
             avg_win = winning_returns.mean() if len(winning_returns) > 0 else 0
             avg_loss = abs(losing_returns.mean()) if len(losing_returns) > 0 else 1
             profit_loss_ratio = avg_win / avg_loss if avg_loss > 0 else 0
@@ -902,9 +1008,9 @@ class GlassnodeAdvancedAnalyzer:
                 'max_drawdown_duration': max_drawdown_duration,
                 'win_rate': win_rate,
                 'profit_loss_ratio': profit_loss_ratio,
-                'total_days': n_days,
-                'start_date': daily_returns.index[0].strftime('%Y-%m-%d') if len(daily_returns) > 0 else None,
-                'end_date': daily_returns.index[-1].strftime('%Y-%m-%d') if len(daily_returns) > 0 else None
+                'total_periods': n_periods,
+                'start_date': period_returns.index[0].strftime('%Y-%m-%d') if len(period_returns) > 0 else None,
+                'end_date': period_returns.index[-1].strftime('%Y-%m-%d') if len(period_returns) > 0 else None
             }
             
             # 打印关键指标
@@ -1028,15 +1134,22 @@ class GlassnodeAdvancedAnalyzer:
                 i += 1
         
         # 打印市场状态统计
-        bull_days = (final_result == 1).sum()
-        bear_days = (final_result == -1).sum()
-        sideways_days = (final_result == 0).sum()
-        total_days = len(final_result)
+        bull_count = (final_result == 1).sum()
+        bear_count = (final_result == -1).sum()
+        sideways_count = (final_result == 0).sum()
+        total_count = len(final_result)
+        
+        # 计算实际天数（基于时间差）
+        if len(final_result) > 1:
+            actual_days = (final_result.index[-1] - final_result.index[0]).total_seconds() / 86400
+        else:
+            actual_days = 1
         
         print(f"\n  市场状态分布（最小持续{min_duration}天）:")
-        print(f"    牛市: {bull_days}天 ({bull_days/total_days*100:.1f}%)")
-        print(f"    熊市: {bear_days}天 ({bear_days/total_days*100:.1f}%)")
-        print(f"    震荡市: {sideways_days}天 ({sideways_days/total_days*100:.1f}%)")
+        print(f"    牛市: {bull_count}个数据点 ({bull_count/total_count*100:.1f}%)")
+        print(f"    熊市: {bear_count}个数据点 ({bear_count/total_count*100:.1f}%)")
+        print(f"    震荡市: {sideways_count}个数据点 ({sideways_count/total_count*100:.1f}%)")
+        print(f"    总时间跨度: {actual_days:.1f}天")
         
         return final_result
     
@@ -1047,7 +1160,7 @@ class GlassnodeAdvancedAnalyzer:
         print("\n  生成市场状态可视化图表...")
         
         # 创建图表
-        fig, axes = plt.subplots(4, 1, figsize=(15, 12))
+        fig, axes = plt.subplots(2, 1, figsize=(15, 8))
         
         # 1. 价格走势与市场状态
         ax1 = axes[0]
@@ -1085,63 +1198,8 @@ class GlassnodeAdvancedAnalyzer:
         ax1.legend(loc='upper left')
         ax1.grid(True, alpha=0.3)
         
-        # 2. 市场状态分布（时间序列）
+        # 2. 市场状态统计
         ax2 = axes[1]
-        
-        # 创建阶梯图显示市场状态
-        ax2.plot(market_regime.index, market_regime.values, drawstyle='steps-post', linewidth=1)
-        ax2.fill_between(market_regime.index, 0, market_regime.values, 
-                         where=(market_regime > 0), color='green', alpha=0.3, step='post')
-        ax2.fill_between(market_regime.index, 0, market_regime.values, 
-                         where=(market_regime < 0), color='red', alpha=0.3, step='post')
-        ax2.axhline(y=0, color='black', linestyle='-', linewidth=0.5)
-        
-        ax2.set_title('市场状态时间序列', fontsize=12)
-        ax2.set_ylabel('市场状态')
-        ax2.set_yticks([-1, 0, 1])
-        ax2.set_yticklabels(['熊市', '震荡', '牛市'])
-        ax2.grid(True, alpha=0.3)
-        
-        # 3. 价格表现分析
-        ax3 = axes[2]
-        
-        # 计算实际收益率
-        returns_90d = (price_data / price_data.shift(90) - 1).fillna(0) * 100
-        returns_180d = (price_data / price_data.shift(180) - 1).fillna(0) * 100
-        
-        # 计算价格位置
-        rolling_high = price_data.rolling(window=252, min_periods=50).max()
-        rolling_low = price_data.rolling(window=252, min_periods=50).min()
-        price_position = ((price_data - rolling_low) / (rolling_high - rolling_low) * 100).fillna(50)
-        
-        # 创建双Y轴
-        ax3_twin = ax3.twinx()
-        
-        # 左轴：收益率
-        line1 = ax3.plot(price_data.index, returns_90d, 'b-', linewidth=0.8, alpha=0.7, label='90天收益率')
-        line2 = ax3.plot(price_data.index, returns_180d, 'g-', linewidth=1, label='180天收益率')
-        ax3.axhline(y=0, color='black', linestyle='-', alpha=0.5)
-        ax3.axhline(y=20, color='green', linestyle='--', alpha=0.3)
-        ax3.axhline(y=-20, color='red', linestyle='--', alpha=0.3)
-        
-        # 右轴：价格位置
-        line3 = ax3_twin.plot(price_data.index, price_position, 'orange', linewidth=0.8, alpha=0.6, label='价格位置')
-        ax3_twin.axhline(y=50, color='gray', linestyle=':', alpha=0.5)
-        
-        ax3.set_title('价格表现分析（基于此判定市场状态）', fontsize=12)
-        ax3.set_ylabel('收益率 (%)', color='blue')
-        ax3_twin.set_ylabel('价格位置 (0=年低, 100=年高)', color='orange')
-        ax3.set_ylim(-60, 60)
-        ax3_twin.set_ylim(0, 100)
-        
-        # 合并图例
-        lines = line1 + line2 + line3
-        labels = [l.get_label() for l in lines]
-        ax3.legend(lines, labels, loc='upper left', fontsize=8)
-        ax3.grid(True, alpha=0.3)
-        
-        # 4. 市场状态统计
-        ax4 = axes[3]
         
         # 计算各状态的天数和占比
         regime_counts = market_regime.value_counts()
@@ -1157,11 +1215,11 @@ class GlassnodeAdvancedAnalyzer:
             if value in regime_counts.index:
                 count = regime_counts[value]
                 pct = regime_pct[value]
-                labels.append(f'{name}\n{count}天 ({pct:.1f}%)')
+                labels.append(f'{name}\n({pct:.1f}%)')
                 sizes.append(count)
                 pie_colors.append(color)
         
-        wedges, texts, autotexts = ax4.pie(sizes, labels=labels, colors=pie_colors, 
+        wedges, texts, autotexts = ax2.pie(sizes, labels=labels, colors=pie_colors, 
                                            autopct='%1.1f%%', startangle=90)
         
         # 调整文字大小
@@ -1172,12 +1230,15 @@ class GlassnodeAdvancedAnalyzer:
             autotext.set_fontweight('bold')
             autotext.set_fontsize(10)
         
-        ax4.set_title('市场状态分布统计', fontsize=12)
+        ax2.set_title('市场状态分布统计', fontsize=12)
         
         # 添加统计信息文本
+        # 计算实际天数
+        actual_days = (price_data.index[-1] - price_data.index[0]).total_seconds() / 86400
         stats_text = f"""
         数据范围: {price_data.index[0].strftime('%Y-%m-%d')} 至 {price_data.index[-1].strftime('%Y-%m-%d')}
-        总天数: {len(market_regime)}
+        时间跨度: {actual_days:.0f}天
+        数据点数: {len(market_regime)}
         最新状态: {'牛市' if market_regime.iloc[-1] == 1 else '熊市' if market_regime.iloc[-1] == -1 else '震荡市'}
         """
         
@@ -1192,11 +1253,12 @@ class GlassnodeAdvancedAnalyzer:
         
         # 打印统计信息
         print(f"\n  市场状态统计:")
+        print(f"    时间跨度: {actual_days:.0f}天")
         for value, name in [(1, '牛市'), (-1, '熊市'), (0, '震荡市')]:
             if value in regime_counts.index:
                 count = regime_counts[value]
                 pct = regime_pct[value]
-                print(f"    {name}: {count}天 ({pct:.1f}%)")
+                print(f"    {name}: {count}个数据点 ({pct:.1f}%)")
     
     def _calculate_strategy_returns(self, price_data: pd.Series, signal: pd.Series, 
                                    index_align: pd.Index, strategy_type: str = 'long') -> Dict:
@@ -1212,8 +1274,8 @@ class GlassnodeAdvancedAnalyzer:
         aligned_price = price_data.reindex(index_align).fillna(method='ffill')
         aligned_signal = signal.reindex(index_align).fillna(0)
         
-        # 计算日收益率
-        daily_returns = aligned_price.pct_change().fillna(0)
+        # 计算周期收益率
+        period_returns = aligned_price.pct_change().fillna(0)
         
         # 策略收益计算
         # shift(1)避免前瞻偏差（今天的信号明天生效）
@@ -1227,7 +1289,7 @@ class GlassnodeAdvancedAnalyzer:
         strategy_returns = pd.Series(index=aligned_price.index, data=0.0)
         
         # 多头收益：正常的价格变化收益
-        strategy_returns[long_positions] = daily_returns[long_positions]
+        strategy_returns[long_positions] = period_returns[long_positions]
         
         # 空头收益：需要特殊处理以确保对称性
         # 使用价格比率方法计算空头收益
@@ -1270,12 +1332,22 @@ class GlassnodeAdvancedAnalyzer:
         # 年化收益和波动率
         # 使用几何平均计算年化收益率
         cumulative_return = cumulative_returns.iloc[-1] - 1 if len(cumulative_returns) > 0 else 0
-        n_days = len(strategy_returns)
-        annual_return = ((1 + cumulative_return) ** (252 / n_days) - 1) if n_days > 0 and cumulative_return > -1 else 0
-        volatility = strategy_returns.std() * np.sqrt(252)
+        
+        # 计算年化因子
+        time_index = strategy_returns.index
+        if len(time_index) > 1:
+            time_diffs = pd.Series(time_index[1:]) - pd.Series(time_index[:-1])
+            avg_interval_seconds = time_diffs.dt.total_seconds().mean()
+            periods_per_year = self._get_periods_per_year(avg_interval_seconds)
+        else:
+            periods_per_year = 252  # 默认为日频
+        
+        n_periods = len(strategy_returns)
+        annual_return = ((1 + cumulative_return) ** (periods_per_year / n_periods) - 1) if n_periods > 0 and cumulative_return > -1 else 0
+        volatility = strategy_returns.std() * np.sqrt(periods_per_year)
         
         return {
-            'daily': strategy_returns,
+            'period_returns': strategy_returns,
             'cumulative': cumulative_returns,
             'annual_return': annual_return,
             'volatility': volatility,
@@ -1286,23 +1358,32 @@ class GlassnodeAdvancedAnalyzer:
                                       benchmark_returns: pd.DataFrame,
                                       signal: pd.Series) -> Dict:
         """计算性能指标（包括超额收益和信息比率）"""
-        if not strategy_returns or 'daily' not in strategy_returns:
+        if not strategy_returns or 'period_returns' not in strategy_returns:
             return self._empty_performance_metrics()
         
-        strategy_daily = strategy_returns['daily']
-        benchmark_daily = benchmark_returns['daily']
+        strategy_period = strategy_returns['period_returns']
+        benchmark_period = benchmark_returns['period_returns']
         
         # 对齐数据
         aligned_data = pd.DataFrame({
-            'strategy': strategy_daily,
-            'benchmark': benchmark_daily
+            'strategy': strategy_period,
+            'benchmark': benchmark_period
         }).dropna()
         
         if len(aligned_data) < 30:
             return self._empty_performance_metrics()
         
+        # 计算年化因子
+        time_index = aligned_data.index
+        if len(time_index) > 1:
+            time_diffs = pd.Series(time_index[1:]) - pd.Series(time_index[:-1])
+            avg_interval_seconds = time_diffs.dt.total_seconds().mean()
+            periods_per_year = self._get_periods_per_year(avg_interval_seconds)
+        else:
+            periods_per_year = 252  # 默认为日频
+        
         # Sharpe Ratio
-        sharpe = (aligned_data['strategy'].mean() / aligned_data['strategy'].std() * np.sqrt(252)) if aligned_data['strategy'].std() > 0 else 0
+        sharpe = (aligned_data['strategy'].mean() / aligned_data['strategy'].std() * np.sqrt(periods_per_year)) if aligned_data['strategy'].std() > 0 else 0
         
         # 最大回撤
         cumulative = (1 + aligned_data['strategy']).cumprod()
@@ -1314,11 +1395,11 @@ class GlassnodeAdvancedAnalyzer:
         excess_returns = aligned_data['strategy'] - aligned_data['benchmark']
         # 年化超额收益：使用几何平均
         excess_cumulative = (1 + excess_returns).prod() - 1 if len(excess_returns) > 0 else 0
-        n_days = len(excess_returns)
-        excess_return = ((1 + excess_cumulative) ** (252 / n_days) - 1) if n_days > 0 and excess_cumulative > -1 else excess_returns.mean() * 252
+        n_periods = len(excess_returns)
+        excess_return = ((1 + excess_cumulative) ** (periods_per_year / n_periods) - 1) if n_periods > 0 and excess_cumulative > -1 else excess_returns.mean() * periods_per_year
         
         # 跟踪误差
-        tracking_error = excess_returns.std() * np.sqrt(252)
+        tracking_error = excess_returns.std() * np.sqrt(periods_per_year)
         
         # Information Ratio
         information_ratio = excess_return / tracking_error if tracking_error > 0 else 0
@@ -1331,7 +1412,7 @@ class GlassnodeAdvancedAnalyzer:
                 aligned_data['strategy']
             )
             beta = slope
-            alpha = intercept * 252  # 年化
+            alpha = intercept * periods_per_year  # 年化
         except:
             # beta = 1
             # alpha = 0
@@ -1341,21 +1422,21 @@ class GlassnodeAdvancedAnalyzer:
         win_rate_vs_benchmark = (excess_returns > 0).mean()
         
         # 计算策略的胜率和盈亏比
-        winning_days = aligned_data['strategy'] > 0
-        losing_days = aligned_data['strategy'] < 0
+        winning_periods = aligned_data['strategy'] > 0
+        losing_periods = aligned_data['strategy'] < 0
         
-        # 胜率：盈利天数 / 总交易天数
-        win_rate = winning_days.sum() / (winning_days.sum() + losing_days.sum()) if (winning_days.sum() + losing_days.sum()) > 0 else 0
+        # 胜率：盈利周期数 / 总交易周期数
+        win_rate = winning_periods.sum() / (winning_periods.sum() + losing_periods.sum()) if (winning_periods.sum() + losing_periods.sum()) > 0 else 0
         
         # 平均盈利和平均亏损
-        avg_win = aligned_data.loc[winning_days, 'strategy'].mean() if winning_days.sum() > 0 else 0
-        avg_loss = abs(aligned_data.loc[losing_days, 'strategy'].mean()) if losing_days.sum() > 0 else 0
+        avg_win = aligned_data.loc[winning_periods, 'strategy'].mean() if winning_periods.sum() > 0 else 0
+        avg_loss = abs(aligned_data.loc[losing_periods, 'strategy'].mean()) if losing_periods.sum() > 0 else 0
         
         # 盈亏比：平均盈利 / 平均亏损
         profit_loss_ratio = avg_win / avg_loss if avg_loss > 0 else float('inf') if avg_win > 0 else 0
         
         # 期望值（数学期望）
-        expectancy = win_rate * avg_win - (1 - win_rate) * avg_loss if (winning_days.sum() + losing_days.sum()) > 0 else 0
+        expectancy = win_rate * avg_win - (1 - win_rate) * avg_loss if (winning_periods.sum() + losing_periods.sum()) > 0 else 0
         
         return {
             'sharpe': sharpe,
@@ -1368,9 +1449,9 @@ class GlassnodeAdvancedAnalyzer:
             'win_rate_vs_benchmark': win_rate_vs_benchmark,
             'win_rate': win_rate,  # 策略胜率
             'profit_loss_ratio': profit_loss_ratio,  # 盈亏比
-            'avg_win': avg_win * 252,  # 年化平均盈利
-            'avg_loss': avg_loss * 252,  # 年化平均亏损
-            'expectancy': expectancy * 252  # 年化期望值
+            'avg_win': avg_win * periods_per_year,  # 年化平均盈利
+            'avg_loss': avg_loss * periods_per_year,  # 年化平均亏损
+            'expectancy': expectancy * periods_per_year  # 年化期望值
         }
     
     def _empty_performance_metrics(self) -> Dict:
@@ -1405,13 +1486,13 @@ class GlassnodeAdvancedAnalyzer:
             full_regime_benchmarks: 统一的市场基准（可选）
             strategy_type: 策略类型 ('long' 或 'short')
         """
-        if not strategy_returns or 'daily' not in strategy_returns:
+        if not strategy_returns or 'period_returns' not in strategy_returns:
             return {}
         
         # 计算策略表现（处理缺失值后）
         aligned_data = pd.DataFrame({
-            'strategy': strategy_returns['daily'],
-            'benchmark': benchmark_returns['daily'],
+            'strategy': strategy_returns['period_returns'],
+            'benchmark': benchmark_returns['period_returns'],
             'regime': market_regime
         }).dropna()
         
@@ -1434,8 +1515,18 @@ class GlassnodeAdvancedAnalyzer:
                 
                 # 策略收益计算（使用几何平均）
                 strategy_cumulative_return = (1 + strategy_regime).prod() - 1 if len(strategy_regime) > 0 else 0
-                regime_days = len(strategy_regime)
-                strategy_return = ((1 + strategy_cumulative_return) ** (252 / regime_days) - 1) if regime_days > 0 and strategy_cumulative_return > -1 else 0
+                
+                # 计算年化因子
+                time_index = strategy_regime.index
+                if len(time_index) > 1:
+                    time_diffs = pd.Series(time_index[1:]) - pd.Series(time_index[:-1])
+                    avg_interval_seconds = time_diffs.dt.total_seconds().mean()
+                    periods_per_year = self._get_periods_per_year(avg_interval_seconds)
+                else:
+                    periods_per_year = 252
+                
+                regime_periods = len(strategy_regime)
+                strategy_return = ((1 + strategy_cumulative_return) ** (periods_per_year / regime_periods) - 1) if regime_periods > 0 and strategy_cumulative_return > -1 else 0
                 
                 # 计算策略的最大回撤
                 strategy_cumulative = (1 + strategy_regime).cumprod()
@@ -1451,7 +1542,7 @@ class GlassnodeAdvancedAnalyzer:
                     'benchmark_max_drawdown': unified_benchmark['benchmark_max_drawdown'],  # 基准的最大回撤
                     'excess_return': strategy_return - unified_benchmark.get('benchmark_annual_return'),
                     'excess_return_win_rate': (strategy_regime > benchmark_regime).mean() if len(strategy_regime) > 0 else 0,
-                    'sharpe': (strategy_regime.mean() / strategy_regime.std() * np.sqrt(252)) if strategy_regime.std() > 0 else 0,
+                    'sharpe': (strategy_regime.mean() / strategy_regime.std() * np.sqrt(periods_per_year)) if strategy_regime.std() > 0 else 0,
                     'strategy_max_drawdown': strategy_max_drawdown  # 策略的最大回撤
                 }
         
@@ -1527,21 +1618,39 @@ class GlassnodeAdvancedAnalyzer:
         
         price_df = self.fetch_metric_data('market', 'price_usd_close', start_date, end_date, 
                                          asset=self.asset, only_cache=only_cache)
-        if price_df.empty:
-            price_df = self.fetch_metric_data('market', 'close', start_date, end_date, 
-                                             asset=self.asset, only_cache=only_cache)
-            if not price_df.empty:
-                price_df = price_df.rename(columns={'close': 'price_usd_close'})
         
         if price_df.empty:
-            print(f"错误：无法获取 {self.asset} 价格数据")
-            return
+            raise ValueError(f"无法获取 {self.asset} 价格数据")
             
         price_data = price_df['price_usd_close']
         print(f"✓ 获取到 {len(price_data)} 天的价格数据")
         
-        # 分析关键指标
-        self.analyze_key_indicators(price_data, only_cache=only_cache, num_workers=num_workers)
+        # 获取24小时间隔的价格数据用于市场状态识别
+        print(f"\n获取24小时间隔价格数据用于市场状态识别...")
+        price_24h_df = self.fetch_metric_data('market', 'price_usd_close', start_date, end_date, 
+                                              asset=self.asset, only_cache=only_cache, interval='24h')
+        
+        if price_24h_df.empty:
+            raise ValueError(f"无法获取 {self.asset} 24小时间隔价格数据")
+        price_24h_data = price_24h_df['price_usd_close']
+        # 识别市场状态（基于24小时数据）
+        market_regime_daily = self._identify_market_regime(price_24h_data)
+        
+        # 将每日的市场状态对齐到price_data的时间索引
+        # 使用reindex和forward fill，这比循环快得多
+        market_regime = market_regime_daily.reindex(price_data.index, method='ffill')
+        
+        # 如果第一天没有数据，使用后向填充
+        if market_regime.isna().any():
+            market_regime = market_regime.fillna(method='bfill')
+        print(f"✓ 市场状态已对齐到 {len(market_regime)} 个时间点")
+        
+        # 可视化市场状态（使用24小时数据和原始daily regime）
+        self._plot_market_regime(price_data, market_regime)
+        
+        # 分析关键指标（使用对齐后的market_regime）
+        self.analyze_key_indicators(price_data, market_regime, only_cache=only_cache, num_workers=num_workers)
+
         
         # 保存完整的分析结果到 JSON
         save_analysis_results_to_json(self.asset, self.analysis_results)
@@ -1607,12 +1716,14 @@ class GlassnodeAdvancedAnalyzer:
             traceback.print_exc()
             return None
     
-    def analyze_key_indicators(self, price_data: pd.Series, only_cache: bool = False, num_workers: int = 12):
+    def analyze_key_indicators(self, price_data: pd.Series, market_regime: pd.Series, only_cache: bool = False, num_workers: int = 12):
         """分析关键指标
         
         Args:
             price_data: 价格数据
+            market_regime: 市场状态数据
             only_cache: 如果为True，只使用缓存数据
+            num_workers: 并行处理的进程数
         """
         print("\n2. 分析所有配置的指标...")
         if only_cache:
@@ -1642,11 +1753,10 @@ class GlassnodeAdvancedAnalyzer:
         }
         self.indicator_analysis_results = {}  # 保留以向后兼容
         
-        # 预先计算基准收益和市场状态（只需计算一次）
-        print("\n  计算基准收益和市场状态...")
+        # 预先计算基准收益（只需计算一次）
+        print("\n  计算基准收益...")
         benchmark_returns_long = self._calculate_benchmark_returns(price_data, 'long')
         benchmark_returns_short = self._calculate_benchmark_returns(price_data, 'short')
-        market_regime = self._identify_market_regime(price_data)
         
         # 计算统一的市场状态基准收益（多头和空头分别计算）
         full_regime_benchmarks = {
@@ -1668,9 +1778,6 @@ class GlassnodeAdvancedAnalyzer:
             'full_regime_benchmarks': full_regime_benchmarks
         }
         
-        # 可视化市场状态
-        self._plot_market_regime(price_data, market_regime)
-        
         # 准备并行处理的参数
         process_args = []
         for category, endpoint_info in key_indicators:
@@ -1687,7 +1794,9 @@ class GlassnodeAdvancedAnalyzer:
                 full_regime_benchmarks, 
                 benchmark_returns_long, 
                 benchmark_returns_short, 
-                only_cache
+                only_cache,
+                self.interval,  # 添加interval参数
+                self.horizons  # 添加horizons参数
             )
             process_args.append(args)
         
@@ -1705,136 +1814,6 @@ class GlassnodeAdvancedAnalyzer:
                 self.results[metric_name] = result_dict
         self.analysis_results['indicators'] = self.results
         print(f"\n成功分析了 {len(self.results)} 个指标")
-        
-        # 原来的串行处理代码已经被多进程替代，注释掉
-        '''
-        for category, endpoint_info in key_indicators:
-            # 从endpoint_info中提取metric和path
-            if isinstance(endpoint_info, dict):
-                metric = endpoint_info['metric']
-                path = endpoint_info.get('path', None)
-            else:
-                metric = endpoint_info
-                path = None
-            
-            print(f"\n分析 {metric}...")
-            
-            # 获取数据，传入path参数、asset和only_cache
-            df = self.fetch_metric_data(category, metric, 
-                                       price_data.index[0], 
-                                       price_data.index[-1],
-                                       path=path,
-                                       asset=self.asset,
-                                       only_cache=only_cache)
-            if df.empty:
-                continue
-            
-            indicator_data = df[metric]
-            
-            # 1. 多时间窗口分析
-            multi_horizon = self.calculate_information_gain_multi_horizon(
-                indicator_data, price_data
-            )
-            
-            # 2. 找最优窗口
-            optimal = self.find_optimal_horizon(multi_horizon)
-            
-            # 3. 阈值影响分析（传入市场状态和统一基准）
-            threshold_impact = self.analyze_threshold_impact(
-                indicator_data, price_data,
-                market_regime=market_regime,
-                full_regime_benchmarks=full_regime_benchmarks,
-                benchmark_long=benchmark_returns_long,
-                benchmark_short=benchmark_returns_short
-            )
-            
-            # 保存结果到两个地方
-            result_dict = {
-                'multi_horizon': multi_horizon,
-                'optimal': optimal,
-                'threshold_impact': threshold_impact
-            }
-            
-            # 保存到新结构
-            self.analysis_results['indicators'][metric] = result_dict
-            
-            # 保留旧结构以向后兼容
-            self.indicator_analysis_results[metric] = result_dict
-            
-            # 打印关键结果
-            if optimal:
-                print(f"  最优预测窗口: {optimal.get('optimal_horizon_ig', 'N/A')}天")
-                print(f"  最大信息增益: {optimal.get('max_ig', 0):.4f}")
-                
-            # 打印相关性和策略信息
-            if threshold_impact:
-                first_result = next(iter(threshold_impact.values()))
-                corr_type = first_result.get('correlation_type', 'unknown')
-                corr_value = first_result.get('correlation_value', 0)
-                print(f"  相关性: {corr_type} ({corr_value:.3f})")
-                
-                # 找出最佳的多头和空头策略
-                best_long_ir = -999
-                best_short_ir = -999
-                best_long_pct = None
-                best_short_pct = None
-                best_long_ig = -999
-                best_short_ig = -999
-                best_long_accuracy = 0
-                best_short_accuracy = 0
-                best_long_horizon = None
-                best_short_horizon = None
-                
-                for pct, pct_data in threshold_impact.items():
-                    strategies = pct_data.get('strategies', {})
-                    
-                    # 检查多头策略
-                    if 'long' in strategies:
-                        ir = strategies['long']['relative_performance'].get('information_ratio', -999)
-                        if ir > best_long_ir:
-                            best_long_ir = ir
-                            best_long_pct = pct
-                        
-                        # 检查最优时间窗口的信息增益
-                        optimal = strategies['long'].get('optimal_horizon')
-                        if optimal:
-                            ig = optimal.get('information_gain', 0)
-                            accuracy = optimal.get('signal_accuracy', 0)
-                            horizon = optimal.get('horizon', 'N/A')
-                            if ig > best_long_ig:
-                                best_long_ig = ig
-                                best_long_accuracy = accuracy
-                                best_long_horizon = horizon
-                    
-                    # 检查空头策略
-                    if 'short' in strategies:
-                        ir = strategies['short']['relative_performance'].get('information_ratio', -999)
-                        if ir > best_short_ir:
-                            best_short_ir = ir
-                            best_short_pct = pct
-                        
-                        # 检查最优时间窗口的信息增益
-                        optimal = strategies['short'].get('optimal_horizon')
-                        if optimal:
-                            ig = optimal.get('information_gain', 0)
-                            accuracy = optimal.get('signal_accuracy', 0)
-                            horizon = optimal.get('horizon', 'N/A')
-                            if ig > best_short_ig:
-                                best_short_ig = ig
-                                best_short_accuracy = accuracy
-                                best_short_horizon = horizon
-                
-                # 打印最佳策略
-                if best_long_pct is not None:
-                    print(f"  最佳多头策略: 阈值{best_long_pct}%, IR={best_long_ir:.3f}")
-                    if best_long_horizon:
-                        print(f"    最优预测窗口: {best_long_horizon}, IG={best_long_ig:.4f}, 准确率={best_long_accuracy:.1%}")
-                        
-                if best_short_pct is not None:
-                    print(f"  最佳空头策略: 阈值{best_short_pct}%, IR={best_short_ir:.3f}")
-                    if best_short_horizon:
-                        print(f"    最优预测窗口: {best_short_horizon}, IG={best_short_ig:.4f}, 准确率={best_short_accuracy:.1%}")
-        '''
 
 
 def main():
@@ -1842,17 +1821,25 @@ def main():
     
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='Glassnode 高级分析系统')
-    parser.add_argument('--asset', type=str, default='BTC', 
+    parser.add_argument('--asset', type=str, default='ETH', 
                        help='要分析的资产代码 (BTC, ETH, LTC, 等)')
     parser.add_argument('--api-key', type=str, default="myapi_sk_b3fa36048ea022be1c21e626742d4dec",
                        help='Glassnode API密钥')
     parser.add_argument('--end-date', type=str, default='2025-09-18',
                        help='分析结束日期 (格式: YYYY-MM-DD)，默认为2025-09-18 16:00')
     parser.add_argument('--only-cache', type=str, default='True',
-                       choices=['True', 'False', 'true', 'false'],
+                       choices=['True', 'False'],
                        help='只使用缓存数据，不发起网络请求 (True/False，默认False)')
-    parser.add_argument('--num-workers', type=int, default=12,
+    parser.add_argument('--num-workers', type=int, default=14,
                        help='并行处理的进程数 (默认12)')
+    parser.add_argument('--interval', type=str, default='24h',
+                       choices=['1h', '24h', '10m', '1w', '1month'],
+                       help='数据采样间隔 (1h/24h/10m/1w/1month，默认24h)')
+    parser.add_argument('--horizons', type=str, 
+                      # default='1,2,3',
+                       default='1,2,3,5,7,10,14,21,30,45,60,90,120,150,180',
+                       # default='1,2,3,5,7,10,14,21,30,45,60,90,120,150,180,270,365,450,730',
+                       help='预测时间窗口，以逗号分隔 (例如: 1,2,3,5,7，默认包含多个时间窗口)')
     
     args = parser.parse_args()
     
@@ -1869,13 +1856,24 @@ def main():
     # 解析only_cache参数（将字符串转为布尔值）
     only_cache = args.only_cache.lower() == 'true'
     
+    # 解析horizons参数（将逗号分隔的字符串转为整数列表）
+    horizons = None
+    if args.horizons:
+        try:
+            horizons = [int(h.strip()) for h in args.horizons.split(',')]
+            print(f"使用自定义预测窗口: {horizons}")
+        except ValueError:
+            print(f"警告：无效的horizons格式 '{args.horizons}'，使用默认值")
+            horizons = None
+    
     # 创建分析器
-    analyzer = GlassnodeAdvancedAnalyzer(args.api_key)
+    analyzer = GlassnodeAdvancedAnalyzer(args.api_key, interval=args.interval, horizons=horizons)
     
     # 显示配置信息
     print("\n" + "=" * 60)
     print(f"Glassnode 完整分析系统 - {args.asset}")
     print("=" * 60)
+    print(f"数据间隔: {args.interval}")
     if only_cache:
         print("模式: 仅使用缓存（不发起网络请求）")
     
