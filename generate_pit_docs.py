@@ -78,26 +78,70 @@ PIT（时间点）API 允许您查询特定历史时间点的链上指标数据�
 ### 数据修正影响示例
 
 ```mermaid
-gantt
-    title 数据修正对历史分析的影响
-    dateFormat YYYY-MM-DD
-    section 实际数据演变
-    原始数据采集          :done,    raw1, 2024-01-01, 30d
-    发现计算错误          :crit,    error, 2024-02-01, 1d
-    数据修正完成          :done,    fix1, 2024-02-02, 1d
-    方法论更新            :active,  method, 2024-03-01, 1d
-    重新计算历史数据      :done,    recalc, 2024-03-02, 7d
+timeline
+    title 数据修正对历史分析的影响时间线
+
+    section 2024年1月
+        原始数据采集开始
+        : 常规API显示原始值
+        : PIT API T1时间点记录
+
+    section 2024年2月
+        发现计算错误并修正
+        : 常规API更新为修正值
+        : PIT API T2保持原始值
+        : PIT API T3记录修正值
+
+    section 2024年3月
+        方法论更新和重算
+        : 常规API显示重算值
+        : PIT API T4记录重算值
+        : 历史PIT数据保持不变
+```
+
+或使用流程图展示：
+
+```mermaid
+graph LR
+    subgraph "时间演变"
+        T1[2024-01-15<br/>原始数据] --> T2[2024-01-30<br/>原始数据]
+        T2 --> T3[2024-02-15<br/>数据修正]
+        T3 --> T4[2024-03-15<br/>方法更新]
+    end
     
-    section 常规API视角
-    显示原始值            :done,    api1, 2024-01-01, 31d
-    显示修正后的值        :done,    api2, 2024-02-02, 27d
-    显示重算后的值        :active,  api3, 2024-03-09, 30d
+    subgraph "常规API返回值"
+        A1[原始值] --> A2[修正后值]
+        A2 --> A3[重算后值]
+        A3 --> A4[当前最新值]
+    end
     
-    section PIT API视角
-    T1时间点: 原始值      :done,    pit1, 2024-01-15, 1d
-    T2时间点: 原始值      :done,    pit2, 2024-01-30, 1d
-    T3时间点: 修正值      :done,    pit3, 2024-02-15, 1d
-    T4时间点: 重算值      :active,  pit4, 2024-03-15, 1d
+    subgraph "PIT API返回值"
+        P1[T1: 原始值] -.-> P1
+        P2[T2: 原始值] -.-> P2
+        P3[T3: 修正值] -.-> P3
+        P4[T4: 重算值] -.-> P4
+    end
+    
+    T1 -.-> A1
+    T3 -.-> A2
+    T4 -.-> A3
+    
+    T1 ==> P1
+    T2 ==> P2
+    T3 ==> P3
+    T4 ==> P4
+    
+    style T3 fill:#ef4444,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    style T4 fill:#f59e0b,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    style A4 fill:#10b981,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    
+    classDef timeNode fill:#3b82f6,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef apiNode fill:#8b5cf6,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef pitNode fill:#059669,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    
+    class T1,T2 timeNode
+    class A1,A2,A3 apiNode
+    class P1,P2,P3,P4 pitNode
 ```
 
 使用 PIT API 可以确保您获得的是在特定时间点实际可用的数据，这对于公平的策略回测和历史分析至关重要。
